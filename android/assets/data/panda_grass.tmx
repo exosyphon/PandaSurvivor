@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="panda_grass" tilewidth="32" tileheight="32">
+  <image source="../Downloads/tileset.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt0j0OABAMQOHe0HXrBtyKpUnTTTQSvOEbGDx/RURKEp1q4nq39dvU6dOnf4QG1o/zXg3j3fOu8Ps0J+/bdzPe6bf/Rp8+fQDACwZFH13P
+  </data>
+ </layer>
+ <layer name="objects" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlcsNgDAMQ7v/HdgJmACYADaACz72Etp8BFTyk3yLZSmN3JT+Swf10PAwM0JTUN5s8CzQGpSxGfJ36FDMazNKOzmhqzBT844Slp2QNvHcSQt4uiqi57RdZfVKnaHtqvweNF6pM2q6SsLjrcHy90TCnn0fvjkhhJCvuAHKvCY1
+  </data>
+ </layer>
+</map>
