@@ -2,7 +2,6 @@ package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -38,17 +37,17 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
 
         texture = new Texture(Gdx.files.internal("dpad.png"));
         dpadSprite = new Sprite(texture);
-        dpadSprite.setPosition(0, 0);
+        dpadSprite.setPosition(75, 75);
 
         texture = new Texture(Gdx.files.internal("a-button.png"));
         aButtonSprite = new Sprite(texture);
-        aButtonSprite.setPosition(w - texture.getWidth() - 24, 24);
+        aButtonSprite.setPosition(w - texture.getWidth() - 75, 100);
 
         tiledMap = new TmxMapLoader().load("panda_snow.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
         tiledMapRenderer.addSprite(pandaSprite);
-        tiledMapRenderer.addSprite(dpadSprite);
-        tiledMapRenderer.addSprite(aButtonSprite);
+        tiledMapRenderer.addControlSprite(dpadSprite);
+        tiledMapRenderer.addControlSprite(aButtonSprite);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -85,15 +84,15 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
         float originalx = pandaSprite.getX();
         float originaly = pandaSprite.getY();
 
-        if (position.x < (dpadSprite.getX() + dpadSprite.getWidth()) && position.y < (dpadSprite.getY() + dpadSprite.getHeight())) {
-            if (position.y < (dpadSprite.getY() + 94) && position.y > (dpadSprite.getY() + 30)) {
-                if (position.x < (dpadSprite.getX() + 56) && originalx > 0) {
+        if (position.x < (dpadSprite.getX() + dpadSprite.getWidth() + 40) && position.y < (dpadSprite.getY() + dpadSprite.getHeight() + 40)) {
+            if (position.y < (dpadSprite.getY() + 180) && position.y > (dpadSprite.getY() + 68)) {
+                if (position.x < (dpadSprite.getX() + 112) && originalx > 0) {
                     //left
                     pandaSprite.setPosition(originalx - SINGLE_TILE_WIDTH, originaly);
                     dpadSprite.setPosition(dpadSprite.getX() - SINGLE_TILE_WIDTH, dpadSprite.getY());
                     aButtonSprite.setPosition(aButtonSprite.getX() - SINGLE_TILE_WIDTH, aButtonSprite.getY());
                     camera.translate(-SINGLE_TILE_WIDTH, 0);
-                } else if (position.x > (dpadSprite.getX() + 74) && originalx < 7584) {
+                } else if (position.x > (dpadSprite.getX() + 148) && originalx < 7584) {
                     //right
                     pandaSprite.setPosition(originalx + SINGLE_TILE_WIDTH, originaly);
                     dpadSprite.setPosition(dpadSprite.getX() + SINGLE_TILE_WIDTH, dpadSprite.getY());
@@ -101,13 +100,13 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
                     camera.translate(SINGLE_TILE_WIDTH, 0);
                 }
             } else {
-                if (position.y < (dpadSprite.getY() + 40) && originaly > 0) {
+                if (position.y < (dpadSprite.getY() + 80) && originaly > 0) {
                     //down
                     pandaSprite.setPosition(originalx, originaly - SINGLE_TILE_WIDTH);
                     dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - SINGLE_TILE_WIDTH);
                     aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - SINGLE_TILE_WIDTH);
                     camera.translate(0, -SINGLE_TILE_WIDTH);
-                } else if(position.y > (dpadSprite.getY() + 74) && originaly < 7616) {
+                } else if(position.y > (dpadSprite.getY() + 148) && originaly < 7616) {
                     //up
                     pandaSprite.setPosition(originalx, originaly + SINGLE_TILE_WIDTH);
                     dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + SINGLE_TILE_WIDTH);
