@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector3;
 
 public class PandaSurvivor extends ApplicationAdapter implements InputProcessor {
+    public static final int SINGLE_TILE_WIDTH = 32;
     TiledMap tiledMap;
     OrthographicCamera camera;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
@@ -68,18 +69,6 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.LEFT)
-            camera.translate(-32, 0);
-        if (keycode == Input.Keys.RIGHT)
-            camera.translate(32, 0);
-        if (keycode == Input.Keys.UP)
-            camera.translate(0, -32);
-        if (keycode == Input.Keys.DOWN)
-            camera.translate(0, 32);
-        if (keycode == Input.Keys.NUM_1)
-            tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
-        if (keycode == Input.Keys.NUM_2)
-            tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
         return false;
     }
 
@@ -90,41 +79,40 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
-        System.out.println(screenX + "  Y:" + screenY);
+        Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
         float originalx = pandaSprite.getX();
         float originaly = pandaSprite.getY();
 
         if (position.x < (dpadSprite.getX() + dpadSprite.getWidth()) && position.y < (dpadSprite.getY() + dpadSprite.getHeight())) {
-            if (position.y <  (dpadSprite.getY() + 74) && position.y > (dpadSprite.getY() + 56)) {
-                if (position.x < (dpadSprite.getX() + 56)) {
+            if (position.y < (dpadSprite.getY() + 94) && position.y > (dpadSprite.getY() + 30)) {
+                if (position.x < (dpadSprite.getX() + 56) && originalx > 0) {
                     //left
-                    pandaSprite.setPosition(originalx - 32, originaly);
-                    dpadSprite.setPosition(dpadSprite.getX() - 32, dpadSprite.getY());
-                    aButtonSprite.setPosition(aButtonSprite.getX() - 32, aButtonSprite.getY());
-                    camera.translate(-32, 0);
-                } else {
+                    pandaSprite.setPosition(originalx - SINGLE_TILE_WIDTH, originaly);
+                    dpadSprite.setPosition(dpadSprite.getX() - SINGLE_TILE_WIDTH, dpadSprite.getY());
+                    aButtonSprite.setPosition(aButtonSprite.getX() - SINGLE_TILE_WIDTH, aButtonSprite.getY());
+                    camera.translate(-SINGLE_TILE_WIDTH, 0);
+                } else if (position.x > (dpadSprite.getX() + 74) && originalx < 7584) {
                     //right
-                    pandaSprite.setPosition(originalx + 32, originaly);
-                    dpadSprite.setPosition(dpadSprite.getX() + 32, dpadSprite.getY());
-                    aButtonSprite.setPosition(aButtonSprite.getX() + 32, aButtonSprite.getY());
-                    camera.translate(32, 0);
+                    pandaSprite.setPosition(originalx + SINGLE_TILE_WIDTH, originaly);
+                    dpadSprite.setPosition(dpadSprite.getX() + SINGLE_TILE_WIDTH, dpadSprite.getY());
+                    aButtonSprite.setPosition(aButtonSprite.getX() + SINGLE_TILE_WIDTH, aButtonSprite.getY());
+                    camera.translate(SINGLE_TILE_WIDTH, 0);
                 }
             } else {
-                if (position.y < (dpadSprite.getY() + 56)) {
+                if (position.y < (dpadSprite.getY() + 40) && originaly > 0) {
                     //down
-                    pandaSprite.setPosition(originalx, originaly - 32);
-                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - 32);
-                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - 32);
-                    camera.translate(0, -32);
-                } else {
+                    pandaSprite.setPosition(originalx, originaly - SINGLE_TILE_WIDTH);
+                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - SINGLE_TILE_WIDTH);
+                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - SINGLE_TILE_WIDTH);
+                    camera.translate(0, -SINGLE_TILE_WIDTH);
+                } else if(position.y > (dpadSprite.getY() + 74) && originaly < 7616) {
                     //up
-                    pandaSprite.setPosition(originalx, originaly + 32);
-                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + 32);
-                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + 32);
-                    camera.translate(0, 32);
+                    pandaSprite.setPosition(originalx, originaly + SINGLE_TILE_WIDTH);
+                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + SINGLE_TILE_WIDTH);
+                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + SINGLE_TILE_WIDTH);
+                    camera.translate(0, SINGLE_TILE_WIDTH);
                 }
             }
         }
