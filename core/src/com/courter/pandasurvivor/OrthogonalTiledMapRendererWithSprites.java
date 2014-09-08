@@ -21,11 +21,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         controlSprites = new ArrayList<Sprite>();
     }
 
-    public void addSprite(Sprite sprite){
+    public void addSprite(Sprite sprite) {
         sprites.add(sprite);
     }
 
-    public void addControlSprite(Sprite sprite){
+    public void addControlSprite(Sprite sprite) {
         controlSprites.add(sprite);
     }
 
@@ -36,12 +36,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         for (MapLayer layer : map.getLayers()) {
             if (layer.isVisible()) {
                 if (layer instanceof TiledMapTileLayer) {
-                    renderTileLayer((TiledMapTileLayer)layer);
-                    for(Sprite sprite : controlSprites)
+                    renderTileLayer((TiledMapTileLayer) layer);
+                    for (Sprite sprite : controlSprites)
                         sprite.draw(this.getSpriteBatch());
                     currentLayer++;
-                    if(currentLayer == drawSpritesAfterLayer){
-                        for(Sprite sprite : sprites)
+                    if (currentLayer == drawSpritesAfterLayer) {
+                        for (Sprite sprite : sprites)
                             sprite.draw(this.getSpriteBatch());
                     }
                 } else {

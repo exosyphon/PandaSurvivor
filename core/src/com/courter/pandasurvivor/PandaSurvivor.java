@@ -2,17 +2,17 @@ package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector3;
 
-public class PandaSurvivor extends ApplicationAdapter implements InputProcessor {
-    public static final int SINGLE_TILE_WIDTH = 32;
+public class PandaSurvivor extends ApplicationAdapter {
+    public static final int SINGLE_TILE_WIDTH = 520;
     TiledMap tiledMap;
     OrthographicCamera camera;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
@@ -20,6 +20,17 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
     Sprite pandaSprite;
     Sprite dpadSprite;
     Sprite aButtonSprite;
+    private static final int FRAME_COLS = 12;
+    private static final int FRAME_ROWS = 8;
+    Texture pandaSheet;
+    TextureRegion[] firstPandaFrames;
+    Animation pandaDownAnimation;
+    Animation pandaLeftAnimation;
+    Animation pandaRightAnimation;
+    Animation pandaUpAnimation;
+    float deltaTime;
+    Hero hero;
+
 
     @Override
     public void create() {
@@ -31,9 +42,25 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
 
         camera.update();
 
-        texture = new Texture(Gdx.files.internal("pik.png"));
-        pandaSprite = new Sprite(texture);
+        pandaSheet = new Texture(Gdx.files.internal("panda2.png")); // #9
+        TextureRegion[][] tmp = TextureRegion.split(pandaSheet, pandaSheet.getWidth() / FRAME_COLS, pandaSheet.getHeight() / FRAME_ROWS);              // #10
+        firstPandaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
+        int index = 0;
+        for (int i = 4; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < 3; j++) {
+                firstPandaFrames[index++] = tmp[i][j];
+            }
+        }
+
+        pandaDownAnimation = new Animation(.2f, firstPandaFrames[0], firstPandaFrames[1], firstPandaFrames[2]);
+        pandaLeftAnimation = new Animation(.2f, firstPandaFrames[3], firstPandaFrames[4], firstPandaFrames[5]);
+        pandaRightAnimation = new Animation(.2f, firstPandaFrames[6], firstPandaFrames[7], firstPandaFrames[8]);
+        pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]);
+
+        pandaSprite = new Sprite(firstPandaFrames[0]);
+        pandaSprite.setSize(96, 96);
         pandaSprite.setPosition(w / 2, h / 2);
+        hero = new Hero(w / 2, h / 2);
 
         texture = new Texture(Gdx.files.internal("dpad.png"));
         dpadSprite = new Sprite(texture);
@@ -48,7 +75,6 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
         tiledMapRenderer.addSprite(pandaSprite);
         tiledMapRenderer.addControlSprite(dpadSprite);
         tiledMapRenderer.addControlSprite(aButtonSprite);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -59,82 +85,62 @@ public class PandaSurvivor extends ApplicationAdapter implements InputProcessor 
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        deltaTime = Gdx.graphics.getDeltaTime();
+
+        hero.update(deltaTime);
+
+        if (Gdx.input.isTouched(0)) {
+            touchDown(Gdx.input.getX(), Gdx.input.getY());
+        }
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(float screenX, float screenY) {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
         float originalx = pandaSprite.getX();
         float originaly = pandaSprite.getY();
 
-        if (position.x < (dpadSprite.getX() + dpadSprite.getWidth() + 40) && position.y < (dpadSprite.getY() + dpadSprite.getHeight() + 40)) {
+        if (position.x < (dpadSprite.getX() + dpadSprite.getWidth() + 80) && position.y < (dpadSprite.getY() + dpadSprite.getHeight() + 40)) {
             if (position.y < (dpadSprite.getY() + 180) && position.y > (dpadSprite.getY() + 68)) {
                 if (position.x < (dpadSprite.getX() + 112) && originalx > 0) {
                     //left
-                    pandaSprite.setPosition(originalx - SINGLE_TILE_WIDTH, originaly);
-                    dpadSprite.setPosition(dpadSprite.getX() - SINGLE_TILE_WIDTH, dpadSprite.getY());
-                    aButtonSprite.setPosition(aButtonSprite.getX() - SINGLE_TILE_WIDTH, aButtonSprite.getY());
-                    camera.translate(-SINGLE_TILE_WIDTH, 0);
+                    pandaSprite.setRegion(pandaLeftAnimation.getKeyFrame(hero.stateTime, Animation.ANIMATION_LOOPING));
+
+                    pandaSprite.setPosition(originalx - (SINGLE_TILE_WIDTH * deltaTime), originaly);
+                    dpadSprite.setPosition(dpadSprite.getX() - (SINGLE_TILE_WIDTH * deltaTime), dpadSprite.getY());
+                    aButtonSprite.setPosition(aButtonSprite.getX() - (SINGLE_TILE_WIDTH * deltaTime), aButtonSprite.getY());
+                    camera.translate(-(SINGLE_TILE_WIDTH * deltaTime), 0);
                 } else if (position.x > (dpadSprite.getX() + 148) && originalx < 7584) {
                     //right
-                    pandaSprite.setPosition(originalx + SINGLE_TILE_WIDTH, originaly);
-                    dpadSprite.setPosition(dpadSprite.getX() + SINGLE_TILE_WIDTH, dpadSprite.getY());
-                    aButtonSprite.setPosition(aButtonSprite.getX() + SINGLE_TILE_WIDTH, aButtonSprite.getY());
-                    camera.translate(SINGLE_TILE_WIDTH, 0);
+                    pandaSprite.setRegion(pandaRightAnimation.getKeyFrame(hero.stateTime, Animation.ANIMATION_LOOPING));
+
+                    pandaSprite.setPosition(originalx + (SINGLE_TILE_WIDTH * deltaTime), originaly);
+                    dpadSprite.setPosition(dpadSprite.getX() + (SINGLE_TILE_WIDTH * deltaTime), dpadSprite.getY());
+                    aButtonSprite.setPosition(aButtonSprite.getX() + (SINGLE_TILE_WIDTH * deltaTime), aButtonSprite.getY());
+                    camera.translate((SINGLE_TILE_WIDTH * deltaTime), 0);
                 }
             } else {
                 if (position.y < (dpadSprite.getY() + 80) && originaly > 0) {
                     //down
-                    pandaSprite.setPosition(originalx, originaly - SINGLE_TILE_WIDTH);
-                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - SINGLE_TILE_WIDTH);
-                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - SINGLE_TILE_WIDTH);
-                    camera.translate(0, -SINGLE_TILE_WIDTH);
-                } else if(position.y > (dpadSprite.getY() + 148) && originaly < 7616) {
+                    pandaSprite.setRegion(pandaDownAnimation.getKeyFrame(hero.stateTime, Animation.ANIMATION_LOOPING));
+
+                    pandaSprite.setPosition(originalx, originaly - (SINGLE_TILE_WIDTH * deltaTime));
+                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (SINGLE_TILE_WIDTH * deltaTime));
+                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - (SINGLE_TILE_WIDTH * deltaTime));
+                    camera.translate(0, -(SINGLE_TILE_WIDTH * deltaTime));
+                } else if (position.y > (dpadSprite.getY() + 148) && originaly < 7616) {
                     //up
-                    pandaSprite.setPosition(originalx, originaly + SINGLE_TILE_WIDTH);
-                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + SINGLE_TILE_WIDTH);
-                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + SINGLE_TILE_WIDTH);
-                    camera.translate(0, SINGLE_TILE_WIDTH);
+                    pandaSprite.setRegion(pandaUpAnimation.getKeyFrame(hero.stateTime, Animation.ANIMATION_LOOPING));
+
+                    pandaSprite.setPosition(originalx, originaly + (SINGLE_TILE_WIDTH * deltaTime));
+                    dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (SINGLE_TILE_WIDTH * deltaTime));
+                    aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (SINGLE_TILE_WIDTH * deltaTime));
+                    camera.translate(0, (SINGLE_TILE_WIDTH * deltaTime));
                 }
             }
         }
         return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
     }
 }

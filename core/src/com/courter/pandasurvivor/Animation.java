@@ -9,13 +9,13 @@ public class Animation {
     final TextureRegion[] keyFrames;
     final float frameDuration;
 
-    public Animation (float frameDuration, TextureRegion... keyFrames) {
+    public Animation(float frameDuration, TextureRegion... keyFrames) {
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;
     }
 
-    public TextureRegion getKeyFrame (float stateTime, int mode) {
-        int frameNumber = (int)(stateTime / frameDuration);
+    public TextureRegion getKeyFrame(float stateTime, int mode) {
+        int frameNumber = (int) (stateTime / frameDuration);
 
         if (mode == ANIMATION_NONLOOPING) {
             frameNumber = Math.min(keyFrames.length - 1, frameNumber);
