@@ -111,32 +111,32 @@ public class WorldRenderer {
     }
 
     public void updateCameraAndPandaSpritePositionsLeft(float deltaTime, float originalx, float originaly) {
-        WorldRenderer.heroSprite.setPosition(originalx - (World.HERO_MOVE_SPEED * deltaTime), originaly);
-        WorldRenderer.dpadSprite.setPosition(WorldRenderer.dpadSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), WorldRenderer.dpadSprite.getY());
+        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
+        dpadSprite.setPosition(dpadSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (World.HERO_MOVE_SPEED * deltaTime), aButtonBounds.getY());
-        WorldRenderer.aButtonSprite.setPosition(WorldRenderer.aButtonSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), WorldRenderer.aButtonSprite.getY());
-        WorldRenderer.camera.translate(-(World.HERO_MOVE_SPEED * deltaTime), 0);
+        aButtonSprite.setPosition(aButtonSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), aButtonSprite.getY());
+        camera.translate(-(World.HERO_MOVE_SPEED * deltaTime), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsRight(float deltaTime, float originalx, float originaly) {
-        WorldRenderer.heroSprite.setPosition(originalx + (World.HERO_MOVE_SPEED * deltaTime), originaly);
-        WorldRenderer.dpadSprite.setPosition(WorldRenderer.dpadSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), WorldRenderer.dpadSprite.getY());
+        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
+        dpadSprite.setPosition(dpadSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.HERO_MOVE_SPEED * deltaTime), aButtonBounds.getY());
-        WorldRenderer.aButtonSprite.setPosition(WorldRenderer.aButtonSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), WorldRenderer.aButtonSprite.getY());
-        WorldRenderer.camera.translate((World.HERO_MOVE_SPEED * deltaTime), 0);
+        aButtonSprite.setPosition(aButtonSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), aButtonSprite.getY());
+        camera.translate((World.HERO_MOVE_SPEED * deltaTime), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsDown(float deltaTime, float originalx, float originaly) {
-        WorldRenderer.heroSprite.setPosition(originalx, originaly - (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.dpadSprite.setPosition(WorldRenderer.dpadSprite.getX(), WorldRenderer.dpadSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
+        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.aButtonSprite.setPosition(WorldRenderer.aButtonSprite.getX(), WorldRenderer.aButtonSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.camera.translate(0, -(World.HERO_MOVE_SPEED * deltaTime));
+        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
+        camera.translate(0, -(World.HERO_MOVE_SPEED * deltaTime));
     }
 
     public void updateCameraAndPandaSpritePositionsUp(float deltaTime, float originalx, float originaly) {
-        WorldRenderer.heroSprite.setPosition(originalx, originaly + (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.dpadSprite.setPosition(WorldRenderer.dpadSprite.getX(), WorldRenderer.dpadSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
+        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.HERO_MOVE_SPEED * deltaTime));
         aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
         camera.translate(0, (World.HERO_MOVE_SPEED * deltaTime));
