@@ -24,6 +24,7 @@ public class World {
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static List<Fireball> fireballList;
     public static List<Tree> treeList;
+    public static List<Wall> wallList;
     public static Hero hero;
     public final WorldListener listener;
     public final Random rand;
@@ -41,7 +42,6 @@ public class World {
     }
 
     public void update(float deltaTime) {
-        hero.update(deltaTime);
         updateFireballs(deltaTime);
         checkCollisions();
         checkGameOver();
@@ -50,7 +50,7 @@ public class World {
     private void checkGameOver() {
     }
 
-    private void checkCollisions() {
+    public void checkCollisions() {
         checkFireballCollisions();
     }
 
@@ -70,6 +70,31 @@ public class World {
                     hero.position.y = tree.position.y + 10;
                 else
                     hero.position.y = tree.position.y - 10;
+            }
+        }
+    }
+    
+    public void checkWallCollisions() {
+        for (int i = 0; i < wallList.size(); i++) {
+            Wall wall = wallList.get(i);
+
+            System.out.println("help me hero and wall  " + hero.position.x + "  " + wall.position.x);
+            System.out.println("help me hero and wall y " + hero.position.y + "  " + wall.position.y);
+
+            System.out.println("help me bounds  " + hero.bounds.x + "  " + wall.bounds.x);
+            System.out.println("help me bounds y " + hero.bounds.y + "  " + wall.bounds.y);
+
+            if (OverlapTester.overlapRectangles(wall.bounds, hero.bounds)) {
+                System.out.println("help me Im mega overlapped " + hero.position.x + "  " + wall.position.x);
+                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                    hero.position.x = wall.position.x - wall.WALL_WIDTH/2 - 1;
+                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                    hero.position.x = wall.position.x + wall.WALL_WIDTH/2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                    hero.position.y = wall.position.y + wall.WALL_HEIGHT/2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                    hero.position.y = wall.position.y - wall.WALL_HEIGHT/2 - 1;
+                }
             }
         }
     }
@@ -99,5 +124,6 @@ public class World {
     private void createObjects() {
         fireballList = new ArrayList<Fireball>();
         treeList = new ArrayList<Tree>();
+        wallList = new ArrayList<Wall>();
     }
 }

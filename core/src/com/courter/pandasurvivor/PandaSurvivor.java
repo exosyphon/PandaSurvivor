@@ -21,6 +21,7 @@ public class PandaSurvivor extends ApplicationAdapter {
         Assets.load();
         worldRenderer = new WorldRenderer();
         world = new World(null, WorldRenderer.tiledMapRenderer);
+        worldRenderer.addWalls();
     }
 
     @Override
@@ -44,8 +45,8 @@ public class PandaSurvivor extends ApplicationAdapter {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
-        float heroOriginalX = WorldRenderer.heroSprite.getX();
-        float heroOriginalY = WorldRenderer.heroSprite.getY();
+        float heroOriginalX = World.hero.position.x;
+        float heroOriginalY = World.hero.position.y;
 
         if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
             handleAButtonPress(heroOriginalX, heroOriginalY);
@@ -70,14 +71,20 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
-                world.checkTreeCollisions();
+//                world.checkTreeCollisions();
+                World.hero.update(deltaTime);
+
+                world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
                 worldRenderer.updateCameraAndPandaSpritePositionsLeft(deltaTime, heroOriginalX, heroOriginalY);
             } else if (position.x > (WorldRenderer.dpadSprite.getX() + 148) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
-                world.checkTreeCollisions();
+//                world.checkTreeCollisions();
+                World.hero.update(deltaTime);
+
+                world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
                 worldRenderer.updateCameraAndPandaSpritePositionsRight(deltaTime, heroOriginalX, heroOriginalY);
             }
@@ -86,14 +93,20 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
-                world.checkTreeCollisions();
+//                world.checkTreeCollisions();
+                World.hero.update(deltaTime);
+
+                world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateCameraAndPandaSpritePositionsDown(deltaTime, heroOriginalX, heroOriginalY);
             } else if (position.y > (WorldRenderer.dpadSprite.getY() + 148) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
-                world.checkTreeCollisions();
+//                world.checkTreeCollisions();
+                World.hero.update(deltaTime);
+
+                world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
                 worldRenderer.updateCameraAndPandaSpritePositionsUp(deltaTime, heroOriginalX, heroOriginalY);
             }

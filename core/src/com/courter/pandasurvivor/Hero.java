@@ -1,8 +1,8 @@
 package com.courter.pandasurvivor;
 
 public class Hero extends GameObject {
-    public static final float HERO_HEIGHT = .8f;
-    public static final float HERO_WIDTH = .8f;
+    public static final float HERO_HEIGHT = 2;
+    public static final float HERO_WIDTH = 2;
 
     float stateTime = 0;
     World.HeroDirections currentDirection;

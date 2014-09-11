@@ -17,6 +17,7 @@ public class WorldRenderer {
     public static Sprite aButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite heroSprite;
+    public static Sprite pikSprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     TextureRegion[] firstPandaFrames;
@@ -112,34 +113,34 @@ public class WorldRenderer {
 
     public void updateCameraAndPandaSpritePositionsLeft(float deltaTime, float originalx, float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), dpadSprite.getY());
-        aButtonBounds.setPosition(aButtonBounds.getX() - (World.HERO_MOVE_SPEED * deltaTime), aButtonBounds.getY());
-        aButtonSprite.setPosition(aButtonSprite.getX() - (World.HERO_MOVE_SPEED * deltaTime), aButtonSprite.getY());
-        camera.translate(-(World.HERO_MOVE_SPEED * deltaTime), 0);
+        dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
+        aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
+        aButtonSprite.setPosition(aButtonSprite.getX() - (originalx - World.hero.position.x), aButtonSprite.getY());
+        camera.translate(-(originalx - World.hero.position.x), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsRight(float deltaTime, float originalx, float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), dpadSprite.getY());
-        aButtonBounds.setPosition(aButtonBounds.getX() + (World.HERO_MOVE_SPEED * deltaTime), aButtonBounds.getY());
-        aButtonSprite.setPosition(aButtonSprite.getX() + (World.HERO_MOVE_SPEED * deltaTime), aButtonSprite.getY());
-        camera.translate((World.HERO_MOVE_SPEED * deltaTime), 0);
+        dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
+        aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
+        aButtonSprite.setPosition(aButtonSprite.getX() + (World.hero.position.x - originalx), aButtonSprite.getY());
+        camera.translate((World.hero.position.x - originalx), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsDown(float deltaTime, float originalx, float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
-        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (World.HERO_MOVE_SPEED * deltaTime));
-        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - (World.HERO_MOVE_SPEED * deltaTime));
-        camera.translate(0, -(World.HERO_MOVE_SPEED * deltaTime));
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
+        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
+        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - (originaly - World.hero.position.y));
+        camera.translate(0, -(originaly - World.hero.position.y));
     }
 
     public void updateCameraAndPandaSpritePositionsUp(float deltaTime, float originalx, float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
-        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.HERO_MOVE_SPEED * deltaTime));
-        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
-        camera.translate(0, (World.HERO_MOVE_SPEED * deltaTime));
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
+        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
+        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.hero.position.y - originaly));
+        camera.translate(0, (World.hero.position.y - originaly));
     }
 
     private void slurpPandaFramesIntoAnimations() {
@@ -179,5 +180,17 @@ public class WorldRenderer {
             Fireball fireball = World.fireballList.get(i);
             fireball.getSprite().setPosition(fireball.position.x, fireball.position.y);
         }
+    }
+
+    public void addWalls() {
+        addWallSprite(600, 600);
+    }
+
+    private void addWallSprite(float x, float y) {
+        Sprite wallSprite = new Sprite(Assets.impassablePickachu);
+        wallSprite.setSize(64, 64);
+        wallSprite.setPosition(x + (wallSprite.getWidth()/4), y - (wallSprite.getHeight()/4));
+        tiledMapRenderer.addSprite(wallSprite);
+        World.wallList.add(new Wall(x, y, wallSprite));
     }
 }
