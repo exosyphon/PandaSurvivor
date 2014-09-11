@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by andrew on 9/9/14.
- */
 public class World {
     enum HeroDirections {
         UP,
@@ -17,13 +14,16 @@ public class World {
 
     public interface WorldListener {
         public void hit();
+
         public void kill();
+
         public void powerup();
     }
 
     public static final int HERO_MOVE_SPEED = 520;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static List<Fireball> fireballList;
+    public static List<Tree> treeList;
     public static Hero hero;
     public final WorldListener listener;
     public final Random rand;
@@ -37,7 +37,8 @@ public class World {
         createObjects();
     }
 
-    private void generateLevel() {}
+    private void generateLevel() {
+    }
 
     public void update(float deltaTime) {
         hero.update(deltaTime);
@@ -46,10 +47,31 @@ public class World {
         checkGameOver();
     }
 
-    private void checkGameOver() {}
+    private void checkGameOver() {
+    }
 
     private void checkCollisions() {
         checkFireballCollisions();
+    }
+
+    public void checkTreeCollisions() {
+        for (int i = 0; i < treeList.size(); i++) {
+            Tree tree = treeList.get(i);
+            if (OverlapTester.overlapRectanglesX(tree.bounds, hero.bounds)) {
+                System.out.println("help me on x");
+                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                    hero.position.x = tree.position.x + 10;
+                else
+                    hero.position.x = tree.position.x - 10;
+            }
+            if (OverlapTester.overlapRectanglesY(tree.bounds, hero.bounds)) {
+                System.out.println("help me on yyyyyyy");
+                if (hero.getCurrentDirection() == HeroDirections.DOWN)
+                    hero.position.y = tree.position.y + 10;
+                else
+                    hero.position.y = tree.position.y - 10;
+            }
+        }
     }
 
     private void checkFireballCollisions() {
@@ -76,5 +98,6 @@ public class World {
 
     private void createObjects() {
         fireballList = new ArrayList<Fireball>();
+        treeList = new ArrayList<Tree>();
     }
 }

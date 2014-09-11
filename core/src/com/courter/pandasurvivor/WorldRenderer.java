@@ -58,10 +58,6 @@ public class WorldRenderer {
         renderObjectSprites();
     }
 
-    public void renderObjectSprites() {
-        renderFireballs();
-    }
-
     public void addHero(float w, float h) {
         slurpPandaFramesIntoAnimations();
 
@@ -74,24 +70,24 @@ public class WorldRenderer {
     public void addFireballSprite(float heroOriginalX, float heroOriginalY) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
-        fireballSprite.setPosition(heroOriginalX + (heroSprite.getWidth() / 2), heroOriginalY);
+        fireballSprite.setPosition(heroOriginalX + (heroSprite.getWidth() / 3), heroOriginalY + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(heroOriginalX + (WorldRenderer.heroSprite.getWidth() / 2), heroOriginalY, fireballSprite));
+        World.fireballList.add(new Fireball(heroOriginalX + (heroSprite.getWidth() / 3), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
-                WorldRenderer.heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case DOWN:
-                WorldRenderer.heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case LEFT:
-                WorldRenderer.heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case RIGHT:
-                WorldRenderer.heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
         }
 
@@ -100,16 +96,16 @@ public class WorldRenderer {
     public void updatePandaWalkingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
-                WorldRenderer.heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case DOWN:
-                WorldRenderer.heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case LEFT:
-                WorldRenderer.heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case RIGHT:
-                WorldRenderer.heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
                 break;
         }
     }
@@ -142,16 +138,8 @@ public class WorldRenderer {
         WorldRenderer.heroSprite.setPosition(originalx, originaly + (World.HERO_MOVE_SPEED * deltaTime));
         WorldRenderer.dpadSprite.setPosition(WorldRenderer.dpadSprite.getX(), WorldRenderer.dpadSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.aButtonSprite.setPosition(WorldRenderer.aButtonSprite.getX(), WorldRenderer.aButtonSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
-        WorldRenderer.camera.translate(0, (World.HERO_MOVE_SPEED * deltaTime));
-    }
-
-    private void renderFireballs() {
-        int len = World.fireballList.size();
-        for (int i = 0; i < len; i++) {
-            Fireball fireball = World.fireballList.get(i);
-            fireball.getSprite().setPosition(fireball.position.x, fireball.position.y);
-        }
+        aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.HERO_MOVE_SPEED * deltaTime));
+        camera.translate(0, (World.HERO_MOVE_SPEED * deltaTime));
     }
 
     private void slurpPandaFramesIntoAnimations() {
@@ -173,11 +161,23 @@ public class WorldRenderer {
         pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]);
     }
 
+    private void renderObjectSprites() {
+        renderFireballs();
+    }
+
     private void setupControlSprites(float w) {
         dpadSprite = new Sprite(Assets.dpad);
         dpadSprite.setPosition(75, 75);
 
         aButtonSprite = new Sprite(Assets.aButton);
         aButtonSprite.setPosition(w - Assets.aButton.getWidth() - 75, 100);
+    }
+
+    private void renderFireballs() {
+        int len = World.fireballList.size();
+        for (int i = 0; i < len; i++) {
+            Fireball fireball = World.fireballList.get(i);
+            fireball.getSprite().setPosition(fireball.position.x, fireball.position.y);
+        }
     }
 }

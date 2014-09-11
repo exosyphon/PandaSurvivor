@@ -45,8 +45,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         sprite.draw(this.getSpriteBatch());
                     currentLayer++;
                     if (currentLayer == drawSpritesAfterLayer) {
-                        for (Sprite sprite : sprites)
-                            sprite.draw(this.getSpriteBatch());
+                        for(int i = sprites.size()-1; i >= 0; i--)
+                            sprites.get(i).draw(this.getSpriteBatch());
                     }
                 } else {
                     for (MapObject object : layer.getObjects()) {

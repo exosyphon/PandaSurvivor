@@ -1,8 +1,5 @@
 package com.courter.pandasurvivor;
 
-/**
- * Created by andrew on 9/7/14.
- */
 public class Hero extends GameObject {
     public static final float HERO_HEIGHT = .8f;
     public static final float HERO_WIDTH = .8f;
@@ -17,6 +14,9 @@ public class Hero extends GameObject {
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
+
+        bounds.x = position.x - HERO_WIDTH / 2;
+        bounds.y = position.y - HERO_HEIGHT / 2;
     }
 
     public void setCurrentDirection(World.HeroDirections updatedDirection) {
