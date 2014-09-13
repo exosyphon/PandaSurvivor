@@ -17,7 +17,6 @@ public class WorldRenderer {
     public static Sprite aButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite heroSprite;
-    public static Sprite pikSprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     TextureRegion[] firstPandaFrames;

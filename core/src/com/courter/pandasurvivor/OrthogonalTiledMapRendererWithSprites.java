@@ -73,10 +73,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     if (currentLayer == backgroundLayer)
                         super.renderTileLayer((TiledMapTileLayer) layer);
                     if (currentLayer == treeBottomSpritesLayer) {
+                        firstRender = 0;
+
                         this.renderTileLayer((TiledMapTileLayer) layer);
-                        if (firstRender == 0) {
-                            firstRender = 1;
-                        }
+
+                        firstRender = 1;
                     }
                     if (currentLayer == treeMidSpritesLayer) {
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, false);
@@ -391,8 +392,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         }
                     }
                     spriteBatch.draw(region.getTexture(), vertices, 0, 20);
-                    if(firstRender == 0)
-                        addTrees(x2, y2, region.getTexture());
+                    if (firstRender == 0)
+                        addTree(x2, y2, region.getTexture());
                 }
                 x += layerTileWidth;
             }
@@ -400,9 +401,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
     }
 
-    private void addTrees(float positionX, float positionY, Texture texture) {
-        if (firstRender == 0) {
-            World.treeList.add(new Tree(positionX, positionY, new Sprite(texture)));
+    private void addTree(float positionX, float positionY, Texture texture) {
+        Tree tree = new Tree(positionX, positionY, new Sprite(texture));
+        if (!World.treeList.contains(tree)) {
+            World.treeList.add(tree);
         }
     }
 }
