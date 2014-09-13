@@ -9,7 +9,6 @@ public class Wall extends GameObject {
 
     public Wall(float x, float y, Sprite sprite) {
         super(x, y, WALL_WIDTH, WALL_HEIGHT);
-        System.out.println("help me putting pika at " + x + "  " + y);
         this.sprite = sprite;
     }
 

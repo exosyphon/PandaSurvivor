@@ -50,7 +50,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
         if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
             handleAButtonPress(heroOriginalX, heroOriginalY);
-        } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 80) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 40)) {
+        } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 180) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 140)) {
             handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
         }
         return true;
@@ -71,9 +71,9 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
-//                world.checkTreeCollisions();
                 World.hero.update(deltaTime);
 
+                world.checkTreeCollisions();
                 world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
                 worldRenderer.updateCameraAndPandaSpritePositionsLeft(deltaTime, heroOriginalX, heroOriginalY);
@@ -81,9 +81,9 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
-//                world.checkTreeCollisions();
                 World.hero.update(deltaTime);
 
+                world.checkTreeCollisions();
                 world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
                 worldRenderer.updateCameraAndPandaSpritePositionsRight(deltaTime, heroOriginalX, heroOriginalY);
@@ -93,9 +93,9 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
-//                world.checkTreeCollisions();
                 World.hero.update(deltaTime);
 
+                world.checkTreeCollisions();
                 world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateCameraAndPandaSpritePositionsDown(deltaTime, heroOriginalX, heroOriginalY);
@@ -103,9 +103,9 @@ public class PandaSurvivor extends ApplicationAdapter {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
-//                world.checkTreeCollisions();
                 World.hero.update(deltaTime);
 
+                world.checkTreeCollisions();
                 world.checkWallCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
                 worldRenderer.updateCameraAndPandaSpritePositionsUp(deltaTime, heroOriginalX, heroOriginalY);

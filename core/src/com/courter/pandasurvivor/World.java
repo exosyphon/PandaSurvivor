@@ -57,19 +57,16 @@ public class World {
     public void checkTreeCollisions() {
         for (int i = 0; i < treeList.size(); i++) {
             Tree tree = treeList.get(i);
-            if (OverlapTester.overlapRectanglesX(tree.bounds, hero.bounds)) {
-                System.out.println("help me on x");
+            if (OverlapTester.overlapRectangles(tree.bounds, hero.bounds)) {
                 if (hero.getCurrentDirection() == HeroDirections.RIGHT)
-                    hero.position.x = tree.position.x + 10;
-                else
-                    hero.position.x = tree.position.x - 10;
-            }
-            if (OverlapTester.overlapRectanglesY(tree.bounds, hero.bounds)) {
-                System.out.println("help me on yyyyyyy");
-                if (hero.getCurrentDirection() == HeroDirections.DOWN)
-                    hero.position.y = tree.position.y + 10;
-                else
-                    hero.position.y = tree.position.y - 10;
+                    hero.position.x = tree.position.x - tree.TREE_WIDTH/2 - 1;
+                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                    hero.position.x = tree.position.x + tree.TREE_WIDTH/2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                    hero.position.y = tree.position.y + tree.TREE_HEIGHT/2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                    hero.position.y = tree.position.y - tree.TREE_HEIGHT/2 - 1;
+                }
             }
         }
     }
@@ -78,14 +75,7 @@ public class World {
         for (int i = 0; i < wallList.size(); i++) {
             Wall wall = wallList.get(i);
 
-            System.out.println("help me hero and wall  " + hero.position.x + "  " + wall.position.x);
-            System.out.println("help me hero and wall y " + hero.position.y + "  " + wall.position.y);
-
-            System.out.println("help me bounds  " + hero.bounds.x + "  " + wall.bounds.x);
-            System.out.println("help me bounds y " + hero.bounds.y + "  " + wall.bounds.y);
-
             if (OverlapTester.overlapRectangles(wall.bounds, hero.bounds)) {
-                System.out.println("help me Im mega overlapped " + hero.position.x + "  " + wall.position.x);
                 if (hero.getCurrentDirection() == HeroDirections.RIGHT)
                     hero.position.x = wall.position.x - wall.WALL_WIDTH/2 - 1;
                 else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
