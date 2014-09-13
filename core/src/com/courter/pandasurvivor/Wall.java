@@ -11,8 +11,4 @@ public class Wall extends GameObject {
         super(x, y, WALL_WIDTH, WALL_HEIGHT);
         this.sprite = sprite;
     }
-
-    public Sprite getSprite() {
-        return this.sprite;
-    }
 }

@@ -11,8 +11,4 @@ public class Tree extends GameObject {
         super(x - TREE_WIDTH + 5, y - (TREE_HEIGHT/2), TREE_WIDTH, TREE_HEIGHT);
         this.sprite = sprite;
     }
-
-    public Sprite getSprite() {
-        return this.sprite;
-    }
 }
