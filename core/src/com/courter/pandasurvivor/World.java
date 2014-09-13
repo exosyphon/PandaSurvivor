@@ -25,6 +25,7 @@ public class World {
     public static List<Fireball> fireballList;
     public static List<Tree> treeList;
     public static List<Wall> wallList;
+    public static List<List> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
     public final Random rand;
@@ -59,31 +60,31 @@ public class World {
             Tree tree = treeList.get(i);
             if (OverlapTester.overlapRectangles(tree.bounds, hero.bounds)) {
                 if (hero.getCurrentDirection() == HeroDirections.RIGHT)
-                    hero.position.x = tree.position.x - tree.TREE_WIDTH/2 - 1;
+                    hero.position.x = tree.position.x - tree.WALKING_BOUNDS_TREE_WIDTH / 2 - 1;
                 else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
-                    hero.position.x = tree.position.x + tree.TREE_WIDTH/2 + 1;
+                    hero.position.x = tree.position.x + tree.WALKING_BOUNDS_TREE_WIDTH / 2 + 1;
                 } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
-                    hero.position.y = tree.position.y + tree.TREE_HEIGHT/2 + 1;
+                    hero.position.y = tree.position.y + tree.WALKING_BOUNDS_TREE_HEIGHT / 2 + 1;
                 } else if (hero.getCurrentDirection() == HeroDirections.UP) {
-                    hero.position.y = tree.position.y - tree.TREE_HEIGHT/2 - 1;
+                    hero.position.y = tree.position.y - tree.WALKING_BOUNDS_TREE_HEIGHT / 2 - 1;
                 }
             }
         }
     }
-    
+
     public void checkWallCollisions() {
         for (int i = 0; i < wallList.size(); i++) {
             Wall wall = wallList.get(i);
 
             if (OverlapTester.overlapRectangles(wall.bounds, hero.bounds)) {
                 if (hero.getCurrentDirection() == HeroDirections.RIGHT)
-                    hero.position.x = wall.position.x - wall.WALL_WIDTH/2 - 1;
+                    hero.position.x = wall.position.x - wall.WALKING_BOUNDS_WALL_WIDTH / 2 - 1;
                 else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
-                    hero.position.x = wall.position.x + wall.WALL_WIDTH/2 + 1;
+                    hero.position.x = wall.position.x + wall.WALKING_BOUNDS_WALL_WIDTH / 2 + 1;
                 } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
-                    hero.position.y = wall.position.y + wall.WALL_HEIGHT/2 + 1;
+                    hero.position.y = wall.position.y + wall.WALKING_BOUNDS_WALL_HEIGHT / 2 + 1;
                 } else if (hero.getCurrentDirection() == HeroDirections.UP) {
-                    hero.position.y = wall.position.y - wall.WALL_HEIGHT/2 - 1;
+                    hero.position.y = wall.position.y - wall.WALKING_BOUNDS_WALL_HEIGHT / 2 - 1;
                 }
             }
         }
@@ -99,6 +100,18 @@ public class World {
                     fireball.stateTime > Fireball.FIREBALL_DISTANCE) {
                 tiledMapRenderer.removeSprite(fireball.getSprite());
                 fireballList.remove(fireball);
+                break;
+            } else {
+                for (List<GameObject> list : worldObjectLists) {
+                    for (int listIter = 0; listIter < list.size(); listIter++) {
+                        GameObject gameObject = list.get(listIter);
+                        if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
+                            tiledMapRenderer.removeSprite(fireball.getSprite());
+                            fireballList.remove(fireball);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -112,8 +125,15 @@ public class World {
     }
 
     private void createObjects() {
+        worldObjectLists = new ArrayList<List>();
+
         fireballList = new ArrayList<Fireball>();
         treeList = new ArrayList<Tree>();
         wallList = new ArrayList<Wall>();
+
+        List<List> input = new ArrayList<List>();
+        input.add(treeList);
+        input.add(wallList);
+        worldObjectLists = input;
     }
 }

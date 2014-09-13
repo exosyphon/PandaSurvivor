@@ -3,12 +3,16 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Tree extends GameObject {
-    public static final float TREE_HEIGHT = 70;
-    public static final float TREE_WIDTH = 70;
+    public static final float WALKING_BOUNDS_TREE_HEIGHT = 70;
+    public static final float WALKING_BOUNDS_TREE_WIDTH = 74;
+
+    public static final float SHOOTING_BOUNDS_TREE_HEIGHT = 26;
+    public static final float SHOOTING_BOUNDS_TREE_WIDTH = 30;
     Sprite sprite;
 
     public Tree(float x, float y, Sprite sprite) {
-        super(x - TREE_WIDTH + 5, y - (TREE_HEIGHT/2), TREE_WIDTH, TREE_HEIGHT);
+        super(x - WALKING_BOUNDS_TREE_WIDTH + 8, y - WALKING_BOUNDS_TREE_HEIGHT/2, WALKING_BOUNDS_TREE_WIDTH, WALKING_BOUNDS_TREE_HEIGHT);
+        this.shooting_bounds = createBoundsRectangle(x - (SHOOTING_BOUNDS_TREE_WIDTH + 6), y - SHOOTING_BOUNDS_TREE_HEIGHT, SHOOTING_BOUNDS_TREE_WIDTH, SHOOTING_BOUNDS_TREE_HEIGHT);
         this.sprite = sprite;
     }
 }
