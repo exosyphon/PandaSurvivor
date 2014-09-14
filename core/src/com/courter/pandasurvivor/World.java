@@ -58,61 +58,61 @@ public class World {
         checkFireballCollisions();
     }
 
-    public void checkStaticObjectCollisions() {
-        checkTreeCollisions();
-        checkWallCollisions();
-        checkEnemyCollisions();
+    public void checkStaticObjectCollisions(HeroDirections direction) {
+        checkTreeCollisions(direction);
+        checkWallCollisions(direction);
+        checkEnemyCollisions(direction);
     }
 
     private void checkGameOver() {
     }
 
-    private void checkTreeCollisions() {
+    private void checkTreeCollisions(HeroDirections direction) {
         for (int i = 0; i < treeList.size(); i++) {
             Tree tree = treeList.get(i);
             if (OverlapTester.overlapRectangles(tree.bounds, hero.bounds)) {
-                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                if (direction == HeroDirections.RIGHT)
                     hero.position.x = tree.position.x - tree.WALKING_BOUNDS_TREE_WIDTH / 2 - 1;
-                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                else if (direction == HeroDirections.LEFT) {
                     hero.position.x = tree.position.x + tree.WALKING_BOUNDS_TREE_WIDTH / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                } else if (direction == HeroDirections.DOWN) {
                     hero.position.y = tree.position.y + tree.WALKING_BOUNDS_TREE_HEIGHT / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                } else if (direction == HeroDirections.UP) {
                     hero.position.y = tree.position.y - tree.WALKING_BOUNDS_TREE_HEIGHT / 2 - 1;
                 }
             }
         }
     }
 
-    private void checkEnemyCollisions() {
+    private void checkEnemyCollisions(HeroDirections direction) {
         for (int i = 0; i < enemyList.size(); i++) {
             Enemy enemy = enemyList.get(i);
             if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
-                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                if (direction == HeroDirections.RIGHT)
                     hero.position.x = enemy.position.x - enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 1;
-                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                else if (direction == HeroDirections.LEFT) {
                     hero.position.x = enemy.position.x + enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                } else if (direction == HeroDirections.DOWN) {
                     hero.position.y = enemy.position.y + enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                } else if (direction == HeroDirections.UP) {
                     hero.position.y = enemy.position.y - enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 - 1;
                 }
             }
         }
     }
 
-    private void checkWallCollisions() {
+    private void checkWallCollisions(HeroDirections direction) {
         for (int i = 0; i < wallList.size(); i++) {
             Wall wall = wallList.get(i);
 
             if (OverlapTester.overlapRectangles(wall.bounds, hero.bounds)) {
-                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                if (direction == HeroDirections.RIGHT)
                     hero.position.x = wall.position.x - wall.WALKING_BOUNDS_WALL_WIDTH / 2 - 1;
-                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                else if (direction == HeroDirections.LEFT) {
                     hero.position.x = wall.position.x + wall.WALKING_BOUNDS_WALL_WIDTH / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                } else if (direction == HeroDirections.DOWN) {
                     hero.position.y = wall.position.y + wall.WALKING_BOUNDS_WALL_HEIGHT / 2 + 1;
-                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                } else if (direction == HeroDirections.UP) {
                     hero.position.y = wall.position.y - wall.WALKING_BOUNDS_WALL_HEIGHT / 2 - 1;
                 }
             }
@@ -173,30 +173,27 @@ public class World {
                     float tmpXPosition = hero.position.x;
 
                     if (fireball.fireballDirection == HeroDirections.UP) {
-                        hero.position.y += (HERO_MOVE_SPEED * deltaTime)*2;
+                        hero.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.update(deltaTime);
-                        checkStaticObjectCollisions();
+                        checkStaticObjectCollisions(HeroDirections.UP);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsUp(tmpYPosition);
-                    }
-                    else if (fireball.fireballDirection == HeroDirections.DOWN) {
-                        hero.position.y -= (HERO_MOVE_SPEED * deltaTime)*2;
+                    } else if (fireball.fireballDirection == HeroDirections.DOWN) {
+                        hero.position.y -= (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.update(deltaTime);
-                        checkStaticObjectCollisions();
+                        checkStaticObjectCollisions(HeroDirections.DOWN);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsDown(tmpYPosition);
-                    }
-                    else if (fireball.fireballDirection == HeroDirections.RIGHT) {
-                        hero.position.x += (HERO_MOVE_SPEED * deltaTime)*2;
+                    } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
+                        hero.position.x += (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.update(deltaTime);
-                        checkStaticObjectCollisions();
+                        checkStaticObjectCollisions(HeroDirections.RIGHT);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsRight(tmpXPosition);
-                    }
-                    else if (fireball.fireballDirection == HeroDirections.LEFT) {
-                        hero.position.x -= (HERO_MOVE_SPEED * deltaTime)*2;
+                    } else if (fireball.fireballDirection == HeroDirections.LEFT) {
+                        hero.position.x -= (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.update(deltaTime);
-                        checkStaticObjectCollisions();
+                        checkStaticObjectCollisions(HeroDirections.LEFT);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsLeft(tmpXPosition);
                     }
