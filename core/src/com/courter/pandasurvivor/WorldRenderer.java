@@ -188,11 +188,23 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
+    public void addEnemy() {
+        addEnemySprite(800, 600);
+    }
+
     private void addWallSprite(float x, float y) {
         Sprite wallSprite = new Sprite(Assets.wall);
         wallSprite.setSize(64, 64);
         wallSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(wallSprite);
         World.wallList.add(new Wall(x, y, wallSprite));
+    }
+
+    private void addEnemySprite(float x, float y) {
+        Sprite enemySprite = new Sprite(Assets.enemy);
+        enemySprite.setSize(64, 64);
+        enemySprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(enemySprite);
+        World.enemyList.add(new Enemy(x, y));
     }
 }

@@ -25,6 +25,7 @@ public class World {
     public static List<Fireball> fireballList;
     public static List<Tree> treeList;
     public static List<Wall> wallList;
+    public static List<Enemy> enemyList;
     public static List<List> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
@@ -55,6 +56,7 @@ public class World {
     public void checkStaticObjectCollisions() {
         checkTreeCollisions();
         checkWallCollisions();
+        checkEnemyCollisions();
     }
 
     private void checkGameOver() {
@@ -72,6 +74,23 @@ public class World {
                     hero.position.y = tree.position.y + tree.WALKING_BOUNDS_TREE_HEIGHT / 2 + 1;
                 } else if (hero.getCurrentDirection() == HeroDirections.UP) {
                     hero.position.y = tree.position.y - tree.WALKING_BOUNDS_TREE_HEIGHT / 2 - 1;
+                }
+            }
+        }
+    }
+    
+    private void checkEnemyCollisions() {
+        for (int i = 0; i < enemyList.size(); i++) {
+            Enemy enemy = enemyList.get(i);
+            if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
+                if (hero.getCurrentDirection() == HeroDirections.RIGHT)
+                    hero.position.x = enemy.position.x - enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 1;
+                else if (hero.getCurrentDirection() == HeroDirections.LEFT) {
+                    hero.position.x = enemy.position.x + enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.DOWN) {
+                    hero.position.y = enemy.position.y + enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 + 1;
+                } else if (hero.getCurrentDirection() == HeroDirections.UP) {
+                    hero.position.y = enemy.position.y - enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 - 1;
                 }
             }
         }
@@ -135,10 +154,12 @@ public class World {
         fireballList = new ArrayList<Fireball>();
         treeList = new ArrayList<Tree>();
         wallList = new ArrayList<Wall>();
+        enemyList = new ArrayList<Enemy>();
 
         List<List> input = new ArrayList<List>();
         input.add(treeList);
         input.add(wallList);
+        input.add(enemyList);
         worldObjectLists = input;
     }
 }

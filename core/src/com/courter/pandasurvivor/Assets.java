@@ -9,6 +9,7 @@ public class Assets {
     public static Texture pandaSpriteSheet;
     public static Texture fireball;
     public static Texture wall;
+    public static Texture enemy;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -20,5 +21,6 @@ public class Assets {
         pandaSpriteSheet = loadTexture("panda2.png");
         fireball = loadTexture("fireball.png");
         wall = loadTexture("wall.png");
+        enemy = loadTexture("pik.png");
     }
 }

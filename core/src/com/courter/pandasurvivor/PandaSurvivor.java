@@ -22,6 +22,7 @@ public class PandaSurvivor extends ApplicationAdapter {
         worldRenderer = new WorldRenderer();
         world = new World(null, WorldRenderer.tiledMapRenderer);
         worldRenderer.addWalls();
+        worldRenderer.addEnemy();
     }
 
     @Override
