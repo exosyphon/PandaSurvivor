@@ -48,14 +48,19 @@ public class World {
         checkGameOver();
     }
 
-    private void checkGameOver() {
-    }
-
     public void checkCollisions() {
         checkFireballCollisions();
     }
 
-    public void checkTreeCollisions() {
+    public void checkStaticObjectCollisions() {
+        checkTreeCollisions();
+        checkWallCollisions();
+    }
+
+    private void checkGameOver() {
+    }
+
+    private void checkTreeCollisions() {
         for (int i = 0; i < treeList.size(); i++) {
             Tree tree = treeList.get(i);
             if (OverlapTester.overlapRectangles(tree.bounds, hero.bounds)) {
@@ -72,7 +77,7 @@ public class World {
         }
     }
 
-    public void checkWallCollisions() {
+    private void checkWallCollisions() {
         for (int i = 0; i < wallList.size(); i++) {
             Wall wall = wallList.get(i);
 

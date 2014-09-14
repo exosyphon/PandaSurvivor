@@ -75,20 +75,18 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkTreeCollisions();
-                world.checkWallCollisions();
+                world.checkStaticObjectCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
-                worldRenderer.updateCameraAndPandaSpritePositionsLeft(deltaTime, heroOriginalX, heroOriginalY);
+                worldRenderer.updateCameraAndPandaSpritePositionsLeft(heroOriginalX);
             } else if (position.x > (WorldRenderer.dpadSprite.getX() + 148) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkTreeCollisions();
-                world.checkWallCollisions();
+                world.checkStaticObjectCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
-                worldRenderer.updateCameraAndPandaSpritePositionsRight(deltaTime, heroOriginalX, heroOriginalY);
+                worldRenderer.updateCameraAndPandaSpritePositionsRight(heroOriginalX);
             }
         } else {
             if (position.y < (WorldRenderer.dpadSprite.getY() + 80) && heroOriginalY > BOTTOM_OF_MAP) {
@@ -97,20 +95,18 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkTreeCollisions();
-                world.checkWallCollisions();
+                world.checkStaticObjectCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
-                worldRenderer.updateCameraAndPandaSpritePositionsDown(deltaTime, heroOriginalX, heroOriginalY);
+                worldRenderer.updateCameraAndPandaSpritePositionsDown(heroOriginalY);
             } else if (position.y > (WorldRenderer.dpadSprite.getY() + 148) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkTreeCollisions();
-                world.checkWallCollisions();
+                world.checkStaticObjectCollisions();
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
-                worldRenderer.updateCameraAndPandaSpritePositionsUp(deltaTime, heroOriginalX, heroOriginalY);
+                worldRenderer.updateCameraAndPandaSpritePositionsUp(heroOriginalY);
             }
         }
     }

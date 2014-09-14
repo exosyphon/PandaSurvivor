@@ -110,7 +110,7 @@ public class WorldRenderer {
         }
     }
 
-    public void updateCameraAndPandaSpritePositionsLeft(float deltaTime, float originalx, float originaly) {
+    public void updateCameraAndPandaSpritePositionsLeft(float originalx) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
@@ -118,7 +118,7 @@ public class WorldRenderer {
         camera.translate(-(originalx - World.hero.position.x), 0);
     }
 
-    public void updateCameraAndPandaSpritePositionsRight(float deltaTime, float originalx, float originaly) {
+    public void updateCameraAndPandaSpritePositionsRight(float originalx) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
@@ -126,7 +126,7 @@ public class WorldRenderer {
         camera.translate((World.hero.position.x - originalx), 0);
     }
 
-    public void updateCameraAndPandaSpritePositionsDown(float deltaTime, float originalx, float originaly) {
+    public void updateCameraAndPandaSpritePositionsDown(float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
@@ -134,7 +134,7 @@ public class WorldRenderer {
         camera.translate(0, -(originaly - World.hero.position.y));
     }
 
-    public void updateCameraAndPandaSpritePositionsUp(float deltaTime, float originalx, float originaly) {
+    public void updateCameraAndPandaSpritePositionsUp(float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
