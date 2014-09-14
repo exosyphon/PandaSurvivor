@@ -189,7 +189,7 @@ public class WorldRenderer {
     }
 
     private void addWallSprite(float x, float y) {
-        Sprite wallSprite = new Sprite(Assets.impassablePickachu);
+        Sprite wallSprite = new Sprite(Assets.wall);
         wallSprite.setSize(64, 64);
         wallSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(wallSprite);
