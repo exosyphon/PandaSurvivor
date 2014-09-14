@@ -176,24 +176,28 @@ public class World {
                         hero.position.y += (HERO_MOVE_SPEED * deltaTime)*2;
                         hero.update(deltaTime);
                         checkStaticObjectCollisions();
+                        worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsUp(tmpYPosition);
                     }
                     else if (fireball.fireballDirection == HeroDirections.DOWN) {
                         hero.position.y -= (HERO_MOVE_SPEED * deltaTime)*2;
                         hero.update(deltaTime);
                         checkStaticObjectCollisions();
+                        worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsDown(tmpYPosition);
                     }
                     else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                         hero.position.x += (HERO_MOVE_SPEED * deltaTime)*2;
                         hero.update(deltaTime);
                         checkStaticObjectCollisions();
+                        worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsRight(tmpXPosition);
                     }
                     else if (fireball.fireballDirection == HeroDirections.LEFT) {
                         hero.position.x -= (HERO_MOVE_SPEED * deltaTime)*2;
                         hero.update(deltaTime);
                         checkStaticObjectCollisions();
+                        worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsLeft(tmpXPosition);
                     }
                     tiledMapRenderer.removeSprite(fireball.getSprite());

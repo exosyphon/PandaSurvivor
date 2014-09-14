@@ -18,7 +18,7 @@ public class Assets {
     public static void load() {
         dpad = loadTexture("dpad.png");
         aButton = loadTexture("a-button.png");
-        pandaSpriteSheet = loadTexture("panda2.png");
+        pandaSpriteSheet = loadTexture("panda3.png");
         fireball = loadTexture("fireball.png");
         wall = loadTexture("wall.png");
         enemy = loadTexture("pik.png");

@@ -31,7 +31,7 @@ public class PandaSurvivor extends ApplicationAdapter {
         deltaTime = Gdx.graphics.getDeltaTime();
 
         world.update(deltaTime);
-        worldRenderer.render();
+        worldRenderer.render(World.hero.getCurrentDirection());
 
         if (Gdx.input.isTouched(0)) {
             touchDown(Gdx.input.getX(0), Gdx.input.getY(0));

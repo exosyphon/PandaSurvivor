@@ -20,10 +20,15 @@ public class WorldRenderer {
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     TextureRegion[] firstPandaFrames;
+    TextureRegion[] firstPandaHitFrames;
     Animation pandaDownAnimation;
     Animation pandaLeftAnimation;
     Animation pandaRightAnimation;
     Animation pandaUpAnimation;
+    Animation pandaHitDownAnimation;
+    Animation pandaHitLeftAnimation;
+    Animation pandaHitRightAnimation;
+    Animation pandaHitUpAnimation;
     TiledMap tiledMap;
 
 
@@ -47,13 +52,15 @@ public class WorldRenderer {
         tiledMapRenderer.addControlSprite(aButtonSprite);
     }
     
-    public void render() {
+    public void render(World.HeroDirections direction) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
+        updatePandaWalkingSpriteTexture(direction);
 
         renderObjectSprites();
     }
@@ -123,6 +130,23 @@ public class WorldRenderer {
                 break;
         }
     }
+    
+    public void updatePandaHitSpriteTexture(World.HeroDirections direction) {
+        switch (direction) {
+            case UP:
+                heroSprite.setRegion(pandaHitUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case DOWN:
+                heroSprite.setRegion(pandaHitDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case LEFT:
+                heroSprite.setRegion(pandaHitLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case RIGHT:
+                heroSprite.setRegion(pandaHitRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+        }
+    }
 
     public void updateCameraAndPandaSpritePositionsLeft(float originalx) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
@@ -158,11 +182,16 @@ public class WorldRenderer {
 
     private void slurpPandaFramesIntoAnimations() {
         Texture pandaSheet = Assets.pandaSpriteSheet;
-        TextureRegion[][] tmp = TextureRegion.split(pandaSheet, pandaSheet.getWidth() / FRAME_COLS, pandaSheet.getHeight() / FRAME_ROWS);              // #10
+        TextureRegion[][] tmp = TextureRegion.split(pandaSheet, pandaSheet.getWidth() / FRAME_COLS, pandaSheet.getHeight() / FRAME_ROWS);
         firstPandaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
+        firstPandaHitFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
         int index = 0;
-        //First 4 rows are blank in the sprite sheet
-        //First 3 columns are for the first panda
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                firstPandaHitFrames[index++] = tmp[i][j];
+            }
+        }
+        index = 0;
         for (int i = 4; i < FRAME_ROWS; i++) {
             for (int j = 0; j < 3; j++) {
                 firstPandaFrames[index++] = tmp[i][j];
@@ -172,7 +201,12 @@ public class WorldRenderer {
         pandaDownAnimation = new Animation(.2f, firstPandaFrames[0], firstPandaFrames[1], firstPandaFrames[2]);
         pandaLeftAnimation = new Animation(.2f, firstPandaFrames[3], firstPandaFrames[4], firstPandaFrames[5]);
         pandaRightAnimation = new Animation(.2f, firstPandaFrames[6], firstPandaFrames[7], firstPandaFrames[8]);
-        pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]);
+        pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]); 
+        
+        pandaHitDownAnimation = new Animation(.2f, firstPandaHitFrames[0], firstPandaHitFrames[1], firstPandaHitFrames[2]);
+        pandaHitLeftAnimation = new Animation(.2f, firstPandaHitFrames[3], firstPandaHitFrames[4], firstPandaHitFrames[5]);
+        pandaHitRightAnimation = new Animation(.2f, firstPandaHitFrames[6], firstPandaHitFrames[7], firstPandaHitFrames[8]);
+        pandaHitUpAnimation = new Animation(.2f, firstPandaHitFrames[9], firstPandaHitFrames[10], firstPandaHitFrames[11]);
     }
 
     private void renderObjectSprites() {
