@@ -67,12 +67,15 @@ public class WorldRenderer {
         World.hero = new Hero(w / 2, h / 2);
     }
     
-    public void addFireballSprite(float heroOriginalX, float heroOriginalY) {
+    public void addFireballSprite(float heroOriginalX, float heroOriginalY, World.HeroDirections heroDirection) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
-        fireballSprite.setPosition(heroOriginalX + (heroSprite.getWidth() / 2.5f), heroOriginalY + (heroSprite.getHeight() / 4));
+        float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        if(heroDirection == World.HeroDirections.LEFT)
+            fireballSpriteXOffset = heroSprite.getWidth() / 3;
+        fireballSprite.setPosition(heroOriginalX + (fireballSpriteXOffset), heroOriginalY + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(heroOriginalX + (heroSprite.getWidth() / 2.5f), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
+        World.fireballList.add(new Fireball(heroOriginalX + (fireballSpriteXOffset), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
