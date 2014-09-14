@@ -13,7 +13,7 @@ public class Enemy extends GameObject {
     public Enemy(float x, float y) {
         super(x - WALKING_BOUNDS_ENEMY_WIDTH/6, y + WALKING_BOUNDS_ENEMY_HEIGHT/6, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(x + SHOOTING_BOUNDS_ENEMY_WIDTH/4, y + SHOOTING_BOUNDS_ENEMY_HEIGHT/4, SHOOTING_BOUNDS_ENEMY_WIDTH, SHOOTING_BOUNDS_ENEMY_HEIGHT);
-        currentDirection = World.HeroDirections.DOWN;
+        currentDirection = World.HeroDirections.RIGHT;
     }
 
     public void update(float deltaTime) {

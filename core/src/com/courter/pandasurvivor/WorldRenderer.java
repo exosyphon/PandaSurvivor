@@ -67,15 +67,26 @@ public class WorldRenderer {
         World.hero = new Hero(w / 2, h / 2);
     }
     
-    public void addFireballSprite(float heroOriginalX, float heroOriginalY, World.HeroDirections heroDirection) {
+    public void addFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
         float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
-        if(heroDirection == World.HeroDirections.LEFT)
+        if(direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
-        fireballSprite.setPosition(heroOriginalX + (fireballSpriteXOffset), heroOriginalY + (heroSprite.getHeight() / 4));
+        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(heroOriginalX + (fireballSpriteXOffset), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
+        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite));
+    }
+
+    public void addEnemyFireballSprite(float x, float y, World.HeroDirections direction) {
+        Sprite fireballSprite = new Sprite(Assets.fireball);
+        fireballSprite.setSize(32, 32);
+        float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        if(direction == World.HeroDirections.LEFT)
+            fireballSpriteXOffset = heroSprite.getWidth() / 3;
+        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
+        tiledMapRenderer.addSprite(fireballSprite);
+        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
@@ -166,6 +177,7 @@ public class WorldRenderer {
 
     private void renderObjectSprites() {
         renderFireballs();
+        renderEnemyFireballs();
     }
 
     private void setupControlSprites(float w) {
@@ -184,12 +196,20 @@ public class WorldRenderer {
         }
     }
 
+    private void renderEnemyFireballs() {
+        int len = World.enemyFireballList.size();
+        for (int i = 0; i < len; i++) {
+            Fireball fireball = World.enemyFireballList.get(i);
+            fireball.getSprite().setPosition(fireball.position.x, fireball.position.y);
+        }
+    }
+
     public void addWalls() {
         addWallSprite(600, 600);
     }
 
     public void addEnemy() {
-        addEnemySprite(800, 600);
+        addEnemySprite(800, 400);
     }
 
     private void addWallSprite(float x, float y) {

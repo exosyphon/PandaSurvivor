@@ -23,6 +23,7 @@ public class World {
     public static final int HERO_MOVE_SPEED = 520;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static List<Fireball> fireballList;
+    public static List<Fireball> enemyFireballList;
     public static List<Tree> treeList;
     public static List<Wall> wallList;
     public static List<Enemy> enemyList;
@@ -31,10 +32,12 @@ public class World {
     public final WorldListener listener;
     public final Random rand;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
+    WorldRenderer worldRenderer;
 
-    public World(WorldListener listener, OrthogonalTiledMapRendererWithSprites tiledMapRenderer) {
+    public World(WorldListener listener, WorldRenderer worldRenderer) {
         this.listener = listener;
-        this.tiledMapRenderer = tiledMapRenderer;
+        this.worldRenderer = worldRenderer;
+        this.tiledMapRenderer = worldRenderer.tiledMapRenderer;
         rand = new Random();
         generateLevel();
         createObjects();
@@ -45,11 +48,13 @@ public class World {
 
     public void update(float deltaTime) {
         updateFireballs(deltaTime);
-        checkCollisions();
+        updateEnemyFireballs(deltaTime);
+        checkCollisions(deltaTime);
         checkGameOver();
     }
 
-    public void checkCollisions() {
+    public void checkCollisions(float deltaTime) {
+        checkEnemyFireballCollisions(deltaTime);
         checkFireballCollisions();
     }
 
@@ -78,7 +83,7 @@ public class World {
             }
         }
     }
-    
+
     private void checkEnemyCollisions() {
         for (int i = 0; i < enemyList.size(); i++) {
             Enemy enemy = enemyList.get(i);
@@ -140,6 +145,65 @@ public class World {
         }
     }
 
+    private void checkEnemyFireballCollisions(float deltaTime) {
+        for (int i = 0; i < enemyFireballList.size(); i++) {
+            Fireball fireball = enemyFireballList.get(i);
+            if (fireball.position.x < PandaSurvivor.LEFT_SIDE_OF_MAP ||
+                    fireball.position.x > (PandaSurvivor.RIGHT_SIDE_OF_MAP + 64) ||
+                    fireball.position.y < PandaSurvivor.BOTTOM_OF_MAP ||
+                    fireball.position.y > (PandaSurvivor.TOP_OF_MAP + 64) ||
+                    fireball.stateTime > Fireball.FIREBALL_DISTANCE) {
+                tiledMapRenderer.removeSprite(fireball.getSprite());
+                enemyFireballList.remove(fireball);
+                break;
+            } else {
+                for (List<GameObject> list : worldObjectLists) {
+                    for (int listIter = 0; listIter < list.size(); listIter++) {
+                        GameObject gameObject = list.get(listIter);
+                        if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
+                            tiledMapRenderer.removeSprite(fireball.getSprite());
+                            enemyFireballList.remove(fireball);
+                            break;
+                        }
+                    }
+                }
+
+                if (OverlapTester.overlapRectangles(hero.shooting_bounds, fireball.bounds)) {
+                    float tmpYPosition = hero.position.y;
+                    float tmpXPosition = hero.position.x;
+
+                    if (fireball.fireballDirection == HeroDirections.UP) {
+                        hero.position.y += World.HERO_MOVE_SPEED * deltaTime;
+                        hero.update(deltaTime);
+                        checkStaticObjectCollisions();
+                        worldRenderer.updateCameraAndPandaSpritePositionsUp(tmpYPosition);
+                    }
+                    else if (fireball.fireballDirection == HeroDirections.DOWN) {
+                        hero.position.y -= World.HERO_MOVE_SPEED * deltaTime;
+                        hero.update(deltaTime);
+                        checkStaticObjectCollisions();
+                        worldRenderer.updateCameraAndPandaSpritePositionsDown(tmpYPosition);
+                    }
+                    else if (fireball.fireballDirection == HeroDirections.RIGHT) {
+                        hero.position.x += World.HERO_MOVE_SPEED * deltaTime;
+                        hero.update(deltaTime);
+                        checkStaticObjectCollisions();
+                        worldRenderer.updateCameraAndPandaSpritePositionsRight(tmpXPosition);
+                    }
+                    else if (fireball.fireballDirection == HeroDirections.LEFT) {
+                        hero.position.x -= World.HERO_MOVE_SPEED * deltaTime;
+                        hero.update(deltaTime);
+                        checkStaticObjectCollisions();
+                        worldRenderer.updateCameraAndPandaSpritePositionsLeft(tmpXPosition);
+                    }
+                    tiledMapRenderer.removeSprite(fireball.getSprite());
+                    enemyFireballList.remove(fireball);
+                    break;
+                }
+            }
+        }
+    }
+
     private void updateFireballs(float deltaTime) {
         HeroDirections heroDirection = hero.getCurrentDirection();
         for (int i = 0; i < fireballList.size(); i++) {
@@ -148,10 +212,19 @@ public class World {
         }
     }
 
+    private void updateEnemyFireballs(float deltaTime) {
+        HeroDirections enemyDirection = enemyList.get(0).getCurrentDirection();
+        for (int i = 0; i < enemyFireballList.size(); i++) {
+            Fireball fireball = enemyFireballList.get(i);
+            fireball.update(deltaTime, enemyDirection);
+        }
+    }
+
     private void createObjects() {
         worldObjectLists = new ArrayList<List>();
 
         fireballList = new ArrayList<Fireball>();
+        enemyFireballList = new ArrayList<Fireball>();
         treeList = new ArrayList<Tree>();
         wallList = new ArrayList<Wall>();
         enemyList = new ArrayList<Enemy>();
@@ -159,7 +232,6 @@ public class World {
         List<List> input = new ArrayList<List>();
         input.add(treeList);
         input.add(wallList);
-        input.add(enemyList);
         worldObjectLists = input;
     }
 }

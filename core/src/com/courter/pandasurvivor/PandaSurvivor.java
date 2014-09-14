@@ -11,6 +11,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static final int TOP_OF_MAP = 7616;
     public static final float BUTTON_ACTION_BUFFER = 15;
     float lastActionTime = 0;
+    float testActionTime = 0;
     float deltaTime;
     World world;
     WorldRenderer worldRenderer;
@@ -20,7 +21,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public void create() {
         Assets.load();
         worldRenderer = new WorldRenderer();
-        world = new World(null, WorldRenderer.tiledMapRenderer);
+        world = new World(null, worldRenderer);
         worldRenderer.addWalls();
         worldRenderer.addEnemy();
     }
@@ -40,6 +41,14 @@ public class PandaSurvivor extends ApplicationAdapter {
         } else if (Gdx.input.isTouched(1)) {
             touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
         }
+
+        if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
+//        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
+            worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, World.enemyList.get(0).getCurrentDirection());
+
+            testActionTime = deltaTime;
+        }
+        testActionTime += deltaTime;
 
         lastActionTime += deltaTime;
     }
