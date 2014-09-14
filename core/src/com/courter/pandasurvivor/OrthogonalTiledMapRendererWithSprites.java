@@ -43,7 +43,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private int treeBottomSpritesLayer = 2;
     private int treeMidSpritesLayer = 3;
     private int treeTopSpritesLayer = 4;
-    private int firstRender = 0;
+    private boolean renderTreeBottomsFlag = true;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
@@ -73,11 +73,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     if (currentLayer == backgroundLayer)
                         super.renderTileLayer((TiledMapTileLayer) layer);
                     if (currentLayer == treeBottomSpritesLayer) {
-                        firstRender = 0;
+                        renderTreeBottomsFlag = true;
 
                         this.renderTileLayer((TiledMapTileLayer) layer);
 
-                        firstRender = 1;
+                        renderTreeBottomsFlag = false;
                     }
                     if (currentLayer == treeMidSpritesLayer) {
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, false);
@@ -392,7 +392,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         }
                     }
                     spriteBatch.draw(region.getTexture(), vertices, 0, 20);
-                    if (firstRender == 0)
+                    if (renderTreeBottomsFlag)
                         addTree(x2, y2, region.getTexture());
                 }
                 x += layerTileWidth;
@@ -402,8 +402,15 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     }
 
     private void addTree(float positionX, float positionY, Texture texture) {
-        Tree tree = new Tree(positionX, positionY, new Sprite(texture));
-        if (!World.treeList.contains(tree)) {
+        boolean found = false;
+        for (Tree tree : World.treeList) {
+            if (tree.position.x == Tree.convertTreeWalkingBoundsX(positionX) && tree.position.y == Tree.convertTreeWalkingBoundsY(positionY)) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            Tree tree = new Tree(positionX, positionY, new Sprite(texture));
             World.treeList.add(tree);
         }
     }

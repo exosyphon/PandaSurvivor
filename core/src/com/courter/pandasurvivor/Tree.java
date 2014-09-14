@@ -11,8 +11,16 @@ public class Tree extends GameObject {
     Sprite sprite;
 
     public Tree(float x, float y, Sprite sprite) {
-        super(x - WALKING_BOUNDS_TREE_WIDTH + 8, y - WALKING_BOUNDS_TREE_HEIGHT/2, WALKING_BOUNDS_TREE_WIDTH, WALKING_BOUNDS_TREE_HEIGHT);
+        super(convertTreeWalkingBoundsX(x), convertTreeWalkingBoundsY(y), WALKING_BOUNDS_TREE_WIDTH, WALKING_BOUNDS_TREE_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(x - (SHOOTING_BOUNDS_TREE_WIDTH + 6), y - SHOOTING_BOUNDS_TREE_HEIGHT, SHOOTING_BOUNDS_TREE_WIDTH, SHOOTING_BOUNDS_TREE_HEIGHT);
         this.sprite = sprite;
+    }
+
+    public static float convertTreeWalkingBoundsX(float x) {
+        return x - WALKING_BOUNDS_TREE_WIDTH + 8;
+    }
+
+    public static float convertTreeWalkingBoundsY(float y) {
+        return y - WALKING_BOUNDS_TREE_HEIGHT/2;
     }
 }
