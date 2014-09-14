@@ -70,9 +70,9 @@ public class WorldRenderer {
     public void addFireballSprite(float heroOriginalX, float heroOriginalY) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
-        fireballSprite.setPosition(heroOriginalX + (heroSprite.getWidth() / 3), heroOriginalY + (heroSprite.getHeight() / 4));
+        fireballSprite.setPosition(heroOriginalX + (heroSprite.getWidth() / 2.5f), heroOriginalY + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(heroOriginalX + (heroSprite.getWidth() / 3), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
+        World.fireballList.add(new Fireball(heroOriginalX + (heroSprite.getWidth() / 2.5f), heroOriginalY + (heroSprite.getHeight() / 4), fireballSprite));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
