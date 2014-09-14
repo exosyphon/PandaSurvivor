@@ -36,6 +36,8 @@ public class PandaSurvivor extends ApplicationAdapter {
             if (Gdx.input.isTouched(1)) {
                 touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
             }
+        } else if (Gdx.input.isTouched(1)) {
+            touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
         }
 
         lastActionTime += deltaTime;
