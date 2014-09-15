@@ -403,7 +403,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
     private void addTree(float positionX, float positionY, Texture texture) {
         boolean found = false;
-        for (Tree tree : World.treeList) {
+        for (GameObject tree : World.treeList) {
             if (tree.position.x == Tree.convertTreeWalkingBoundsX(positionX) && tree.position.y == Tree.convertTreeWalkingBoundsY(positionY)) {
                 found = true;
                 break;

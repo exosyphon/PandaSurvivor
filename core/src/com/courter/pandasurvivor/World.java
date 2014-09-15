@@ -24,9 +24,9 @@ public class World {
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
-    public static List<Tree> treeList;
-    public static List<Wall> wallList;
-    public static List<Enemy> enemyList;
+    public static List<GameObject> treeList;
+    public static List<GameObject> wallList;
+    public static List<GameObject> enemyList;
     public static List<List> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
@@ -68,52 +68,30 @@ public class World {
     }
 
     private void checkTreeCollisions(HeroDirections direction) {
-        for (int i = 0; i < treeList.size(); i++) {
-            Tree tree = treeList.get(i);
-            if (OverlapTester.overlapRectangles(tree.bounds, hero.bounds)) {
-                if (direction == HeroDirections.RIGHT)
-                    hero.position.x = tree.position.x - tree.WALKING_BOUNDS_TREE_WIDTH / 2 - 1;
-                else if (direction == HeroDirections.LEFT) {
-                    hero.position.x = tree.position.x + tree.WALKING_BOUNDS_TREE_WIDTH / 2 + 1;
-                } else if (direction == HeroDirections.DOWN) {
-                    hero.position.y = tree.position.y + tree.WALKING_BOUNDS_TREE_HEIGHT / 2 + 1;
-                } else if (direction == HeroDirections.UP) {
-                    hero.position.y = tree.position.y - tree.WALKING_BOUNDS_TREE_HEIGHT / 2 - 1;
-                }
-            }
-        }
+        checkStaticCollisionsForArray(treeList, direction);
     }
 
     private void checkEnemyCollisions(HeroDirections direction) {
-        for (int i = 0; i < enemyList.size(); i++) {
-            Enemy enemy = enemyList.get(i);
-            if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
-                if (direction == HeroDirections.RIGHT)
-                    hero.position.x = enemy.position.x - enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 1;
-                else if (direction == HeroDirections.LEFT) {
-                    hero.position.x = enemy.position.x + enemy.WALKING_BOUNDS_ENEMY_WIDTH / 2 + 1;
-                } else if (direction == HeroDirections.DOWN) {
-                    hero.position.y = enemy.position.y + enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 + 1;
-                } else if (direction == HeroDirections.UP) {
-                    hero.position.y = enemy.position.y - enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 2 - 1;
-                }
-            }
-        }
+        checkStaticCollisionsForArray(enemyList, direction);
     }
 
     private void checkWallCollisions(HeroDirections direction) {
-        for (int i = 0; i < wallList.size(); i++) {
-            Wall wall = wallList.get(i);
+        checkStaticCollisionsForArray(wallList, direction);
+    }
 
-            if (OverlapTester.overlapRectangles(wall.bounds, hero.bounds)) {
+    private void checkStaticCollisionsForArray(List<GameObject> objectList, HeroDirections direction) {
+        for (int i = 0; i < objectList.size(); i++) {
+            GameObject gameObject = objectList.get(i);
+
+            if (OverlapTester.overlapRectangles(gameObject.bounds, hero.bounds)) {
                 if (direction == HeroDirections.RIGHT)
-                    hero.position.x = wall.position.x - wall.WALKING_BOUNDS_WALL_WIDTH / 2 - 1;
+                    hero.position.x = gameObject.position.x - gameObject.bounds.getWidth() / 2 - 1;
                 else if (direction == HeroDirections.LEFT) {
-                    hero.position.x = wall.position.x + wall.WALKING_BOUNDS_WALL_WIDTH / 2 + 1;
+                    hero.position.x = gameObject.position.x + gameObject.bounds.getWidth() / 2 + 1;
                 } else if (direction == HeroDirections.DOWN) {
-                    hero.position.y = wall.position.y + wall.WALKING_BOUNDS_WALL_HEIGHT / 2 + 1;
+                    hero.position.y = gameObject.position.y + gameObject.bounds.getHeight() / 2 + 1;
                 } else if (direction == HeroDirections.UP) {
-                    hero.position.y = wall.position.y - wall.WALKING_BOUNDS_WALL_HEIGHT / 2 - 1;
+                    hero.position.y = gameObject.position.y - gameObject.bounds.getHeight() / 2 - 1;
                 }
             }
         }
@@ -214,7 +192,7 @@ public class World {
     }
 
     private void updateEnemyFireballs(float deltaTime) {
-        HeroDirections enemyDirection = enemyList.get(0).getCurrentDirection();
+        HeroDirections enemyDirection = ((Enemy) enemyList.get(0)).getCurrentDirection();
         for (int i = 0; i < enemyFireballList.size(); i++) {
             Fireball fireball = enemyFireballList.get(i);
             fireball.update(deltaTime, enemyDirection);
@@ -226,9 +204,9 @@ public class World {
 
         fireballList = new ArrayList<Fireball>();
         enemyFireballList = new ArrayList<Fireball>();
-        treeList = new ArrayList<Tree>();
-        wallList = new ArrayList<Wall>();
-        enemyList = new ArrayList<Enemy>();
+        treeList = new ArrayList<GameObject>();
+        wallList = new ArrayList<GameObject>();
+        enemyList = new ArrayList<GameObject>();
 
         List<List> input = new ArrayList<List>();
         input.add(treeList);
