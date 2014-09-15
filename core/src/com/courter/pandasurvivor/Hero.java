@@ -7,6 +7,7 @@ public class Hero extends GameObject {
     public static final float SHOOTING_BOUNDS_HERO_HEIGHT = 115;
     public static final float SHOOTING_BOUNDS_HERO_WIDTH = 80;
 
+    public static float health;
     float stateTime = 0;
     World.HeroDirections currentDirection;
 
@@ -19,6 +20,7 @@ public class Hero extends GameObject {
                 SHOOTING_BOUNDS_HERO_HEIGHT
         );
         currentDirection = World.HeroDirections.DOWN;
+        this.health = 100;
     }
 
     public void update(float deltaTime) {
@@ -38,4 +40,6 @@ public class Hero extends GameObject {
     public World.HeroDirections getCurrentDirection() {
         return currentDirection;
     }
+
+
 }

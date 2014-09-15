@@ -65,6 +65,11 @@ public class World {
     }
 
     private void checkGameOver() {
+        if (hero.health <= 0) {
+            fireballList.clear();
+            enemyFireballList.clear();
+            PandaSurvivor.game_state = PandaSurvivor.GAME_STATES.GAME_OVER;
+        }
     }
 
     private void checkTreeCollisions(HeroDirections direction) {
@@ -149,6 +154,8 @@ public class World {
                 if (OverlapTester.overlapRectangles(hero.shooting_bounds, fireball.bounds)) {
                     float tmpYPosition = hero.position.y;
                     float tmpXPosition = hero.position.x;
+
+                    hero.health -= fireball.getDamageValue();
 
                     if (fireball.fireballDirection == HeroDirections.UP) {
                         hero.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;

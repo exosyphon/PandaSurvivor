@@ -10,6 +10,7 @@ public class Fireball extends DynamicGameObject{
 
     float stateTime = 0;
     Sprite sprite;
+    float damageValue;
 
     World.HeroDirections fireballDirection = null;
 
@@ -17,6 +18,7 @@ public class Fireball extends DynamicGameObject{
         super(x, y, FIREBALL_WIDTH, FIREBALL_HEIGHT);
         velocity.set(FIREBALL_SPEED, 0);
         this.sprite = sprite;
+        this.damageValue = 5;
     }
 
     public void update(float deltaTime, World.HeroDirections heroDirection)
@@ -41,5 +43,9 @@ public class Fireball extends DynamicGameObject{
 
     public Sprite getSprite() {
         return this.sprite;
+    }
+
+    public float getDamageValue() {
+        return damageValue;
     }
 }

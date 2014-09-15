@@ -409,7 +409,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 break;
             }
         }
-        if(!found) {
+        if (!found) {
             Tree tree = new Tree(positionX, positionY, new Sprite(texture));
             World.treeList.add(tree);
         }

@@ -15,6 +15,11 @@ public class PandaSurvivor extends ApplicationAdapter {
     float deltaTime;
     World world;
     WorldRenderer worldRenderer;
+    public static GAME_STATES game_state;
+
+    enum GAME_STATES {
+        RUNNING, GAME_OVER
+    }
 
 
     @Override
@@ -24,33 +29,38 @@ public class PandaSurvivor extends ApplicationAdapter {
         world = new World(null, worldRenderer);
         worldRenderer.addWalls();
         worldRenderer.addEnemy();
+        game_state = GAME_STATES.RUNNING;
     }
 
     @Override
     public void render() {
-        deltaTime = Gdx.graphics.getDeltaTime();
+        if (game_state == GAME_STATES.RUNNING) {
+            deltaTime = Gdx.graphics.getDeltaTime();
 
-        world.update(deltaTime);
-        worldRenderer.render(World.hero.getCurrentDirection());
+            world.update(deltaTime);
+            worldRenderer.render(World.hero.getCurrentDirection());
 
-        if (Gdx.input.isTouched(0)) {
-            touchDown(Gdx.input.getX(0), Gdx.input.getY(0));
-            if (Gdx.input.isTouched(1)) {
+            if (Gdx.input.isTouched(0)) {
+                touchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+                if (Gdx.input.isTouched(1)) {
+                    touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                }
+            } else if (Gdx.input.isTouched(1)) {
                 touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
             }
-        } else if (Gdx.input.isTouched(1)) {
-            touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
-        }
 
-        if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
+            if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
 //        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
-            worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
+                worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
 
-            testActionTime = deltaTime;
+                testActionTime = deltaTime;
+            }
+            testActionTime += deltaTime;
+
+            lastActionTime += deltaTime;
+        } else if (game_state == GAME_STATES.GAME_OVER) {
+            worldRenderer.render(World.hero.getCurrentDirection());
         }
-        testActionTime += deltaTime;
-
-        lastActionTime += deltaTime;
     }
 
     public boolean touchDown(float screenX, float screenY) {

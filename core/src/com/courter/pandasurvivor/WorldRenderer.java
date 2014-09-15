@@ -51,7 +51,7 @@ public class WorldRenderer {
         tiledMapRenderer.addControlSprite(dpadSprite);
         tiledMapRenderer.addControlSprite(aButtonSprite);
     }
-    
+
     public void render(World.HeroDirections direction) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -73,12 +73,12 @@ public class WorldRenderer {
         heroSprite.setPosition(w / 2, h / 2);
         World.hero = new Hero(w / 2, h / 2);
     }
-    
+
     public void addFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
         float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
-        if(direction == World.HeroDirections.LEFT)
+        if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
@@ -89,7 +89,7 @@ public class WorldRenderer {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
         float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
-        if(direction == World.HeroDirections.LEFT)
+        if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
@@ -130,7 +130,7 @@ public class WorldRenderer {
                 break;
         }
     }
-    
+
     public void updatePandaHitSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -201,8 +201,8 @@ public class WorldRenderer {
         pandaDownAnimation = new Animation(.2f, firstPandaFrames[0], firstPandaFrames[1], firstPandaFrames[2]);
         pandaLeftAnimation = new Animation(.2f, firstPandaFrames[3], firstPandaFrames[4], firstPandaFrames[5]);
         pandaRightAnimation = new Animation(.2f, firstPandaFrames[6], firstPandaFrames[7], firstPandaFrames[8]);
-        pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]); 
-        
+        pandaUpAnimation = new Animation(.2f, firstPandaFrames[9], firstPandaFrames[10], firstPandaFrames[11]);
+
         pandaHitDownAnimation = new Animation(.2f, firstPandaHitFrames[0], firstPandaHitFrames[1], firstPandaHitFrames[2]);
         pandaHitLeftAnimation = new Animation(.2f, firstPandaHitFrames[3], firstPandaHitFrames[4], firstPandaHitFrames[5]);
         pandaHitRightAnimation = new Animation(.2f, firstPandaHitFrames[6], firstPandaHitFrames[7], firstPandaHitFrames[8]);
