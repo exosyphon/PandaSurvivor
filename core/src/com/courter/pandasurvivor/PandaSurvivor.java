@@ -18,7 +18,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static GAME_STATES game_state;
 
     enum GAME_STATES {
-        RUNNING, GAME_OVER
+        RUNNING, GAME_OVER, PAUSED
     }
 
 
