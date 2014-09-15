@@ -14,7 +14,7 @@ public class Hero extends GameObject {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(
                 x - (SHOOTING_BOUNDS_HERO_WIDTH / 6),
-                y - (SHOOTING_BOUNDS_HERO_HEIGHT / 6),
+                y - (SHOOTING_BOUNDS_HERO_HEIGHT / 5.5f),
                 SHOOTING_BOUNDS_HERO_WIDTH,
                 SHOOTING_BOUNDS_HERO_HEIGHT
         );
@@ -28,7 +28,7 @@ public class Hero extends GameObject {
         bounds.y = position.y - WALKING_BOUNDS_HERO_HEIGHT / 2;
 
         shooting_bounds.x = position.x - (SHOOTING_BOUNDS_HERO_WIDTH / 6);
-        shooting_bounds.y = position.y - (SHOOTING_BOUNDS_HERO_HEIGHT / 6);
+        shooting_bounds.y = position.y - (SHOOTING_BOUNDS_HERO_HEIGHT / 5.5f);
     }
 
     public void setCurrentDirection(World.HeroDirections updatedDirection) {
