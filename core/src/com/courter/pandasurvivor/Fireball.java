@@ -11,34 +11,31 @@ public class Fireball extends DynamicGameObject{
     float stateTime = 0;
     Sprite sprite;
     float damageValue;
+    World.HeroDirections fireballDirection;
 
-    World.HeroDirections fireballDirection = null;
-
-    public Fireball(float x, float y, Sprite sprite) {
+    public Fireball(float x, float y, Sprite sprite, World.HeroDirections direction) {
         super(x, y, FIREBALL_WIDTH, FIREBALL_HEIGHT);
         velocity.set(FIREBALL_SPEED, 0);
         this.sprite = sprite;
         this.damageValue = 5;
+        this.fireballDirection = direction;
     }
 
-    public void update(float deltaTime, World.HeroDirections heroDirection)
+    public void update(float deltaTime)
     {
-        if(fireballDirection == null)
-            this.fireballDirection = heroDirection;
+        stateTime += deltaTime;
 
-        if(fireballDirection == World.HeroDirections.RIGHT)
+        if(this.fireballDirection == World.HeroDirections.RIGHT)
             position.add(velocity.x * deltaTime, 1 * deltaTime);
-        else if(fireballDirection == World.HeroDirections.LEFT)
+        else if(this.fireballDirection == World.HeroDirections.LEFT)
             position.add(-velocity.x * deltaTime, 1 * deltaTime);
-        else if(fireballDirection == World.HeroDirections.DOWN)
+        else if(this.fireballDirection == World.HeroDirections.DOWN)
             position.add(1 * deltaTime, -velocity.x * deltaTime);
-        else if(fireballDirection == World.HeroDirections.UP)
+        else if(this.fireballDirection == World.HeroDirections.UP)
             position.add(1 * deltaTime, velocity.x * deltaTime);
 
         bounds.x = position.x - FIREBALL_WIDTH / 2;
         bounds.y = position.y - FIREBALL_HEIGHT / 2;
-
-        stateTime += deltaTime;
     }
 
     public Sprite getSprite() {

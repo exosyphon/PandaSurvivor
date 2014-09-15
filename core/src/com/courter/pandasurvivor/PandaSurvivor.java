@@ -51,9 +51,11 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
 //        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
-                worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
+                if (World.enemyList.size() > 0) {
+                    worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
 
-                testActionTime = deltaTime;
+                    testActionTime = deltaTime;
+                }
             }
             testActionTime += deltaTime;
 

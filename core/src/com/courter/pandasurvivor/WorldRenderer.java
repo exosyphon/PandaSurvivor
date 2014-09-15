@@ -82,7 +82,7 @@ public class WorldRenderer {
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite));
+        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite, direction));
     }
 
     public void addEnemyFireballSprite(float x, float y, World.HeroDirections direction) {
@@ -93,7 +93,7 @@ public class WorldRenderer {
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
         tiledMapRenderer.addSprite(fireballSprite);
-        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite));
+        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite, direction));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
@@ -259,6 +259,6 @@ public class WorldRenderer {
         enemySprite.setSize(64, 64);
         enemySprite.setPosition(x, y);
         tiledMapRenderer.addSprite(enemySprite);
-        World.enemyList.add(new Enemy(x, y));
+        World.enemyList.add(new Enemy(x, y, enemySprite));
     }
 }
