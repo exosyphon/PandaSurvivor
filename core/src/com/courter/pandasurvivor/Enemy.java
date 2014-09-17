@@ -9,10 +9,11 @@ public class Enemy extends GameObject {
     public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 70;
     public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = 60;
 
-    public static float health;
+    private float health;
     float stateTime = 0;
     World.HeroDirections currentDirection;
     Sprite sprite;
+    private int xpGain;
 
     public Enemy(float x, float y, Sprite sprite) {
         super(x - WALKING_BOUNDS_ENEMY_WIDTH / 6, y + WALKING_BOUNDS_ENEMY_HEIGHT / 6, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
@@ -20,6 +21,7 @@ public class Enemy extends GameObject {
         currentDirection = World.HeroDirections.RIGHT;
         this.sprite = sprite;
         this.health = 20;
+        this.xpGain = 1;
     }
 
     public void update(float deltaTime) {
@@ -42,5 +44,17 @@ public class Enemy extends GameObject {
 
     public World.HeroDirections getCurrentDirection() {
         return currentDirection;
+    }
+
+    public int getXpGain() {
+        return this.xpGain;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
     }
 }

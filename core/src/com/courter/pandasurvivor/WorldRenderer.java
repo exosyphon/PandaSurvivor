@@ -18,6 +18,7 @@ public class WorldRenderer {
     public static Sprite aButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite healthBarSprite;
+    public static Sprite xpBarSprite;
     public static Sprite heroSprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
@@ -55,6 +56,7 @@ public class WorldRenderer {
         tiledMapRenderer.addControlSprite(dpadSprite);
         tiledMapRenderer.addControlSprite(aButtonSprite);
         tiledMapRenderer.addControlSprite(healthBarSprite);
+        tiledMapRenderer.addControlSprite(xpBarSprite);
     }
 
     public void render(World.HeroDirections direction) {
@@ -157,6 +159,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
         healthBarSprite.setPosition(healthBarSprite.getX() - (originalx - World.hero.position.x), healthBarSprite.getY());
+        xpBarSprite.setPosition(xpBarSprite.getX() - (originalx - World.hero.position.x), xpBarSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
         aButtonSprite.setPosition(aButtonSprite.getX() - (originalx - World.hero.position.x), aButtonSprite.getY());
         camera.translate(-(originalx - World.hero.position.x), 0);
@@ -166,6 +169,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
         healthBarSprite.setPosition(healthBarSprite.getX() + (World.hero.position.x - originalx), healthBarSprite.getY());
+        xpBarSprite.setPosition(xpBarSprite.getX() + (World.hero.position.x - originalx), xpBarSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
         aButtonSprite.setPosition(aButtonSprite.getX() + (World.hero.position.x - originalx), aButtonSprite.getY());
         camera.translate((World.hero.position.x - originalx), 0);
@@ -175,6 +179,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
         healthBarSprite.setPosition(healthBarSprite.getX(), healthBarSprite.getY() - (originaly - World.hero.position.y));
+        xpBarSprite.setPosition(healthBarSprite.getX(), xpBarSprite.getY() - (originaly - World.hero.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
         aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() - (originaly - World.hero.position.y));
         camera.translate(0, -(originaly - World.hero.position.y));
@@ -184,6 +189,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
         healthBarSprite.setPosition(healthBarSprite.getX(), healthBarSprite.getY() + (World.hero.position.y - originaly));
+        xpBarSprite.setPosition(xpBarSprite.getX(), xpBarSprite.getY() + (World.hero.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
         aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.hero.position.y - originaly));
         camera.translate(0, (World.hero.position.y - originaly));
@@ -233,6 +239,10 @@ public class WorldRenderer {
         healthBarSprite = new Sprite(Assets.healthBar);
         healthBarSprite.setSize(384, 32);
         healthBarSprite.setPosition(25, camera.viewportHeight - Assets.healthBar.getHeight() - 10);
+
+        xpBarSprite = new Sprite(Assets.healthBar);
+        xpBarSprite.setSize(384, 32);
+        xpBarSprite.setPosition(25, camera.viewportHeight - Assets.healthBar.getHeight() * 2 - 20);
     }
 
     private void renderFireballs() {
@@ -255,8 +265,8 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
-    public void addEnemy() {
-        addEnemySprite(800, 400);
+    public void addEnemy(int x, int y) {
+        addEnemySprite(x, y);
     }
 
     private void addWallSprite(float x, float y) {

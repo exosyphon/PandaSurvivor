@@ -103,7 +103,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
-        WorldRenderer.shapeRenderer.rect(28, WorldRenderer.camera.viewportHeight - 38, 374 *(World.hero.getHealth()*.01f), 26);
+        WorldRenderer.shapeRenderer.rect(28, WorldRenderer.camera.viewportHeight - 38, 374 * (World.hero.getHealth() * .01f), 26);
+        WorldRenderer.shapeRenderer.end();
+
+        float xpPercentage = (float) World.hero.getCurrentXp() / World.hero.getCurrentLevelXpRequired();
+        WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        WorldRenderer.shapeRenderer.setColor(0, 0, 1, 1);
+        WorldRenderer.shapeRenderer.rect(28, WorldRenderer.camera.viewportHeight - 81, 374 * (xpPercentage), 26);
         WorldRenderer.shapeRenderer.end();
         endRender();
     }

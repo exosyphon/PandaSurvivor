@@ -28,7 +28,9 @@ public class PandaSurvivor extends ApplicationAdapter {
         worldRenderer = new WorldRenderer();
         world = new World(null, worldRenderer);
         worldRenderer.addWalls();
-        worldRenderer.addEnemy();
+        worldRenderer.addEnemy(800, 400);
+        worldRenderer.addEnemy(300, 300);
+        worldRenderer.addEnemy(100, 100);
         game_state = GAME_STATES.RUNNING;
     }
 

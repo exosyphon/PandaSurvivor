@@ -80,8 +80,10 @@ public class World {
     }
 
     private void updateEnemies(float deltaTime) {
-        if (enemyList.size() > 0)
-            ((Enemy) enemyList.get(0)).update(deltaTime);
+        if (enemyList.size() > 0) {
+            for (GameObject enemy : enemyList)
+                ((Enemy) enemy).update(deltaTime);
+        }
     }
 
     private void checkGameOver() {
@@ -161,48 +163,50 @@ public class World {
                 }
 
                 if (fireball != null && enemyList.size() > 0) {
-                    Enemy enemy = ((Enemy) enemyList.get(0));
-                    if (OverlapTester.overlapRectangles(enemy.shooting_bounds, fireball.bounds)) {
-                        enemy.health -= fireball.getDamageValue();
+                    for (GameObject gameObject : enemyList) {
+                        Enemy enemy = ((Enemy) gameObject);
+                        if (OverlapTester.overlapRectangles(enemy.shooting_bounds, fireball.bounds)) {
+                            enemy.setHealth(enemy.getHealth() - fireball.getDamageValue());
+                            if (enemy.getHealth() <= 0) {
+                                hero.handleXpGain(enemy.getXpGain());
+                                tiledMapRenderer.removeSprite(enemy.getSprite());
+                                enemyList.remove(enemy);
+                                break;
+                            }
 
-                        if (enemy.health <= 0) {
-                            tiledMapRenderer.removeSprite(enemy.getSprite());
-                            enemyList.remove(enemy);
-                            break;
+                            if (fireball.fireballDirection == HeroDirections.UP) {
+                                enemy.position.y += (HERO_MOVE_SPEED * deltaTime);
+                                enemy.update(deltaTime);
+                                enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 55);
+//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                            } else if (fireball.fireballDirection == HeroDirections.DOWN) {
+                                enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
+                                enemy.update(deltaTime);
+                                enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 55);
+//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                            } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
+                                enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
+                                enemy.update(deltaTime);
+                                enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 55);
+//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                            } else if (fireball.fireballDirection == HeroDirections.LEFT) {
+                                enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
+                                enemy.update(deltaTime);
+                                enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 55);
+//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                            }
+
+                            tiledMapRenderer.removeSprite(fireball.getSprite());
+                            fireballList.remove(fireball);
                         }
-
-                        if (fireball.fireballDirection == HeroDirections.UP) {
-                            enemy.position.y += (HERO_MOVE_SPEED * deltaTime);
-                            enemy.update(deltaTime);
-                            enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
-
-                            checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
-                        } else if (fireball.fireballDirection == HeroDirections.DOWN) {
-                            enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
-                            enemy.update(deltaTime);
-                            enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
-
-                            checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
-                        } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
-                            enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
-                            enemy.update(deltaTime);
-                            enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
-
-                            checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
-                        } else if (fireball.fireballDirection == HeroDirections.LEFT) {
-                            enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
-                            enemy.update(deltaTime);
-                            enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
-
-                            checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
-                        }
-
-                        tiledMapRenderer.removeSprite(fireball.getSprite());
-                        fireballList.remove(fireball);
                     }
                 }
             }
