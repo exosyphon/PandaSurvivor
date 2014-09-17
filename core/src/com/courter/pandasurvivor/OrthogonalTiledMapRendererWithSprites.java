@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -99,6 +100,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 }
             }
         }
+
+        WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
+        WorldRenderer.shapeRenderer.rect(28, WorldRenderer.camera.viewportHeight - 38, 374 *(World.hero.health*.01f), 26);
+        WorldRenderer.shapeRenderer.end();
         endRender();
     }
 
