@@ -24,6 +24,7 @@ public class World {
 
     public static final int HERO_MOVE_SPEED = 520;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
+    public static final float timeBeforeRegeneration = 25;
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
     public static Set<GameObject> treeList;
@@ -54,6 +55,7 @@ public class World {
         updateEnemies(deltaTime);
         checkCollisions(deltaTime);
         checkGameOver();
+        checkHealthRegen(deltaTime);
     }
 
     public void checkCollisions(float deltaTime) {
@@ -67,13 +69,23 @@ public class World {
         checkEnemyCollisions(direction);
     }
 
+    private void checkHealthRegen(float deltaTime) {
+        if (hero.getHealth() < hero.getFullHealth()) {
+            if (hero.getLastTimeDamaged() > timeBeforeRegeneration) {
+                hero.regenerateHealth();
+            } else {
+                hero.setLastTimeDamaged(hero.getLastTimeDamaged() + deltaTime);
+            }
+        }
+    }
+
     private void updateEnemies(float deltaTime) {
         if (enemyList.size() > 0)
             ((Enemy) enemyList.get(0)).update(deltaTime);
     }
 
     private void checkGameOver() {
-        if (hero.health <= 0) {
+        if (hero.getHealth() <= 0) {
             fireballList.clear();
             enemyFireballList.clear();
             PandaSurvivor.game_state = PandaSurvivor.GAME_STATES.GAME_OVER;
@@ -223,7 +235,8 @@ public class World {
                     float tmpXPosition = hero.position.x;
                     float tmpYPosition = hero.position.y;
 
-                    hero.health -= fireball.getDamageValue();
+                    hero.subtractDamage(fireball.getDamageValue());
+                    hero.setLastTimeDamaged(deltaTime * 500);
 
                     if (fireball.fireballDirection == HeroDirections.UP) {
                         hero.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;

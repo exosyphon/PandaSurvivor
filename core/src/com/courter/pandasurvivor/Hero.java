@@ -7,9 +7,12 @@ public class Hero extends GameObject {
     public static final float SHOOTING_BOUNDS_HERO_HEIGHT = 115;
     public static final float SHOOTING_BOUNDS_HERO_WIDTH = 80;
 
-    public static float health;
+    private float health;
+    private float fullHealth;
+    public static float healthRegenerationRate;
     float stateTime = 0;
     World.HeroDirections currentDirection;
+    private float lastTimeDamaged;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -19,8 +22,11 @@ public class Hero extends GameObject {
                 SHOOTING_BOUNDS_HERO_WIDTH,
                 SHOOTING_BOUNDS_HERO_HEIGHT
         );
-        currentDirection = World.HeroDirections.DOWN;
-        this.health = 100;
+        this.currentDirection = World.HeroDirections.DOWN;
+        this.fullHealth = 100;
+        this.health = fullHealth;
+        this.healthRegenerationRate = .05f;
+        this.lastTimeDamaged = 0;
     }
 
     public void update(float deltaTime) {
@@ -41,5 +47,27 @@ public class Hero extends GameObject {
         return currentDirection;
     }
 
+    public float getHealth() {
+        return this.health;
+    }
 
+    public void subtractDamage(float damage) {
+        this.health -= damage;
+    }
+
+    public void regenerateHealth() {
+        this.health += healthRegenerationRate;
+    }
+
+    public float getLastTimeDamaged() {
+        return lastTimeDamaged;
+    }
+
+    public void setLastTimeDamaged(float lastTimeDamaged) {
+        this.lastTimeDamaged = lastTimeDamaged;
+    }
+
+    public float getFullHealth() {
+        return fullHealth;
+    }
 }
