@@ -1,8 +1,10 @@
 package com.courter.pandasurvivor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class World {
     enum HeroDirections {
@@ -24,10 +26,10 @@ public class World {
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
-    public static List<GameObject> treeList;
-    public static List<GameObject> wallList;
+    public static Set<GameObject> treeList;
+    public static Set<GameObject> wallList;
     public static List<GameObject> enemyList;
-    public static List<List> worldObjectLists;
+    public static Set<Set> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
     public final Random rand;
@@ -79,7 +81,7 @@ public class World {
     }
 
     private void checkTreeCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset) {
-        checkStaticCollisionsForArray(treeList, gameObject, direction, boundsOffset);
+        checkStaticCollisionsForSet(treeList, gameObject, direction, boundsOffset);
     }
 
     private void checkEnemyCollisions(HeroDirections direction) {
@@ -87,13 +89,29 @@ public class World {
     }
 
     private void checkWallCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset) {
-        checkStaticCollisionsForArray(wallList, gameObject, direction, boundsOffset);
+        checkStaticCollisionsForSet(wallList, gameObject, direction, boundsOffset);
     }
 
     private void checkStaticCollisionsForArray(List<GameObject> objectList, GameObject gameObject, HeroDirections direction, float boundsOffset) {
         for (int i = 0; i < objectList.size(); i++) {
             GameObject existingWorldGameObject = objectList.get(i);
 
+            if (OverlapTester.overlapRectangles(existingWorldGameObject.bounds, gameObject.bounds)) {
+                if (direction == HeroDirections.RIGHT)
+                    gameObject.position.x = existingWorldGameObject.position.x - existingWorldGameObject.bounds.getWidth() / 2 - boundsOffset;
+                else if (direction == HeroDirections.LEFT) {
+                    gameObject.position.x = existingWorldGameObject.position.x + existingWorldGameObject.bounds.getWidth() / 2 + boundsOffset;
+                } else if (direction == HeroDirections.DOWN) {
+                    gameObject.position.y = existingWorldGameObject.position.y + existingWorldGameObject.bounds.getHeight() / 2 + boundsOffset;
+                } else if (direction == HeroDirections.UP) {
+                    gameObject.position.y = existingWorldGameObject.position.y - existingWorldGameObject.bounds.getHeight() / 2 - boundsOffset;
+                }
+            }
+        }
+    }
+
+    private void checkStaticCollisionsForSet(Set<GameObject> objectSet, GameObject gameObject, HeroDirections direction, float boundsOffset) {
+        for (GameObject existingWorldGameObject : objectSet) {
             if (OverlapTester.overlapRectangles(existingWorldGameObject.bounds, gameObject.bounds)) {
                 if (direction == HeroDirections.RIGHT)
                     gameObject.position.x = existingWorldGameObject.position.x - existingWorldGameObject.bounds.getWidth() / 2 - boundsOffset;
@@ -120,9 +138,8 @@ public class World {
                 fireballList.remove(fireball);
                 break;
             } else {
-                for (List<GameObject> list : worldObjectLists) {
-                    for (int listIter = 0; listIter < list.size(); listIter++) {
-                        GameObject gameObject = list.get(listIter);
+                for (Set<GameObject> set : worldObjectLists) {
+                    for (GameObject gameObject : set) {
                         if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
                             tiledMapRenderer.removeSprite(fireball.getSprite());
                             fireballList.remove(fireball);
@@ -192,9 +209,8 @@ public class World {
                 enemyFireballList.remove(fireball);
                 break;
             } else {
-                for (List<GameObject> list : worldObjectLists) {
-                    for (int listIter = 0; listIter < list.size(); listIter++) {
-                        GameObject gameObject = list.get(listIter);
+                for (Set<GameObject> set : worldObjectLists) {
+                    for (GameObject gameObject : set) {
                         if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
                             tiledMapRenderer.removeSprite(fireball.getSprite());
                             enemyFireballList.remove(fireball);
@@ -257,15 +273,15 @@ public class World {
     }
 
     private void createObjects() {
-        worldObjectLists = new ArrayList<List>();
+        worldObjectLists = new HashSet<Set>();
 
         fireballList = new ArrayList<Fireball>();
         enemyFireballList = new ArrayList<Fireball>();
-        treeList = new ArrayList<GameObject>();
-        wallList = new ArrayList<GameObject>();
+        treeList = new HashSet<GameObject>();
+        wallList = new HashSet<GameObject>();
         enemyList = new ArrayList<GameObject>();
 
-        List<List> input = new ArrayList<List>();
+        Set<Set> input = new HashSet<Set>();
         input.add(treeList);
         input.add(wallList);
         worldObjectLists = input;

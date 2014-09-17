@@ -42,7 +42,6 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private int drawSpritesAfterLayer = 1;
     private int treeBottomSpritesLayer = 2;
     private int treeMidSpritesLayer = 3;
-    private int treeTopSpritesLayer = 4;
     private boolean renderTreeBottomsFlag = true;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
@@ -85,9 +84,6 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         sprites.get(0).draw(this.getSpriteBatch());
 
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, true);
-                    }
-                    if (currentLayer == treeTopSpritesLayer) {
-                        this.renderTileLayer((TiledMapTileLayer) layer);
                     }
                     for (Sprite sprite : controlSprites)
                         sprite.draw(this.getSpriteBatch());
@@ -402,16 +398,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     }
 
     private void addTree(float positionX, float positionY, Texture texture) {
-        boolean found = false;
-        for (GameObject tree : World.treeList) {
-            if (tree.position.x == Tree.convertTreeWalkingBoundsX(positionX) && tree.position.y == Tree.convertTreeWalkingBoundsY(positionY)) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            Tree tree = new Tree(positionX, positionY, new Sprite(texture));
-            World.treeList.add(tree);
-        }
+        Tree tree = new Tree(positionX, positionY, new Sprite(texture));
+        World.treeList.add(tree);
     }
 }
