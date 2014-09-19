@@ -26,7 +26,7 @@ public class World {
     public static final int ENEMY_MOVE_SPEED = 60;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static final float timeBeforeRegeneration = 25;
-    static final int numberOfEnemies = 25;
+    static final int numberOfEnemies = 40;
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
     public static Set<GameObject> treeList;
