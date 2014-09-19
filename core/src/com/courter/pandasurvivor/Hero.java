@@ -1,8 +1,8 @@
 package com.courter.pandasurvivor;
 
 public class Hero extends GameObject {
-    public static final float WALKING_BOUNDS_HERO_HEIGHT = 2;
-    public static final float WALKING_BOUNDS_HERO_WIDTH = 2;
+    public static final float WALKING_BOUNDS_HERO_HEIGHT = 20;
+    public static final float WALKING_BOUNDS_HERO_WIDTH = 20;
 
     public static final float SHOOTING_BOUNDS_HERO_HEIGHT = 115;
     public static final float SHOOTING_BOUNDS_HERO_WIDTH = 80;
@@ -39,7 +39,11 @@ public class Hero extends GameObject {
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
+        updateBounds();
+    }
 
+    @Override
+    public void updateBounds() {
         bounds.x = position.x - WALKING_BOUNDS_HERO_WIDTH / 2;
         bounds.y = position.y - WALKING_BOUNDS_HERO_HEIGHT / 2;
 

@@ -92,6 +92,23 @@ public class WorldRenderer {
         World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite, direction));
     }
 
+    public void updateControlSprites(float heroOriginalX, float heroOriginalY, World.HeroDirections direction) {
+        switch (direction) {
+            case UP:
+                updateCameraAndPandaSpritePositionsUp(heroOriginalY);
+                break;
+            case DOWN:
+                updateCameraAndPandaSpritePositionsDown(heroOriginalY);
+                break;
+            case LEFT:
+                updateCameraAndPandaSpritePositionsLeft(heroOriginalX);
+                break;
+            case RIGHT:
+                updateCameraAndPandaSpritePositionsRight(heroOriginalX);
+                break;
+        }
+    }
+
     public void addEnemyFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
         fireballSprite.setSize(32, 32);
@@ -265,7 +282,7 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
-    public void addEnemy(int x, int y) {
+    public void addEnemy(float x, float y) {
         addEnemySprite(x, y);
     }
 

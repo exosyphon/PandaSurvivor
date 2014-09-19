@@ -27,10 +27,6 @@ public class PandaSurvivor extends ApplicationAdapter {
         Assets.load();
         worldRenderer = new WorldRenderer();
         world = new World(null, worldRenderer);
-        worldRenderer.addWalls();
-        worldRenderer.addEnemy(800, 400);
-        worldRenderer.addEnemy(300, 300);
-        worldRenderer.addEnemy(100, 100);
         game_state = GAME_STATES.RUNNING;
     }
 
@@ -54,7 +50,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
 //        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
                 if (World.enemyList.size() > 0) {
-                    worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
+//                    worldRenderer.addEnemyFireballSprite(World.enemyList.get(0).position.x, World.enemyList.get(0).position.y, ((Enemy) World.enemyList.get(0)).getCurrentDirection());
 
                     testActionTime = deltaTime;
                 }
@@ -99,18 +95,22 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, 1);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, 10);
+                World.hero.updateBounds();
+
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
-                worldRenderer.updateCameraAndPandaSpritePositionsLeft(heroOriginalX);
+                worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.LEFT);
             } else if (position.x > (WorldRenderer.dpadSprite.getX() + 148) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, 1);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, 10);
+                World.hero.updateBounds();
+
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
-                worldRenderer.updateCameraAndPandaSpritePositionsRight(heroOriginalX);
+                worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
             }
         } else {
             if (position.y < (WorldRenderer.dpadSprite.getY() + 80) && heroOriginalY > BOTTOM_OF_MAP) {
@@ -119,18 +119,22 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, 1);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, 10);
+                World.hero.updateBounds();
+
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
-                worldRenderer.updateCameraAndPandaSpritePositionsDown(heroOriginalY);
+                worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.DOWN);
             } else if (position.y > (WorldRenderer.dpadSprite.getY() + 148) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, 1);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, 10);
+                World.hero.updateBounds();
+
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
-                worldRenderer.updateCameraAndPandaSpritePositionsUp(heroOriginalY);
+                worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.UP);
             }
         }
     }

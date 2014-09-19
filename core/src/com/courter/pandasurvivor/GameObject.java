@@ -17,6 +17,8 @@ public class GameObject {
         return new Rectangle(x - width / 2, y - height / 2, width, height);
     }
 
+    public void updateBounds() { }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

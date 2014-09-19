@@ -14,6 +14,7 @@ public class Enemy extends GameObject {
     World.HeroDirections currentDirection;
     Sprite sprite;
     private int xpGain;
+    private int touchDamage;
 
     public Enemy(float x, float y, Sprite sprite) {
         super(x - WALKING_BOUNDS_ENEMY_WIDTH / 6, y + WALKING_BOUNDS_ENEMY_HEIGHT / 6, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
@@ -21,12 +22,17 @@ public class Enemy extends GameObject {
         currentDirection = World.HeroDirections.RIGHT;
         this.sprite = sprite;
         this.health = 20;
-        this.xpGain = 1;
+        this.xpGain = 5;
+        this.touchDamage = 2;
     }
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
+        updateBounds();
+    }
 
+    @Override
+    public void updateBounds() {
         bounds.x = position.x - WALKING_BOUNDS_ENEMY_WIDTH / 2;
         bounds.y = position.y - WALKING_BOUNDS_ENEMY_HEIGHT / 2;
 
@@ -56,5 +62,13 @@ public class Enemy extends GameObject {
 
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public int getTouchDamage() {
+        return touchDamage;
+    }
+
+    public void setTouchDamage(int touchDamage) {
+        this.touchDamage = touchDamage;
     }
 }
