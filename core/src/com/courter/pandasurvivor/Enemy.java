@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Enemy extends GameObject {
     public static final float WALKING_BOUNDS_ENEMY_HEIGHT = 100;
-    public static final float WALKING_BOUNDS_ENEMY_WIDTH = 110;
+    public static final float WALKING_BOUNDS_ENEMY_WIDTH = 100;
 
     public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 70;
     public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = 60;

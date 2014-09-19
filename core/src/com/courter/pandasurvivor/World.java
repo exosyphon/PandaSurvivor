@@ -80,11 +80,12 @@ public class World {
         checkFireballCollisions(deltaTime);
     }
 
-    public void checkStaticObjectCollisionsFor(GameObject gameObject, HeroDirections direction, float boundsOffset) {
+    public void checkStaticObjectCollisionsFor(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean checkEnemyCollisionsFlag) {
         checkEdgeOfMapCollisions(gameObject);
         checkTreeCollisions(gameObject, direction, boundsOffset);
         checkWallCollisions(gameObject, direction, boundsOffset);
-        checkEnemyCollisions(direction);
+        if (checkEnemyCollisionsFlag)
+            checkEnemyCollisions(direction);
     }
 
     private void checkEdgeOfMapCollisions(GameObject gameObject) {
@@ -113,7 +114,7 @@ public class World {
                     enemy.update(deltaTime);
                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                     hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 10);
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 10, true);
                     hero.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.RIGHT);
                 } else if (direction == HeroDirections.LEFT) {
@@ -123,7 +124,7 @@ public class World {
                     enemy.update(deltaTime);
                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                     hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 10);
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 10, true);
                     hero.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.LEFT);
                 } else if (direction == HeroDirections.DOWN) {
@@ -133,7 +134,7 @@ public class World {
                     enemy.update(deltaTime);
                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                     hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 10);
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 10, true);
                     hero.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.DOWN);
                 } else if (direction == HeroDirections.UP) {
@@ -143,7 +144,7 @@ public class World {
                     enemy.update(deltaTime);
                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                     hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 10);
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 10, true);
                     hero.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.UP);
                 }
@@ -257,29 +258,29 @@ public class World {
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 55, true);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.DOWN) {
                                 enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 55, true);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                                 enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 55, true);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.LEFT) {
                                 enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 55);
-//                        worldRenderer.updatePandaHitSpriteTexture(enemy.getCurrentDirection());
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 55, true);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             }
 
                             tiledMapRenderer.removeSprite(fireball.getSprite());
@@ -323,25 +324,25 @@ public class World {
                     if (fireball.fireballDirection == HeroDirections.UP) {
                         hero.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 1);
+                        checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 10, true);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsUp(tmpYPosition);
                     } else if (fireball.fireballDirection == HeroDirections.DOWN) {
                         hero.position.y -= (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 1);
+                        checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 10, true);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsDown(tmpYPosition);
                     } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                         hero.position.x += (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 1);
+                        checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 10, true);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsRight(tmpXPosition);
                     } else if (fireball.fireballDirection == HeroDirections.LEFT) {
                         hero.position.x -= (HERO_MOVE_SPEED * deltaTime) * 2;
                         hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 1);
+                        checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 10, true);
                         worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
                         worldRenderer.updateCameraAndPandaSpritePositionsLeft(tmpXPosition);
                     }
@@ -411,6 +412,8 @@ public class World {
             enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
             checkEnemyCollisionsWithHero(direction, deltaTime);
+            checkStaticObjectCollisionsFor(enemy, enemy.getCurrentDirection(), 50, false);
+            enemy.updateBounds();
         }
 
         if (doHorizontal) {

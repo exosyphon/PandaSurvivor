@@ -96,7 +96,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, 10);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, 10, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
@@ -107,7 +107,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, 10);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, 10, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
@@ -120,7 +120,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, 10);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, 10, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
@@ -131,7 +131,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, 10);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, 10, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
