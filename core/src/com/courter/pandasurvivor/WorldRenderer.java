@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,6 +23,9 @@ public class WorldRenderer {
     public static Sprite heroSprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
+    public static ShapeRenderer shapeRenderer;
+    public static BitmapFont font;
+
     TextureRegion[] firstPandaFrames;
     TextureRegion[] firstPandaHitFrames;
     Animation pandaDownAnimation;
@@ -33,10 +37,12 @@ public class WorldRenderer {
     Animation pandaHitRightAnimation;
     Animation pandaHitUpAnimation;
     TiledMap tiledMap;
-    public static ShapeRenderer shapeRenderer;
 
 
     public WorldRenderer() {
+        font = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        font.setColor(0, 0, 1, 1);
+        font.setScale(3, 3);
         shapeRenderer = new ShapeRenderer();
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();

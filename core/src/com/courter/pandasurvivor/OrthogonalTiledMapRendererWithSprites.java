@@ -3,6 +3,7 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
@@ -44,11 +45,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private int treeBottomSpritesLayer = 2;
     private int treeMidSpritesLayer = 3;
     private boolean renderTreeBottomsFlag = true;
+    private SpriteBatch batcher;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
         sprites = new ArrayList<Sprite>();
         controlSprites = new ArrayList<Sprite>();
+        batcher = new SpriteBatch();
     }
 
     public void addSprite(Sprite sprite) {
@@ -112,6 +115,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         WorldRenderer.shapeRenderer.rect(28, WorldRenderer.camera.viewportHeight - 81, 374 * (xpPercentage), 26);
         WorldRenderer.shapeRenderer.end();
         endRender();
+
+        batcher.begin();
+        WorldRenderer.font.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), 28, WorldRenderer.camera.viewportHeight - 81);
+        batcher.end();
     }
 
     public void renderTileLayerLeftovers(TiledMapTileLayer layer, boolean checkLessThan) {

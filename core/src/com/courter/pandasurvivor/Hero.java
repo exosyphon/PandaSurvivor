@@ -7,15 +7,15 @@ public class Hero extends GameObject {
     public static final float SHOOTING_BOUNDS_HERO_HEIGHT = 115;
     public static final float SHOOTING_BOUNDS_HERO_WIDTH = 80;
 
-    private static final float XP_LEVEL_MULTIPLIER = 1.25f;
+    private static final float XP_LEVEL_MULTIPLIER = 2;
 
     private float health;
     private float fullHealth;
     private static float healthRegenerationRate;
     private float lastTimeDamaged;
     private int currentLevel;
-    private int currentLevelXpRequired;
-    private int currentXp;
+    private long currentLevelXpRequired;
+    private long currentXp;
     float stateTime = 0;
     World.HeroDirections currentDirection;
 
@@ -91,7 +91,7 @@ public class Hero extends GameObject {
         this.currentLevel = currentLevel;
     }
 
-    public int getCurrentLevelXpRequired() {
+    public long getCurrentLevelXpRequired() {
         return currentLevelXpRequired;
     }
 
@@ -99,7 +99,7 @@ public class Hero extends GameObject {
         this.currentLevelXpRequired = currentLevelXpRequired;
     }
 
-    public int getCurrentXp() {
+    public long getCurrentXp() {
         return this.currentXp;
     }
 
@@ -110,7 +110,7 @@ public class Hero extends GameObject {
     public void handleXpGain(int xpGain) {
         this.currentXp += xpGain;
         if(this.currentXp >= this.currentLevelXpRequired) {
-            int leftoverXp = this.currentXp - this.currentLevelXpRequired;
+            long leftoverXp = this.currentXp - this.currentLevelXpRequired;
             this.currentLevel++;
             this.currentLevelXpRequired *= XP_LEVEL_MULTIPLIER;
             this.currentXp = leftoverXp;
