@@ -36,6 +36,13 @@ public class WorldRenderer {
     Animation pandaHitLeftAnimation;
     Animation pandaHitRightAnimation;
     Animation pandaHitUpAnimation;
+
+    TextureRegion[] redNinjaFrames;
+    Animation redNinjaDownAnimation;
+    Animation redNinjaLeftAnimation;
+    Animation redNinjaRightAnimation;
+    Animation redNinjaUpAnimation;
+    
     TiledMap tiledMap;
 
 
@@ -80,6 +87,7 @@ public class WorldRenderer {
 
     public void addHero(float w, float h) {
         slurpPandaFramesIntoAnimations();
+        slurpRedNinjaFramesIntoAnimations();
 
         heroSprite = new Sprite(firstPandaFrames[0]);
         heroSprite.setSize(96, 96);
@@ -144,6 +152,23 @@ public class WorldRenderer {
 
     }
 
+    public void updateRedNinjaWalkingSpriteTexture(Enemy enemy, World.HeroDirections direction) {
+        switch (direction) {
+            case UP:
+                enemy.getSprite().setRegion(redNinjaUpAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case DOWN:
+                enemy.getSprite().setRegion(redNinjaDownAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case LEFT:
+                enemy.getSprite().setRegion(redNinjaLeftAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case RIGHT:
+                enemy.getSprite().setRegion(redNinjaRightAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+        }
+    }
+    
     public void updatePandaWalkingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -216,6 +241,28 @@ public class WorldRenderer {
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
         aButtonSprite.setPosition(aButtonSprite.getX(), aButtonSprite.getY() + (World.hero.position.y - originaly));
         camera.translate(0, (World.hero.position.y - originaly));
+    }
+
+    private void slurpRedNinjaFramesIntoAnimations() {
+        Texture ninjaSheet = Assets.ninjaSpriteSheet;
+        TextureRegion[][] tmp = TextureRegion.split(ninjaSheet, ninjaSheet.getWidth() / FRAME_COLS, ninjaSheet.getHeight() / FRAME_ROWS);
+        redNinjaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
+        int index = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j < 6; j++) {
+                redNinjaFrames[index++] = tmp[i][j];
+            }
+        }
+
+        redNinjaDownAnimation = new Animation(.2f, redNinjaFrames[0], redNinjaFrames[1], redNinjaFrames[2]);
+        redNinjaLeftAnimation = new Animation(.2f, redNinjaFrames[3], redNinjaFrames[4], redNinjaFrames[5]);
+        redNinjaRightAnimation = new Animation(.2f, redNinjaFrames[6], redNinjaFrames[7], redNinjaFrames[8]);
+        redNinjaUpAnimation = new Animation(.2f, redNinjaFrames[9], redNinjaFrames[10], redNinjaFrames[11]);
+
+//        pandaHitDownAnimation = new Animation(.2f, firstPandaHitFrames[0], firstPandaHitFrames[1], firstPandaHitFrames[2]);
+//        pandaHitLeftAnimation = new Animation(.2f, firstPandaHitFrames[3], firstPandaHitFrames[4], firstPandaHitFrames[5]);
+//        pandaHitRightAnimation = new Animation(.2f, firstPandaHitFrames[6], firstPandaHitFrames[7], firstPandaHitFrames[8]);
+//        pandaHitUpAnimation = new Animation(.2f, firstPandaHitFrames[9], firstPandaHitFrames[10], firstPandaHitFrames[11]);
     }
 
     private void slurpPandaFramesIntoAnimations() {
@@ -301,8 +348,8 @@ public class WorldRenderer {
     }
 
     private void addEnemySprite(float x, float y) {
-        Sprite enemySprite = new Sprite(Assets.enemy);
-        enemySprite.setSize(64, 64);
+        Sprite enemySprite = new Sprite(redNinjaFrames[0]);
+        enemySprite.setSize(96, 96);
         enemySprite.setPosition(x, y);
         tiledMapRenderer.addSprite(enemySprite);
         World.enemyList.add(new Enemy(x, y, enemySprite));

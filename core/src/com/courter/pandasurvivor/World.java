@@ -1,5 +1,7 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.math.Rectangle;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,10 +39,10 @@ public class World {
     public final WorldListener listener;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     WorldRenderer worldRenderer;
-    boolean doHorizontal;
+    int doHorizontal;
 
     public World(WorldListener listener, WorldRenderer worldRenderer) {
-        doHorizontal = false;
+        doHorizontal = 0;
         this.listener = listener;
         this.worldRenderer = worldRenderer;
         this.tiledMapRenderer = worldRenderer.tiledMapRenderer;
@@ -82,10 +84,11 @@ public class World {
 
     public void checkStaticObjectCollisionsFor(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean checkEnemyCollisionsFlag) {
         checkEdgeOfMapCollisions(gameObject);
-        checkTreeCollisions(gameObject, direction, boundsOffset);
-        checkWallCollisions(gameObject, direction, boundsOffset);
-        if (checkEnemyCollisionsFlag)
+        checkWallCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
+        if (checkEnemyCollisionsFlag) {
+            checkTreeCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
             checkEnemyCollisions(direction);
+        }
     }
 
     private void checkEdgeOfMapCollisions(GameObject gameObject) {
@@ -173,16 +176,16 @@ public class World {
         }
     }
 
-    private void checkTreeCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset) {
-        checkStaticCollisionsForSet(treeList, gameObject, direction, boundsOffset);
+    private void checkTreeCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean enemyFlag) {
+        checkStaticCollisionsForSet(treeList, gameObject, direction, boundsOffset, enemyFlag);
     }
 
     private void checkEnemyCollisions(HeroDirections direction) {
         checkStaticCollisionsForArray(enemyList, hero, direction, 10);
     }
 
-    private void checkWallCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset) {
-        checkStaticCollisionsForSet(wallList, gameObject, direction, boundsOffset);
+    private void checkWallCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean enemyFlag) {
+        checkStaticCollisionsForSet(wallList, gameObject, direction, boundsOffset, enemyFlag);
     }
 
     private void checkStaticCollisionsForArray(List<GameObject> objectList, GameObject gameObject, HeroDirections direction, float boundsOffset) {
@@ -203,17 +206,23 @@ public class World {
         }
     }
 
-    private void checkStaticCollisionsForSet(Set<GameObject> objectSet, GameObject gameObject, HeroDirections direction, float boundsOffset) {
-        for (GameObject existingWorldGameObject : objectSet) {
-            if (OverlapTester.overlapRectangles(existingWorldGameObject.bounds, gameObject.bounds)) {
+    private void checkStaticCollisionsForSet(Set<GameObject> objectSet, GameObject gameObject, HeroDirections direction, float boundsOffset, boolean enemyFlag) {
+        Rectangle boundsForStaticObject;
+        for (GameObject existingWorldStaticObject : objectSet) {
+            if (enemyFlag)
+                boundsForStaticObject = existingWorldStaticObject.enemy_walking_bounds;
+            else
+                boundsForStaticObject = existingWorldStaticObject.bounds;
+
+            if (OverlapTester.overlapRectangles(gameObject.bounds, boundsForStaticObject)) {
                 if (direction == HeroDirections.RIGHT)
-                    gameObject.position.x = existingWorldGameObject.position.x - existingWorldGameObject.bounds.getWidth() / 2 - boundsOffset;
+                    gameObject.position.x = existingWorldStaticObject.position.x - boundsForStaticObject.getWidth() / 2 - boundsOffset;
                 else if (direction == HeroDirections.LEFT) {
-                    gameObject.position.x = existingWorldGameObject.position.x + existingWorldGameObject.bounds.getWidth() / 2 + boundsOffset;
+                    gameObject.position.x = existingWorldStaticObject.position.x + boundsForStaticObject.getWidth() / 2 + boundsOffset;
                 } else if (direction == HeroDirections.DOWN) {
-                    gameObject.position.y = existingWorldGameObject.position.y + existingWorldGameObject.bounds.getHeight() / 2 + boundsOffset;
+                    gameObject.position.y = existingWorldStaticObject.position.y + boundsForStaticObject.getHeight() / 2 + boundsOffset;
                 } else if (direction == HeroDirections.UP) {
-                    gameObject.position.y = existingWorldGameObject.position.y - existingWorldGameObject.bounds.getHeight() / 2 - boundsOffset;
+                    gameObject.position.y = existingWorldStaticObject.position.y - boundsForStaticObject.getHeight() / 2 - boundsOffset;
                 }
             }
         }
@@ -258,28 +267,28 @@ public class World {
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 55, true);
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 65, true);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.DOWN) {
                                 enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 55, true);
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 65, true);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                                 enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 55, true);
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 65, true);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             } else if (fireball.fireballDirection == HeroDirections.LEFT) {
                                 enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
                                 enemy.update(deltaTime);
                                 enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 55, true);
+                                checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 65, true);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                             }
 
@@ -387,7 +396,7 @@ public class World {
         for (GameObject gameObject : enemyList) {
             Enemy enemy = (Enemy) gameObject;
             HeroDirections direction = null;
-            if (doHorizontal) {
+            if (doHorizontal < 14) {
                 if (enemy.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
                     direction = HeroDirections.RIGHT;
                     enemy.setCurrentDirection(direction);
@@ -412,14 +421,15 @@ public class World {
             enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
             checkEnemyCollisionsWithHero(direction, deltaTime);
-            checkStaticObjectCollisionsFor(enemy, enemy.getCurrentDirection(), 50, false);
+            checkStaticObjectCollisionsFor(enemy, enemy.getCurrentDirection(), 65, false);
             enemy.updateBounds();
+            worldRenderer.updateRedNinjaWalkingSpriteTexture(enemy, enemy.getCurrentDirection());
         }
 
-        if (doHorizontal) {
-            doHorizontal = false;
+        if (doHorizontal > 28) {
+            doHorizontal = 0;
         } else {
-            doHorizontal = true;
+            doHorizontal++;
         }
     }
 }

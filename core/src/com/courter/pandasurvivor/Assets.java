@@ -7,9 +7,9 @@ public class Assets {
     public static Texture dpad;
     public static Texture aButton;
     public static Texture pandaSpriteSheet;
+    public static Texture ninjaSpriteSheet;
     public static Texture fireball;
     public static Texture wall;
-    public static Texture enemy;
     public static Texture healthBar;
 
     public static Texture loadTexture(String file) {
@@ -20,9 +20,9 @@ public class Assets {
         dpad = loadTexture("dpad.png");
         aButton = loadTexture("a-button.png");
         pandaSpriteSheet = loadTexture("panda3.png");
+        ninjaSpriteSheet = loadTexture("ninjas.png");
         fireball = loadTexture("fireball.png");
         wall = loadTexture("wall.png");
-        enemy = loadTexture("pik.png");
         healthBar = loadTexture("healthbar.png");
     }
 }

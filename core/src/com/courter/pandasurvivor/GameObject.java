@@ -7,6 +7,7 @@ public class GameObject {
     public final Vector2 position;
     public final Rectangle bounds;
     public Rectangle shooting_bounds;
+    public Rectangle enemy_walking_bounds;
 
     public GameObject(float x, float y, float width, float height) {
         this.position = new Vector2(x, y);

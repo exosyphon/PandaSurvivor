@@ -3,11 +3,11 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Enemy extends GameObject {
-    public static final float WALKING_BOUNDS_ENEMY_HEIGHT = 100;
-    public static final float WALKING_BOUNDS_ENEMY_WIDTH = 100;
+    public static final float WALKING_BOUNDS_ENEMY_HEIGHT = 120;
+    public static final float WALKING_BOUNDS_ENEMY_WIDTH = 110;
 
-    public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 70;
-    public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = 60;
+    public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 110;
+    public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = 80;
 
     private float health;
     float stateTime = 0;
@@ -17,8 +17,8 @@ public class Enemy extends GameObject {
     private int touchDamage;
 
     public Enemy(float x, float y, Sprite sprite) {
-        super(x - WALKING_BOUNDS_ENEMY_WIDTH / 6, y + WALKING_BOUNDS_ENEMY_HEIGHT / 6, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
-        this.shooting_bounds = createBoundsRectangle(x, y - SHOOTING_BOUNDS_ENEMY_WIDTH / 2, SHOOTING_BOUNDS_ENEMY_WIDTH, SHOOTING_BOUNDS_ENEMY_HEIGHT);
+        super(x, y + WALKING_BOUNDS_ENEMY_HEIGHT / 4, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
+        this.shooting_bounds = createBoundsRectangle(x + SHOOTING_BOUNDS_ENEMY_HEIGHT/2, y - SHOOTING_BOUNDS_ENEMY_WIDTH / 2, SHOOTING_BOUNDS_ENEMY_WIDTH, SHOOTING_BOUNDS_ENEMY_HEIGHT);
         currentDirection = World.HeroDirections.RIGHT;
         this.sprite = sprite;
         this.health = 20;
