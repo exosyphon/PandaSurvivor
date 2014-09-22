@@ -49,8 +49,8 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
 //        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
-                for (int x = 0; x < 5; x++) {
-                    Enemy enemy = (Enemy) World.enemyList.get(x);
+                for (GameObject gameObject : World.redNinjaList) {
+                    Enemy enemy = (Enemy) gameObject;
                     if (enemy.getCurrentDirection() == World.HeroDirections.RIGHT || enemy.getCurrentDirection() == World.HeroDirections.LEFT)
                         worldRenderer.addEnemyFireballSprite(enemy.position.x, enemy.position.y, enemy.getCurrentDirection());
                 }

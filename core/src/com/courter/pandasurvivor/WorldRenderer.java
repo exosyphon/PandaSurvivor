@@ -42,7 +42,19 @@ public class WorldRenderer {
     Animation redNinjaLeftAnimation;
     Animation redNinjaRightAnimation;
     Animation redNinjaUpAnimation;
-    
+
+    TextureRegion[] purpleNinjaFrames;
+    Animation purpleNinjaDownAnimation;
+    Animation purpleNinjaLeftAnimation;
+    Animation purpleNinjaRightAnimation;
+    Animation purpleNinjaUpAnimation;
+
+    TextureRegion[] blackNinjaFrames;
+    Animation blackNinjaDownAnimation;
+    Animation blackNinjaLeftAnimation;
+    Animation blackNinjaRightAnimation;
+    Animation blackNinjaUpAnimation;
+
     TiledMap tiledMap;
 
 
@@ -87,7 +99,7 @@ public class WorldRenderer {
 
     public void addHero(float w, float h) {
         slurpPandaFramesIntoAnimations();
-        slurpRedNinjaFramesIntoAnimations();
+        slurpNinjaFramesIntoAnimations();
 
         heroSprite = new Sprite(firstPandaFrames[0]);
         heroSprite.setSize(96, 96);
@@ -152,6 +164,20 @@ public class WorldRenderer {
 
     }
 
+    public void updateNinjaWalkingSpriteTexture(Enemy enemy, World.HeroDirections direction, World.NinjaTypes ninjaType) {
+        switch (ninjaType) {
+            case RED:
+                updateRedNinjaWalkingSpriteTexture(enemy, direction);
+                break;
+            case BLACK:
+                updateBlackNinjaWalkingSpriteTexture(enemy, direction);
+                break;
+            case PURPLE:
+                updatePurpleNinjaWalkingSpriteTexture(enemy, direction);
+                break;
+        }
+    }
+
     public void updateRedNinjaWalkingSpriteTexture(Enemy enemy, World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -168,7 +194,41 @@ public class WorldRenderer {
                 break;
         }
     }
-    
+
+    public void updateBlackNinjaWalkingSpriteTexture(Enemy enemy, World.HeroDirections direction) {
+        switch (direction) {
+            case UP:
+                enemy.getSprite().setRegion(blackNinjaUpAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case DOWN:
+                enemy.getSprite().setRegion(blackNinjaDownAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case LEFT:
+                enemy.getSprite().setRegion(blackNinjaLeftAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case RIGHT:
+                enemy.getSprite().setRegion(blackNinjaRightAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+        }
+    }
+
+    public void updatePurpleNinjaWalkingSpriteTexture(Enemy enemy, World.HeroDirections direction) {
+        switch (direction) {
+            case UP:
+                enemy.getSprite().setRegion(purpleNinjaUpAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case DOWN:
+                enemy.getSprite().setRegion(purpleNinjaDownAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case LEFT:
+                enemy.getSprite().setRegion(purpleNinjaLeftAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+            case RIGHT:
+                enemy.getSprite().setRegion(purpleNinjaRightAnimation.getKeyFrame(enemy.stateTime, Animation.ANIMATION_LOOPING));
+                break;
+        }
+    }
+
     public void updatePandaWalkingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -243,7 +303,7 @@ public class WorldRenderer {
         camera.translate(0, (World.hero.position.y - originaly));
     }
 
-    private void slurpRedNinjaFramesIntoAnimations() {
+    private void slurpNinjaFramesIntoAnimations() {
         Texture ninjaSheet = Assets.ninjaSpriteSheet;
         TextureRegion[][] tmp = TextureRegion.split(ninjaSheet, ninjaSheet.getWidth() / FRAME_COLS, ninjaSheet.getHeight() / FRAME_ROWS);
         redNinjaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
@@ -258,6 +318,32 @@ public class WorldRenderer {
         redNinjaLeftAnimation = new Animation(.2f, redNinjaFrames[3], redNinjaFrames[4], redNinjaFrames[5]);
         redNinjaRightAnimation = new Animation(.2f, redNinjaFrames[6], redNinjaFrames[7], redNinjaFrames[8]);
         redNinjaUpAnimation = new Animation(.2f, redNinjaFrames[9], redNinjaFrames[10], redNinjaFrames[11]);
+
+        blackNinjaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
+        index = 0;
+        for (int xx = 0; xx < 4; xx++) {
+            for (int xy = 0; xy < 3; xy++) {
+                blackNinjaFrames[index++] = tmp[xx][xy];
+            }
+        }
+
+        blackNinjaDownAnimation = new Animation(.2f, blackNinjaFrames[0], blackNinjaFrames[1], blackNinjaFrames[2]);
+        blackNinjaLeftAnimation = new Animation(.2f, blackNinjaFrames[3], blackNinjaFrames[4], blackNinjaFrames[5]);
+        blackNinjaRightAnimation = new Animation(.2f, blackNinjaFrames[6], blackNinjaFrames[7], blackNinjaFrames[8]);
+        blackNinjaUpAnimation = new Animation(.2f, blackNinjaFrames[9], blackNinjaFrames[10], blackNinjaFrames[11]);
+
+        purpleNinjaFrames = new TextureRegion[(FRAME_COLS * FRAME_ROWS) / 2];
+        index = 0;
+        for (int y = 0; y < 4; y++) {
+            for (int yy = 6; yy < 9; yy++) {
+                purpleNinjaFrames[index++] = tmp[y][yy];
+            }
+        }
+
+        purpleNinjaDownAnimation = new Animation(.2f, purpleNinjaFrames[0], purpleNinjaFrames[1], purpleNinjaFrames[2]);
+        purpleNinjaLeftAnimation = new Animation(.2f, purpleNinjaFrames[3], purpleNinjaFrames[4], purpleNinjaFrames[5]);
+        purpleNinjaRightAnimation = new Animation(.2f, purpleNinjaFrames[6], purpleNinjaFrames[7], purpleNinjaFrames[8]);
+        purpleNinjaUpAnimation = new Animation(.2f, purpleNinjaFrames[9], purpleNinjaFrames[10], purpleNinjaFrames[11]);
 
 //        pandaHitDownAnimation = new Animation(.2f, firstPandaHitFrames[0], firstPandaHitFrames[1], firstPandaHitFrames[2]);
 //        pandaHitLeftAnimation = new Animation(.2f, firstPandaHitFrames[3], firstPandaHitFrames[4], firstPandaHitFrames[5]);
@@ -335,8 +421,8 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
-    public void addEnemy(float x, float y) {
-        addEnemySprite(x, y);
+    public void addEnemy(float x, float y, World.NinjaTypes ninjaType) {
+        addEnemySprite(x, y, ninjaType);
     }
 
     private void addWallSprite(float x, float y) {
@@ -347,11 +433,25 @@ public class WorldRenderer {
         World.wallList.add(new Wall(x, y, wallSprite));
     }
 
-    private void addEnemySprite(float x, float y) {
-        Sprite enemySprite = new Sprite(redNinjaFrames[0]);
-        enemySprite.setSize(96, 96);
-        enemySprite.setPosition(x, y);
-        tiledMapRenderer.addSprite(enemySprite);
-        World.enemyList.add(new Enemy(x, y, enemySprite));
+    private void addEnemySprite(float x, float y, World.NinjaTypes ninjaType) {
+        if (ninjaType == World.NinjaTypes.RED) {
+            Sprite enemySprite = new Sprite(redNinjaFrames[0]);
+            enemySprite.setSize(96, 96);
+            enemySprite.setPosition(x, y);
+            tiledMapRenderer.addSprite(enemySprite);
+            World.redNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.RED));
+        } else if (ninjaType == World.NinjaTypes.BLACK) {
+            Sprite enemySprite = new Sprite(blackNinjaFrames[0]);
+            enemySprite.setSize(96, 96);
+            enemySprite.setPosition(x, y);
+            tiledMapRenderer.addSprite(enemySprite);
+            World.blackNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.BLACK));
+        } else if (ninjaType == World.NinjaTypes.PURPLE) {
+            Sprite enemySprite = new Sprite(purpleNinjaFrames[0]);
+            enemySprite.setSize(96, 96);
+            enemySprite.setPosition(x, y);
+            tiledMapRenderer.addSprite(enemySprite);
+            World.purpleNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.PURPLE));
+        }
     }
 }

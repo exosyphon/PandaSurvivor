@@ -15,8 +15,9 @@ public class Enemy extends GameObject {
     Sprite sprite;
     private int xpGain;
     private int touchDamage;
+    private World.NinjaTypes ninjaType;
 
-    public Enemy(float x, float y, Sprite sprite) {
+    public Enemy(float x, float y, Sprite sprite, World.NinjaTypes ninjaType) {
         super(x, y + WALKING_BOUNDS_ENEMY_HEIGHT / 4, WALKING_BOUNDS_ENEMY_WIDTH, WALKING_BOUNDS_ENEMY_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(x + SHOOTING_BOUNDS_ENEMY_HEIGHT/2, y - SHOOTING_BOUNDS_ENEMY_WIDTH / 2, SHOOTING_BOUNDS_ENEMY_WIDTH, SHOOTING_BOUNDS_ENEMY_HEIGHT);
         currentDirection = World.HeroDirections.RIGHT;
@@ -24,6 +25,7 @@ public class Enemy extends GameObject {
         this.health = 20;
         this.xpGain = 5;
         this.touchDamage = 2;
+        this.ninjaType = ninjaType;
     }
 
     public void update(float deltaTime) {
@@ -70,5 +72,13 @@ public class Enemy extends GameObject {
 
     public void setTouchDamage(int touchDamage) {
         this.touchDamage = touchDamage;
+    }
+
+    public World.NinjaTypes getNinjaType() {
+        return ninjaType;
+    }
+
+    public void setNinjaType(World.NinjaTypes ninjaType) {
+        this.ninjaType = ninjaType;
     }
 }
