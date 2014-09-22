@@ -13,7 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 
 public class WorldRenderer {
-    public static final Rectangle aButtonBounds = new Rectangle(1590, 50, 196, 196);
+    public static final Rectangle aButtonBounds = new Rectangle(1540, 70, 196, 196);
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
@@ -387,10 +387,10 @@ public class WorldRenderer {
 
     private void setupControlSprites(float w) {
         dpadSprite = new Sprite(Assets.dpad);
-        dpadSprite.setPosition(75, 75);
+        dpadSprite.setPosition(135, 135);
 
         aButtonSprite = new Sprite(Assets.aButton);
-        aButtonSprite.setPosition(w - Assets.aButton.getWidth() - 75, 100);
+        aButtonSprite.setPosition(w - Assets.aButton.getWidth() - 135, 120);
 
         healthBarSprite = new Sprite(Assets.healthBar);
         healthBarSprite.setSize(384, 32);

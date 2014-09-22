@@ -73,7 +73,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
         if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
             handleAButtonPress(heroOriginalX, heroOriginalY);
-        } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 180) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 140)) {
+        } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
             handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
         }
         return true;
@@ -90,7 +90,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
     private void handleDpadMovement(Vector3 position, float heroOriginalX, float heroOriginalY) {
         if (position.y < (WorldRenderer.dpadSprite.getY() + 180) && position.y > (WorldRenderer.dpadSprite.getY() + 68)) {
-            if (position.x < (WorldRenderer.dpadSprite.getX() + 125) && heroOriginalX > LEFT_SIDE_OF_MAP) {
+            if (position.x < (WorldRenderer.dpadSprite.getX() + 166) && heroOriginalX > LEFT_SIDE_OF_MAP) {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
@@ -101,7 +101,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.LEFT);
-            } else if (position.x > (WorldRenderer.dpadSprite.getX() + 148) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
+            } else if (position.x > (WorldRenderer.dpadSprite.getX() + 168) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
@@ -114,7 +114,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
             }
         } else {
-            if (position.y < (WorldRenderer.dpadSprite.getY() + 80) && heroOriginalY > BOTTOM_OF_MAP) {
+            if (position.y < (WorldRenderer.dpadSprite.getY() + 120) && heroOriginalY > BOTTOM_OF_MAP) {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
@@ -125,7 +125,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.DOWN);
-            } else if (position.y > (WorldRenderer.dpadSprite.getY() + 148) && heroOriginalY < TOP_OF_MAP) {
+            } else if (position.y > (WorldRenderer.dpadSprite.getY() + 208) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
