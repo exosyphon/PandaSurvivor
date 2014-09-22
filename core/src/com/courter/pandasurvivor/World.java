@@ -297,28 +297,28 @@ public class World {
                                     enemy.update(deltaTime);
                                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 65, true);
+                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.DOWN) {
                                     enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
                                     enemy.update(deltaTime);
                                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 65, true);
+                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                                     enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
                                     enemy.update(deltaTime);
                                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 65, true);
+                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.LEFT) {
                                     enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
                                     enemy.update(deltaTime);
                                     enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 65, true);
+                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                                 }
 
