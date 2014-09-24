@@ -24,7 +24,9 @@ public class WorldRenderer {
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     public static ShapeRenderer shapeRenderer;
-    public static BitmapFont font;
+    public static BitmapFont levelFont;
+    public static BitmapFont coinFont;
+    public static BitmapFont coinFont2;
 
     TextureRegion[] firstPandaFrames;
     TextureRegion[] firstPandaHitFrames;
@@ -59,9 +61,15 @@ public class WorldRenderer {
 
 
     public WorldRenderer() {
-        font = new BitmapFont(Gdx.files.internal("font.fnt"), false);
-        font.setColor(0, 0, 1, 1);
-        font.setScale(3, 3);
+        levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        levelFont.setColor(0, 0, 1, 1);
+        levelFont.setScale(3, 3);
+        coinFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        coinFont.setColor(1, 1, 0, 1);
+        coinFont.setScale(2, 2);
+        coinFont2 = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        coinFont2.setColor(0, 0, 0, 1);
+        coinFont2.setScale(2, 2);
         shapeRenderer = new ShapeRenderer();
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -421,6 +429,10 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
+    public void addCoins(float x, float y) {
+        addCoinsSprite(x, y);
+    }
+
     public void addEnemy(float x, float y, World.NinjaTypes ninjaType) {
         addEnemySprite(x, y, ninjaType);
     }
@@ -431,6 +443,14 @@ public class WorldRenderer {
         wallSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(wallSprite);
         World.wallList.add(new Wall(x, y, wallSprite));
+    }
+
+    private void addCoinsSprite(float x, float y) {
+        Sprite coinsSprite = new Sprite(Assets.coins);
+        coinsSprite.setSize(32, 32);
+        coinsSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(coinsSprite);
+        World.coinsList.add(new Coins(x, y, coinsSprite));
     }
 
     private void addEnemySprite(float x, float y, World.NinjaTypes ninjaType) {

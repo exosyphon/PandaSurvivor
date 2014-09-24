@@ -89,7 +89,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void handleDpadMovement(Vector3 position, float heroOriginalX, float heroOriginalY) {
-        if (position.y < (WorldRenderer.dpadSprite.getY() + 180) && position.y > (WorldRenderer.dpadSprite.getY() + 68)) {
+        if (position.y < (WorldRenderer.dpadSprite.getY() + 180) && position.y > (WorldRenderer.dpadSprite.getY() + 48)) {
             if (position.x < (WorldRenderer.dpadSprite.getX() + 166) && heroOriginalX > LEFT_SIDE_OF_MAP) {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
@@ -114,7 +114,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
             }
         } else {
-            if (position.y < (WorldRenderer.dpadSprite.getY() + 120) && heroOriginalY > BOTTOM_OF_MAP) {
+            if (position.y < (WorldRenderer.dpadSprite.getY() + 125) && heroOriginalY > BOTTOM_OF_MAP) {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
@@ -125,7 +125,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.DOWN);
-            } else if (position.y > (WorldRenderer.dpadSprite.getY() + 208) && heroOriginalY < TOP_OF_MAP) {
+            } else if (position.y > (WorldRenderer.dpadSprite.getY() + 188) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);

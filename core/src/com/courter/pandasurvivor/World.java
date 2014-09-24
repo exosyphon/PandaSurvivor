@@ -30,6 +30,8 @@ public class World {
     public static final int LAST_TIME_DAMAGED_BUFFER = 500;
     public static final int HERO_MOVE_SPEED = 520;
     public static final int ENEMY_MOVE_SPEED = 60;
+    public static final int COIN_DROP_CHANCE = 50;
+    public static final int COINS_VISIBLE_TIME = 100;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static final float timeBeforeRegeneration = 25;
     static final int numberOfRedNinjaEnemies = 10;
@@ -37,6 +39,7 @@ public class World {
     static final int numberOfPurpleNinjaEnemies = 15;
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
+    public static List<Coins> coinsList;
     public static Set<GameObject> treeList;
     public static Set<GameObject> wallList;
     public static List<GameObject> redNinjaList;
@@ -109,6 +112,7 @@ public class World {
     public void checkCollisions(float deltaTime) {
         checkEnemyFireballCollisions(deltaTime);
         checkFireballCollisions(deltaTime);
+        checkCoinCollisions(deltaTime);
     }
 
     public void checkStaticObjectCollisionsFor(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean checkEnemyCollisionsFlag) {
@@ -117,6 +121,24 @@ public class World {
         if (checkEnemyCollisionsFlag) {
             checkTreeCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
             checkEnemyCollisions(direction);
+        }
+    }
+
+    private void checkCoinCollisions(float deltaTime) {
+        for (Coins coins : coinsList) {
+            if (OverlapTester.overlapRectangles(coins.bounds, hero.bounds)) {
+                hero.addMoney(coins.getMoneyValue());
+                tiledMapRenderer.removeSprite(coins.getSprite());
+                coinsList.remove(coins);
+                break;
+            }
+            coins.update(deltaTime);
+
+            if(coins.getStateTime() > COINS_VISIBLE_TIME) {
+                tiledMapRenderer.removeSprite(coins.getSprite());
+                coinsList.remove(coins);
+                break;
+            }
         }
     }
 
@@ -201,6 +223,7 @@ public class World {
 
     private void checkGameOver() {
         if (hero.getHealth() <= 0) {
+            hero.setHealth(0);
             fireballList.clear();
             enemyFireballList.clear();
             PandaSurvivor.game_state = PandaSurvivor.GAME_STATES.GAME_OVER;
@@ -287,6 +310,10 @@ public class World {
                                 enemy.setHealth(enemy.getHealth() - fireball.getDamageValue());
                                 if (enemy.getHealth() <= 0) {
                                     hero.handleXpGain(enemy.getXpGain());
+                                    float percentageChance = (float) Math.random() * 100;
+                                    if (percentageChance > COIN_DROP_CHANCE) {
+                                        worldRenderer.addCoins(enemy.position.x + enemy.WALKING_BOUNDS_ENEMY_WIDTH/2, enemy.position.y);
+                                    }
                                     tiledMapRenderer.removeSprite(enemy.getSprite());
                                     list.remove(enemy);
                                     break;
@@ -413,6 +440,7 @@ public class World {
 
         fireballList = new ArrayList<Fireball>();
         enemyFireballList = new ArrayList<Fireball>();
+        coinsList = new ArrayList<Coins>();
         treeList = new HashSet<GameObject>();
         wallList = new HashSet<GameObject>();
         redNinjaList = new ArrayList<GameObject>();

@@ -18,6 +18,7 @@ public class Hero extends GameObject {
     private long currentXp;
     float stateTime = 0;
     World.HeroDirections currentDirection;
+    private long moneyTotal;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -35,6 +36,7 @@ public class Hero extends GameObject {
         this.currentLevelXpRequired = 20;
         this.currentLevel = 1;
         this.currentXp = 0;
+        this.moneyTotal = 0;
     }
 
     public void update(float deltaTime) {
@@ -61,6 +63,10 @@ public class Hero extends GameObject {
 
     public float getHealth() {
         return this.health;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
     }
 
     public void subtractDamage(float damage) {
@@ -115,5 +121,17 @@ public class Hero extends GameObject {
             this.currentLevelXpRequired *= XP_LEVEL_MULTIPLIER;
             this.currentXp = leftoverXp;
         }
+    }
+
+    public long getMoneyTotal() {
+        return moneyTotal;
+    }
+
+    public void setMoneyTotal(long moneyTotal) {
+        this.moneyTotal = moneyTotal;
+    }
+
+    public void addMoney(long moneyToAdd) {
+        this.moneyTotal += moneyToAdd;
     }
 }

@@ -117,7 +117,9 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         endRender();
 
         batcher.begin();
-        WorldRenderer.font.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), 28, WorldRenderer.camera.viewportHeight - 81);
+        WorldRenderer.levelFont.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), 28, WorldRenderer.camera.viewportHeight - 81);
+        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), WorldRenderer.camera.viewportWidth - 59 - (String.valueOf(World.hero.getMoneyTotal()).length() * 41f), WorldRenderer.camera.viewportHeight - 24);
+        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), WorldRenderer.camera.viewportWidth - 61 - (String.valueOf(World.hero.getMoneyTotal()).length() * 41f), WorldRenderer.camera.viewportHeight - 21);
         batcher.end();
     }
 
