@@ -75,6 +75,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 if (layer instanceof TiledMapTileLayer) {
                     if (currentLayer == backgroundLayer)
                         super.renderTileLayer((TiledMapTileLayer) layer);
+                    if (currentLayer == drawSpritesAfterLayer) {
+                        for (int i = sprites.size() - 1; i > 0; i--)
+                            sprites.get(i).draw(this.getSpriteBatch());
+                    }
                     if (currentLayer == treeBottomSpritesLayer) {
                         renderTreeBottomsFlag = true;
 
@@ -88,14 +92,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         sprites.get(0).draw(this.getSpriteBatch());
 
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, true);
+
+                        for (Sprite sprite : controlSprites)
+                            sprite.draw(this.getSpriteBatch());
                     }
-                    for (Sprite sprite : controlSprites)
-                        sprite.draw(this.getSpriteBatch());
+
                     currentLayer++;
-                    if (currentLayer == drawSpritesAfterLayer) {
-                        for (int i = sprites.size() - 1; i > 0; i--)
-                            sprites.get(i).draw(this.getSpriteBatch());
-                    }
                 } else {
                     for (MapObject object : layer.getObjects()) {
                         renderObject(object);
@@ -103,6 +105,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 }
             }
         }
+
+        batcher.begin();
+        batcher.draw(WorldRenderer.dpadSprite, 135, 135);
+        batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - Assets.aButton.getWidth() - 135, 120);
+        batcher.draw(WorldRenderer.healthBarSprite, 25, WorldRenderer.camera.viewportHeight - Assets.healthBar.getHeight() - 10, 384, 32);
+        batcher.draw(WorldRenderer.xpBarSprite, 25, WorldRenderer.camera.viewportHeight - Assets.healthBar.getHeight() * 2 - 20, 384, 32);
+        batcher.end();
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
