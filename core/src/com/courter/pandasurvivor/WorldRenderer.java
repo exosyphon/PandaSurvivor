@@ -13,7 +13,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 
 public class WorldRenderer {
-    public static final Rectangle aButtonBounds = new Rectangle(1540, 70, 196, 196);
+    public static Rectangle aButtonBounds;
+    public static Rectangle retryYesButtonBounds;
+    public static Rectangle retryNoButtonBounds;
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
@@ -21,6 +23,7 @@ public class WorldRenderer {
     public static Sprite healthBarSprite;
     public static Sprite xpBarSprite;
     public static Sprite heroSprite;
+    public static Sprite retrySprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     public static ShapeRenderer shapeRenderer;
@@ -59,8 +62,13 @@ public class WorldRenderer {
 
     TiledMap tiledMap;
 
+    public void addRetryBounds() {
+        retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - 960, aButtonBounds.getY() + 270, 250, 200);
+        retryNoButtonBounds  = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
+    }
 
     public WorldRenderer() {
+        aButtonBounds = new Rectangle(1540, 70, 196, 196);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale(3, 3);
@@ -385,6 +393,8 @@ public class WorldRenderer {
         aButtonSprite = new Sprite(Assets.aButton);
         healthBarSprite = new Sprite(Assets.healthBar);
         xpBarSprite = new Sprite(Assets.healthBar);
+
+        retrySprite = new Sprite(Assets.retryPrompt);
     }
 
     private void renderFireballs() {

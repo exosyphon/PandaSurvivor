@@ -12,6 +12,7 @@ public class Assets {
     public static Texture wall;
     public static Texture healthBar;
     public static Texture coins;
+    public static Texture retryPrompt;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -26,5 +27,6 @@ public class Assets {
         wall = loadTexture("wall.png");
         healthBar = loadTexture("healthbar.png");
         coins = loadTexture("gold_coins.png");
+        retryPrompt = loadTexture("tryagain.png");
     }
 }

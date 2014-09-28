@@ -226,6 +226,7 @@ public class World {
             hero.setHealth(0);
             fireballList.clear();
             enemyFireballList.clear();
+            worldRenderer.addRetryBounds();
             PandaSurvivor.game_state = PandaSurvivor.GAME_STATES.GAME_OVER;
         }
     }

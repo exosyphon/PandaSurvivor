@@ -61,6 +61,10 @@ public class PandaSurvivor extends ApplicationAdapter {
             lastActionTime += deltaTime;
         } else if (game_state == GAME_STATES.GAME_OVER) {
             worldRenderer.render(World.hero.getCurrentDirection());
+
+            if (Gdx.input.isTouched(0)) {
+                touchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+            }
         }
     }
 
@@ -68,13 +72,23 @@ public class PandaSurvivor extends ApplicationAdapter {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
-        float heroOriginalX = World.hero.position.x;
-        float heroOriginalY = World.hero.position.y;
+        if (game_state == GAME_STATES.RUNNING) {
+            float heroOriginalX = World.hero.position.x;
+            float heroOriginalY = World.hero.position.y;
 
-        if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
-            handleAButtonPress(heroOriginalX, heroOriginalY);
-        } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
-            handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
+            if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
+                handleAButtonPress(heroOriginalX, heroOriginalY);
+            } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
+                handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
+            }
+        } else if (game_state == GAME_STATES.GAME_OVER) {
+            if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
+                worldRenderer = new WorldRenderer();
+                world = new World(null, worldRenderer);
+                game_state = GAME_STATES.RUNNING;
+            } else if (OverlapTester.pointInRectangle(WorldRenderer.retryNoButtonBounds, clickPosition.x, clickPosition.y)) {
+                //Do something else
+            }
         }
         return true;
     }
