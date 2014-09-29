@@ -18,7 +18,8 @@ public class Ninja extends Enemy {
         super(
                 x,
                 y + WALKING_BOUNDS_ENEMY_HEIGHT / 4,
-                sprite, WALKING_BOUNDS_ENEMY_WIDTH,
+                sprite,
+                WALKING_BOUNDS_ENEMY_WIDTH,
                 WALKING_BOUNDS_ENEMY_HEIGHT,
                 SHOOTING_BOUNDS_ENEMY_WIDTH,
                 SHOOTING_BOUNDS_ENEMY_HEIGHT,

@@ -3,12 +3,6 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Enemy extends GameObject {
-//    public final float WALKING_BOUNDS_ENEMY_HEIGHT = 120;
-//    public final float WALKING_BOUNDS_ENEMY_WIDTH = 110;
-//
-//    public final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 110;
-//    public final float SHOOTING_BOUNDS_ENEMY_WIDTH = 80;
-
     private float health;
     float stateTime = 0;
     World.HeroDirections currentDirection;
