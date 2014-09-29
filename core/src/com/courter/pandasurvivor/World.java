@@ -19,6 +19,10 @@ public class World {
         RED, PURPLE, BLACK
     }
 
+    enum BossTypes {
+        PUMPKIN_BOSS
+    }
+
     public interface WorldListener {
         public void hit();
 
@@ -45,10 +49,12 @@ public class World {
     public static List<GameObject> redNinjaList;
     public static List<GameObject> purpleNinjaList;
     public static List<GameObject> blackNinjaList;
+    public static List<GameObject> bossList;
     public static List<List<GameObject>> enemyList;
     public static Set<Set> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
+    public static final int ninjaKillCountThreshold = 20;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     WorldRenderer worldRenderer;
     int doHorizontal;
@@ -67,17 +73,17 @@ public class World {
         for (int i = 0; i <= numberOfRedNinjaEnemies; i++) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.RED);
+            worldRenderer.addNinja(x, y, NinjaTypes.RED);
         }
         for (int t = 0; t <= numberOfBlackNinjaEnemies; t++) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.BLACK);
+            worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
         }
         for (int p = 0; p <= numberOfPurpleNinjaEnemies; p++) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.PURPLE);
+            worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
         }
     }
 
@@ -85,17 +91,17 @@ public class World {
         while (redNinjaList.size() < numberOfRedNinjaEnemies) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.RED);
+            worldRenderer.addNinja(x, y, NinjaTypes.RED);
         }
         while (blackNinjaList.size() < numberOfBlackNinjaEnemies) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.BLACK);
+            worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
         }
         while (purpleNinjaList.size() < numberOfPurpleNinjaEnemies) {
             float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
             float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addEnemy(x, y, NinjaTypes.PURPLE);
+            worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
         }
     }
 
@@ -107,6 +113,7 @@ public class World {
         checkGameOver();
         checkHealthRegen(deltaTime);
         checkEnemyCount();
+        checkBossSpawn();
     }
 
     public void checkCollisions(float deltaTime) {
@@ -122,6 +129,11 @@ public class World {
             checkTreeCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
             checkEnemyCollisions(direction);
         }
+    }
+
+    private void checkBossSpawn() {
+        if((hero.getNinjaKillCount() % ninjaKillCountThreshold) == 0 && bossList.size() == 0 && hero.getNinjaKillCount() > 0)
+            worldRenderer.addPumpkinBoss(hero.position.x, hero.position.y);
     }
 
     private void checkCoinCollisions(float deltaTime) {
@@ -167,7 +179,7 @@ public class World {
                         hero.position.x = hero.position.x + 40;
 
                         enemy.update(deltaTime);
-                        enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                        enemy.getSprite().setPosition(enemy.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                         hero.updateBounds();
                         checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 10, true);
                         hero.updateBounds();
@@ -177,7 +189,7 @@ public class World {
                         hero.position.x = hero.position.x - 40;
 
                         enemy.update(deltaTime);
-                        enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                        enemy.getSprite().setPosition(enemy.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                         hero.updateBounds();
                         checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 10, true);
                         hero.updateBounds();
@@ -187,7 +199,7 @@ public class World {
                         hero.position.y = hero.position.y - 60;
 
                         enemy.update(deltaTime);
-                        enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                        enemy.getSprite().setPosition(enemy.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                         hero.updateBounds();
                         checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 10, true);
                         hero.updateBounds();
@@ -197,7 +209,7 @@ public class World {
                         hero.position.y = hero.position.y + 60;
 
                         enemy.update(deltaTime);
-                        enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                        enemy.getSprite().setPosition(enemy.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
                         hero.updateBounds();
                         checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 10, true);
                         hero.updateBounds();
@@ -306,47 +318,48 @@ public class World {
                 if (fireball != null) {
                     for (List<GameObject> list : enemyList) {
                         for (GameObject gameObject : list) {
-                            Enemy enemy = ((Enemy) gameObject);
-                            if (OverlapTester.overlapRectangles(enemy.shooting_bounds, fireball.bounds)) {
-                                enemy.setHealth(enemy.getHealth() - fireball.getDamageValue());
-                                if (enemy.getHealth() <= 0) {
-                                    hero.handleXpGain(enemy.getXpGain());
+                            Ninja ninja = ((Ninja) gameObject);
+                            if (OverlapTester.overlapRectangles(ninja.shooting_bounds, fireball.bounds)) {
+                                ninja.setHealth(ninja.getHealth() - fireball.getDamageValue());
+                                if (ninja.getHealth() <= 0) {
+                                    hero.handleXpGain(ninja.getXpGain());
                                     float percentageChance = (float) Math.random() * 100;
                                     if (percentageChance > COIN_DROP_CHANCE) {
-                                        worldRenderer.addCoins(enemy.position.x + enemy.WALKING_BOUNDS_ENEMY_WIDTH/2, enemy.position.y);
+                                        worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y);
                                     }
-                                    tiledMapRenderer.removeSprite(enemy.getSprite());
-                                    list.remove(enemy);
+                                    tiledMapRenderer.removeSprite(ninja.getSprite());
+                                    list.remove(ninja);
+                                    hero.addNinjaKill();
                                     break;
                                 }
 
                                 if (fireball.fireballDirection == HeroDirections.UP) {
-                                    enemy.position.y += (HERO_MOVE_SPEED * deltaTime);
-                                    enemy.update(deltaTime);
-                                    enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                                    ninja.position.y += (HERO_MOVE_SPEED * deltaTime);
+                                    ninja.update(deltaTime);
+                                    ninja.getSprite().setPosition(ninja.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, ninja.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.UP, 65, false);
-//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
+                                    checkStaticObjectCollisionsFor(ninja, HeroDirections.UP, 65, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.DOWN) {
-                                    enemy.position.y -= (HERO_MOVE_SPEED * deltaTime);
-                                    enemy.update(deltaTime);
-                                    enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                                    ninja.position.y -= (HERO_MOVE_SPEED * deltaTime);
+                                    ninja.update(deltaTime);
+                                    ninja.getSprite().setPosition(ninja.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, ninja.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.DOWN, 65, false);
-//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
+                                    checkStaticObjectCollisionsFor(ninja, HeroDirections.DOWN, 65, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
-                                    enemy.position.x += (HERO_MOVE_SPEED * deltaTime);
-                                    enemy.update(deltaTime);
-                                    enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                                    ninja.position.x += (HERO_MOVE_SPEED * deltaTime);
+                                    ninja.update(deltaTime);
+                                    ninja.getSprite().setPosition(ninja.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, ninja.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.RIGHT, 65, false);
-//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
+                                    checkStaticObjectCollisionsFor(ninja, HeroDirections.RIGHT, 65, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.LEFT) {
-                                    enemy.position.x -= (HERO_MOVE_SPEED * deltaTime);
-                                    enemy.update(deltaTime);
-                                    enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                                    ninja.position.x -= (HERO_MOVE_SPEED * deltaTime);
+                                    ninja.update(deltaTime);
+                                    ninja.getSprite().setPosition(ninja.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, ninja.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
-                                    checkStaticObjectCollisionsFor(enemy, HeroDirections.LEFT, 65, false);
+                                    checkStaticObjectCollisionsFor(ninja, HeroDirections.LEFT, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
                                 }
 
@@ -447,6 +460,7 @@ public class World {
         redNinjaList = new ArrayList<GameObject>();
         blackNinjaList = new ArrayList<GameObject>();
         purpleNinjaList = new ArrayList<GameObject>();
+        bossList = new ArrayList<GameObject>();
 
         List<List<GameObject>> list = new ArrayList<List<GameObject>>();
         list.add(redNinjaList);
@@ -463,36 +477,36 @@ public class World {
     private void moveEnemies(float deltaTime) {
         for (List<GameObject> gameObjectList : enemyList) {
             for (GameObject gameObject : gameObjectList) {
-                Enemy enemy = (Enemy) gameObject;
+                Ninja ninja = (Ninja) gameObject;
                 HeroDirections direction = null;
                 if (doHorizontal < 14) {
-                    if (enemy.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                    if (ninja.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
                         direction = HeroDirections.RIGHT;
-                        enemy.setCurrentDirection(direction);
-                        enemy.position.x = enemy.position.x + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (enemy.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
+                        ninja.setCurrentDirection(direction);
+                        ninja.position.x = ninja.position.x + (ENEMY_MOVE_SPEED * deltaTime);
+                    } else if (ninja.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
                         direction = HeroDirections.LEFT;
-                        enemy.setCurrentDirection(direction);
-                        enemy.position.x = enemy.position.x - (ENEMY_MOVE_SPEED * deltaTime);
+                        ninja.setCurrentDirection(direction);
+                        ninja.position.x = ninja.position.x - (ENEMY_MOVE_SPEED * deltaTime);
                     }
                 } else {
-                    if (enemy.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                    if (ninja.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
                         direction = HeroDirections.UP;
-                        enemy.setCurrentDirection(HeroDirections.UP);
-                        enemy.position.y = enemy.position.y + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (enemy.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
+                        ninja.setCurrentDirection(HeroDirections.UP);
+                        ninja.position.y = ninja.position.y + (ENEMY_MOVE_SPEED * deltaTime);
+                    } else if (ninja.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
                         direction = HeroDirections.DOWN;
-                        enemy.setCurrentDirection(direction);
-                        enemy.position.y = enemy.position.y - (ENEMY_MOVE_SPEED * deltaTime);
+                        ninja.setCurrentDirection(direction);
+                        ninja.position.y = ninja.position.y - (ENEMY_MOVE_SPEED * deltaTime);
                     }
                 }
-                enemy.update(deltaTime);
-                enemy.getSprite().setPosition(enemy.position.x + Enemy.WALKING_BOUNDS_ENEMY_WIDTH / 6, enemy.position.y - Enemy.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
+                ninja.update(deltaTime);
+                ninja.getSprite().setPosition(ninja.position.x + Ninja.WALKING_BOUNDS_ENEMY_WIDTH / 6, ninja.position.y - Ninja.WALKING_BOUNDS_ENEMY_HEIGHT / 6);
 
                 checkEnemyCollisionsWithHero(direction, deltaTime);
-                checkStaticObjectCollisionsFor(enemy, enemy.getCurrentDirection(), 65, false);
-                enemy.updateBounds();
-                worldRenderer.updateNinjaWalkingSpriteTexture(enemy, enemy.getCurrentDirection(), enemy.getNinjaType());
+                checkStaticObjectCollisionsFor(ninja, ninja.getCurrentDirection(), 65, false);
+                ninja.updateBounds();
+                worldRenderer.updateNinjaWalkingSpriteTexture(ninja, ninja.getCurrentDirection(), ninja.getNinjaType());
             }
         }
 

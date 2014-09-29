@@ -31,6 +31,8 @@ public class WorldRenderer {
     public static BitmapFont coinFont;
     public static BitmapFont coinFont2;
 
+    TextureRegion[] pumpkinBossFrames;
+
     TextureRegion[] firstPandaFrames;
     TextureRegion[] firstPandaHitFrames;
     Animation pandaDownAnimation;
@@ -87,6 +89,8 @@ public class WorldRenderer {
 
         camera.update();
 
+        slurpFrames();
+
         addHero(w, h);
 
         setupControlSprites(w);
@@ -110,10 +114,13 @@ public class WorldRenderer {
         renderObjectSprites();
     }
 
-    public void addHero(float w, float h) {
+    private void slurpFrames() {
         slurpPandaFramesIntoAnimations();
         slurpNinjaFramesIntoAnimations();
+        slurpPumpkinBossFramesIntoAnimations();
+    }
 
+    public void addHero(float w, float h) {
         heroSprite = new Sprite(firstPandaFrames[0]);
         heroSprite.setSize(96, 96);
         heroSprite.setPosition(w / 2, h / 2);
@@ -304,6 +311,23 @@ public class WorldRenderer {
         camera.translate(0, (World.hero.position.y - originaly));
     }
 
+    private void slurpPumpkinBossFramesIntoAnimations() {
+        Texture pumpkinBossSpriteSheet = Assets.pumpkinBossSpriteSheet;
+        TextureRegion[][] tmp = TextureRegion.split(pumpkinBossSpriteSheet, pumpkinBossSpriteSheet.getWidth() / 3, pumpkinBossSpriteSheet.getHeight() / 4);
+        pumpkinBossFrames = new TextureRegion[3 * 4];
+        int index = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                pumpkinBossFrames[index++] = tmp[i][j];
+            }
+        }
+
+//        pumpkinBossDownAnimation = new Animation(.2f, redNinjaFrames[0], redNinjaFrames[1], redNinjaFrames[2]);
+//        pumpkinBossLeftAnimation = new Animation(.2f, redNinjaFrames[3], redNinjaFrames[4], redNinjaFrames[5]);
+//        pumpkinBossRightAnimation = new Animation(.2f, redNinjaFrames[6], redNinjaFrames[7], redNinjaFrames[8]);
+//        pumpkinBossUpAnimation = new Animation(.2f, redNinjaFrames[9], redNinjaFrames[10], redNinjaFrames[11]);
+    }
+
     private void slurpNinjaFramesIntoAnimations() {
         Texture ninjaSheet = Assets.ninjaSpriteSheet;
         TextureRegion[][] tmp = TextureRegion.split(ninjaSheet, ninjaSheet.getWidth() / FRAME_COLS, ninjaSheet.getHeight() / FRAME_ROWS);
@@ -421,8 +445,20 @@ public class WorldRenderer {
         addCoinsSprite(x, y);
     }
 
-    public void addEnemy(float x, float y, World.NinjaTypes ninjaType) {
-        addEnemySprite(x, y, ninjaType);
+    public void addNinja(float x, float y, World.NinjaTypes ninjaType) {
+        addNinjaSprite(x, y, ninjaType);
+    }
+
+    public void addPumpkinBoss(float x, float y) {
+        addBossSprite(x, y);
+    }
+
+    private void addBossSprite(float x, float y) {
+        Sprite bossSprite = new Sprite(pumpkinBossFrames[0]);
+        bossSprite.setSize(128, 128);
+        bossSprite.setPosition(x - 200, y - 200);
+        tiledMapRenderer.addSprite(bossSprite);
+        World.bossList.add(new Boss(x, y, bossSprite, World.BossTypes.PUMPKIN_BOSS));
     }
 
     private void addWallSprite(float x, float y) {
@@ -441,25 +477,25 @@ public class WorldRenderer {
         World.coinsList.add(new Coins(x, y, coinsSprite));
     }
 
-    private void addEnemySprite(float x, float y, World.NinjaTypes ninjaType) {
+    private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {
         if (ninjaType == World.NinjaTypes.RED) {
             Sprite enemySprite = new Sprite(redNinjaFrames[0]);
             enemySprite.setSize(96, 96);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.redNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.RED));
+            World.redNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.RED));
         } else if (ninjaType == World.NinjaTypes.BLACK) {
             Sprite enemySprite = new Sprite(blackNinjaFrames[0]);
             enemySprite.setSize(96, 96);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.blackNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.BLACK));
+            World.blackNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.BLACK));
         } else if (ninjaType == World.NinjaTypes.PURPLE) {
             Sprite enemySprite = new Sprite(purpleNinjaFrames[0]);
             enemySprite.setSize(96, 96);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.purpleNinjaList.add(new Enemy(x, y, enemySprite, World.NinjaTypes.PURPLE));
+            World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE));
         }
     }
 }

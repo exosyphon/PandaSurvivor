@@ -19,6 +19,7 @@ public class Hero extends GameObject {
     float stateTime = 0;
     World.HeroDirections currentDirection;
     private long moneyTotal;
+    private long ninjaKillCount;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -37,6 +38,7 @@ public class Hero extends GameObject {
         this.currentLevel = 1;
         this.currentXp = 0;
         this.moneyTotal = 0;
+        this.ninjaKillCount = 0;
     }
 
     public void update(float deltaTime) {
@@ -51,6 +53,14 @@ public class Hero extends GameObject {
 
         shooting_bounds.x = position.x - (SHOOTING_BOUNDS_HERO_WIDTH / 6);
         shooting_bounds.y = position.y - (SHOOTING_BOUNDS_HERO_HEIGHT / 5.5f);
+    }
+
+    public void addNinjaKill() {
+        ninjaKillCount++;
+    }
+
+    public long getNinjaKillCount() {
+        return this.ninjaKillCount;
     }
 
     public void setCurrentDirection(World.HeroDirections updatedDirection) {
