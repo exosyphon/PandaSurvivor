@@ -1,5 +1,6 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class World {
     public static final int HERO_MOVE_SPEED = 520;
     public static final int ENEMY_MOVE_SPEED = 60;
     public static final int COIN_DROP_CHANCE = 50;
-    public static final int COINS_VISIBLE_TIME = 100;
+    public static final int COINS_VISIBLE_TIME = 7;
+    public static final int COINS_BLINK_TIME = 5;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static final float timeBeforeRegeneration = 25;
     public static final int ninjaKillCountThreshold = 2;
@@ -154,6 +156,15 @@ public class World {
                 tiledMapRenderer.removeSprite(coins.getSprite());
                 coinsList.remove(coins);
                 break;
+            }
+
+            if (coins.getStateTime() > COINS_BLINK_TIME) {
+                if (coins.isVisible()) {
+                    tiledMapRenderer.removeSprite(coins.getSprite());
+                } else {
+                    tiledMapRenderer.addSprite(coins.getSprite());
+                }
+                coins.toggleVisible();
             }
         }
     }

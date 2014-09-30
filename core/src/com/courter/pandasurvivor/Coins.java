@@ -9,6 +9,7 @@ public class Coins extends GameObject{
     private Sprite sprite;
     private float stateTime;
     private int moneyValue;
+    private boolean visible;
 
     public Coins(float x, float y, Sprite sprite) {
         super(x - HERO_WALKING_BOUNDS_COINS_WIDTH/2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
@@ -16,10 +17,19 @@ public class Coins extends GameObject{
         this.stateTime = 0;
         float randomValue = (float) Math.random() * HIGHEST_MONEY_VALUE;
         this.moneyValue = (int) randomValue;
+        this.visible = true;
     }
 
     public void update(float deltaTime) {
         this.stateTime += deltaTime;
+    }
+
+    public void toggleVisible() {
+        this.visible = !this.visible;
+    }
+
+    public boolean isVisible() {
+        return this.visible;
     }
 
     public Sprite getSprite() {
