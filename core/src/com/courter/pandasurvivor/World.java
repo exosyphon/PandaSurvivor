@@ -35,6 +35,7 @@ public class World {
     public static final int LAST_TIME_DAMAGED_BUFFER = 500;
     public static final int HERO_MOVE_SPEED = 520;
     public static final int ENEMY_MOVE_SPEED = 60;
+    public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
     public static final int COINS_VISIBLE_TIME = 7;
     public static final int COINS_BLINK_TIME = 5;
@@ -669,21 +670,21 @@ public class World {
                 if (boss.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
                     direction = HeroDirections.RIGHT;
                     boss.setCurrentDirection(direction);
-                    boss.position.x = boss.position.x + (ENEMY_MOVE_SPEED * deltaTime);
+                    boss.position.x = boss.position.x + (BOSS_MOVE_SPEED * deltaTime);
                 } else if (boss.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
                     direction = HeroDirections.LEFT;
                     boss.setCurrentDirection(direction);
-                    boss.position.x = boss.position.x - (ENEMY_MOVE_SPEED * deltaTime);
+                    boss.position.x = boss.position.x - (BOSS_MOVE_SPEED * deltaTime);
                 }
             } else {
                 if (boss.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
                     direction = HeroDirections.UP;
                     boss.setCurrentDirection(HeroDirections.UP);
-                    boss.position.y = boss.position.y + (ENEMY_MOVE_SPEED * deltaTime);
+                    boss.position.y = boss.position.y + (BOSS_MOVE_SPEED * deltaTime);
                 } else if (boss.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
                     direction = HeroDirections.DOWN;
                     boss.setCurrentDirection(direction);
-                    boss.position.y = boss.position.y - (ENEMY_MOVE_SPEED * deltaTime);
+                    boss.position.y = boss.position.y - (BOSS_MOVE_SPEED * deltaTime);
                 }
             }
             boss.update(deltaTime);
