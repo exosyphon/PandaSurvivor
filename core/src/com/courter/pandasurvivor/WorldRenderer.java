@@ -32,6 +32,10 @@ public class WorldRenderer {
     public static BitmapFont coinFont2;
 
     TextureRegion[] pumpkinBossFrames;
+    Animation pumpkinBossDownAnimation;
+    Animation pumpkinBossLeftAnimation;
+    Animation pumpkinBossRightAnimation;
+    Animation pumpkinBossUpAnimation;
 
     TextureRegion[] firstPandaFrames;
     TextureRegion[] firstPandaHitFrames;
@@ -66,7 +70,7 @@ public class WorldRenderer {
 
     public void addRetryBounds() {
         retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - 960, aButtonBounds.getY() + 270, 250, 200);
-        retryNoButtonBounds  = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
+        retryNoButtonBounds = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
     }
 
     public WorldRenderer() {
@@ -249,6 +253,25 @@ public class WorldRenderer {
         }
     }
 
+    public void updateBossWalkingSpriteTexture(Boss boss, World.HeroDirections direction, World.BossTypes bossType) {
+        if (bossType == World.BossTypes.PUMPKIN_BOSS) {
+            switch (direction) {
+                case UP:
+                    boss.getSprite().setRegion(pumpkinBossUpAnimation.getKeyFrame(boss.stateTime, Animation.ANIMATION_LOOPING));
+                    break;
+                case DOWN:
+                    boss.getSprite().setRegion(pumpkinBossDownAnimation.getKeyFrame(boss.stateTime, Animation.ANIMATION_LOOPING));
+                    break;
+                case LEFT:
+                    boss.getSprite().setRegion(pumpkinBossLeftAnimation.getKeyFrame(boss.stateTime, Animation.ANIMATION_LOOPING));
+                    break;
+                case RIGHT:
+                    boss.getSprite().setRegion(pumpkinBossRightAnimation.getKeyFrame(boss.stateTime, Animation.ANIMATION_LOOPING));
+                    break;
+            }
+        }
+    }
+
     public void updatePandaWalkingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -322,10 +345,10 @@ public class WorldRenderer {
             }
         }
 
-//        pumpkinBossDownAnimation = new Animation(.2f, redNinjaFrames[0], redNinjaFrames[1], redNinjaFrames[2]);
-//        pumpkinBossLeftAnimation = new Animation(.2f, redNinjaFrames[3], redNinjaFrames[4], redNinjaFrames[5]);
-//        pumpkinBossRightAnimation = new Animation(.2f, redNinjaFrames[6], redNinjaFrames[7], redNinjaFrames[8]);
-//        pumpkinBossUpAnimation = new Animation(.2f, redNinjaFrames[9], redNinjaFrames[10], redNinjaFrames[11]);
+        pumpkinBossDownAnimation = new Animation(.2f, pumpkinBossFrames[0], pumpkinBossFrames[1], pumpkinBossFrames[2]);
+        pumpkinBossRightAnimation = new Animation(.2f, pumpkinBossFrames[3], pumpkinBossFrames[4], pumpkinBossFrames[5]);
+        pumpkinBossLeftAnimation = new Animation(.2f, pumpkinBossFrames[6], pumpkinBossFrames[7], pumpkinBossFrames[8]);
+        pumpkinBossUpAnimation = new Animation(.2f, pumpkinBossFrames[9], pumpkinBossFrames[10], pumpkinBossFrames[11]);
     }
 
     private void slurpNinjaFramesIntoAnimations() {

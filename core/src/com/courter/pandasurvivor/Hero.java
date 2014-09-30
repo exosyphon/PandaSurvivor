@@ -135,7 +135,7 @@ public class Hero extends GameObject {
 
     public void handleXpGain(int xpGain) {
         this.currentXp += xpGain;
-        if(this.currentXp >= this.currentLevelXpRequired) {
+        while(this.currentXp >= this.currentLevelXpRequired) {
             long leftoverXp = this.currentXp - this.currentLevelXpRequired;
             this.currentLevel++;
             this.currentLevelXpRequired *= XP_LEVEL_MULTIPLIER;

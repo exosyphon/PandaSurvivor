@@ -58,9 +58,11 @@ public class World {
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     WorldRenderer worldRenderer;
     int doHorizontal;
+    int bossDoHorizontal;
 
     public World(WorldListener listener, WorldRenderer worldRenderer) {
         doHorizontal = 0;
+        bossDoHorizontal = 0;
         this.listener = listener;
         this.worldRenderer = worldRenderer;
         this.tiledMapRenderer = worldRenderer.tiledMapRenderer;
@@ -109,6 +111,7 @@ public class World {
         updateFireballs(deltaTime);
         updateEnemyFireballs(deltaTime);
         moveEnemies(deltaTime);
+        moveBosses(deltaTime);
         checkCollisions(deltaTime);
         checkGameOver();
         checkHealthRegen(deltaTime);
@@ -220,6 +223,60 @@ public class World {
                     hero.subtractDamage(enemy.getTouchDamage());
                     hero.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
                 }
+            }
+        }
+    }
+
+    private void checkBossCollisionsWithHero(HeroDirections direction, float deltaTime) {
+        for (int i = 0; i < bossList.size(); i++) {
+            Boss boss = (Boss) bossList.get(i);
+            float heroOriginalX = hero.position.x;
+            float heroOriginalY = hero.position.y;
+            if (OverlapTester.overlapRectangles(boss.bounds, hero.bounds)) {
+                if (direction == HeroDirections.RIGHT) {
+                    boss.position.x = hero.position.x - 75;
+                    hero.position.x = hero.position.x + 60;
+
+                    boss.update(deltaTime);
+                    boss.getSprite().setPosition(boss.position.x + Boss.WALKING_BOUNDS_BOSS_WIDTH / 4, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                    hero.updateBounds();
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, 10, true);
+                    hero.updateBounds();
+                    worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.RIGHT);
+                } else if (direction == HeroDirections.LEFT) {
+                    boss.position.x = hero.position.x + 75;
+                    hero.position.x = hero.position.x - 60;
+
+                    boss.update(deltaTime);
+                    boss.getSprite().setPosition(boss.position.x + Boss.WALKING_BOUNDS_BOSS_WIDTH / 4, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                    hero.updateBounds();
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, 10, true);
+                    hero.updateBounds();
+                    worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.LEFT);
+                } else if (direction == HeroDirections.DOWN) {
+                    boss.position.y = hero.position.y + 64;
+                    hero.position.y = hero.position.y - 60;
+
+                    boss.update(deltaTime);
+                    boss.getSprite().setPosition(boss.position.x + Boss.WALKING_BOUNDS_BOSS_WIDTH / 4, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                    hero.updateBounds();
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, 10, true);
+                    hero.updateBounds();
+                    worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.DOWN);
+                } else if (direction == HeroDirections.UP) {
+                    boss.position.y = hero.position.y - 64;
+                    hero.position.y = hero.position.y + 60;
+
+                    boss.update(deltaTime);
+                    boss.getSprite().setPosition(boss.position.x + Boss.WALKING_BOUNDS_BOSS_WIDTH / 4, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                    hero.updateBounds();
+                    checkStaticObjectCollisionsFor(hero, HeroDirections.UP, 10, true);
+                    hero.updateBounds();
+                    worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.UP);
+                }
+                worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
+                hero.subtractDamage(boss.getTouchDamage());
+                hero.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
             }
         }
     }
@@ -412,28 +469,28 @@ public class World {
                                 if (fireball.fireballDirection == HeroDirections.UP) {
                                     boss.position.y += (HERO_MOVE_SPEED * deltaTime);
                                     boss.update(deltaTime);
-                                    boss.getSprite().setPosition(boss.position.x - Boss.WALKING_BOUNDS_BOSS_WIDTH / 8, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                                    boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
 
                                     checkStaticObjectCollisionsFor(boss, HeroDirections.UP, 65, false);
 //                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.DOWN) {
                                     boss.position.y -= (HERO_MOVE_SPEED * deltaTime);
                                     boss.update(deltaTime);
-                                    boss.getSprite().setPosition(boss.position.x - Boss.WALKING_BOUNDS_BOSS_WIDTH / 8, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                                    boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
 
                                     checkStaticObjectCollisionsFor(boss, HeroDirections.DOWN, 65, false);
 //                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
                                     boss.position.x += (HERO_MOVE_SPEED * deltaTime);
                                     boss.update(deltaTime);
-                                    boss.getSprite().setPosition(boss.position.x - Boss.WALKING_BOUNDS_BOSS_WIDTH / 8, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                                    boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
 
                                     checkStaticObjectCollisionsFor(boss, HeroDirections.RIGHT, 65, false);
 //                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
                                 } else if (fireball.fireballDirection == HeroDirections.LEFT) {
                                     boss.position.x -= (HERO_MOVE_SPEED * deltaTime);
                                     boss.update(deltaTime);
-                                    boss.getSprite().setPosition(boss.position.x - Boss.WALKING_BOUNDS_BOSS_WIDTH / 8, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+                                    boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
 
                                     checkStaticObjectCollisionsFor(boss, HeroDirections.LEFT, 65, false);
 //                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
@@ -590,6 +647,47 @@ public class World {
             doHorizontal = 0;
         } else {
             doHorizontal++;
+        }
+    }
+
+    private void moveBosses(float deltaTime) {
+        for (GameObject gameObject : bossList) {
+            Boss boss = (Boss) gameObject;
+            HeroDirections direction = null;
+            if (bossDoHorizontal < 24) {
+                if (boss.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                    direction = HeroDirections.RIGHT;
+                    boss.setCurrentDirection(direction);
+                    boss.position.x = boss.position.x + (ENEMY_MOVE_SPEED * deltaTime);
+                } else if (boss.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
+                    direction = HeroDirections.LEFT;
+                    boss.setCurrentDirection(direction);
+                    boss.position.x = boss.position.x - (ENEMY_MOVE_SPEED * deltaTime);
+                }
+            } else {
+                if (boss.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                    direction = HeroDirections.UP;
+                    boss.setCurrentDirection(HeroDirections.UP);
+                    boss.position.y = boss.position.y + (ENEMY_MOVE_SPEED * deltaTime);
+                } else if (boss.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
+                    direction = HeroDirections.DOWN;
+                    boss.setCurrentDirection(direction);
+                    boss.position.y = boss.position.y - (ENEMY_MOVE_SPEED * deltaTime);
+                }
+            }
+            boss.update(deltaTime);
+            boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+
+            checkBossCollisionsWithHero(direction, deltaTime);
+            checkStaticObjectCollisionsFor(boss, boss.getCurrentDirection(), 65, false);
+            boss.updateBounds();
+            worldRenderer.updateBossWalkingSpriteTexture(boss, boss.getCurrentDirection(), boss.getBossType());
+        }
+
+        if (bossDoHorizontal > 48) {
+            bossDoHorizontal = 0;
+        } else {
+            bossDoHorizontal++;
         }
     }
 }

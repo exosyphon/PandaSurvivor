@@ -41,7 +41,7 @@ public class Boss extends Enemy {
         bounds.x = position.x - WALKING_BOUNDS_BOSS_WIDTH / 2;
         bounds.y = position.y - WALKING_BOUNDS_BOSS_HEIGHT / 2;
 
-        shooting_bounds.x = position.x - SHOOTING_BOUNDS_BOSS_WIDTH / 4;
+        shooting_bounds.x = position.x;
         shooting_bounds.y = position.y - SHOOTING_BOUNDS_BOSS_HEIGHT / 2;
     }
 
