@@ -468,6 +468,10 @@ public class WorldRenderer {
         addCoinsSprite(x, y);
     }
 
+    public void addBossKey(float x, float y) {
+        addBossKeySprite(x, y);
+    }
+
     public void addNinja(float x, float y, World.NinjaTypes ninjaType) {
         addNinjaSprite(x, y, ninjaType);
     }
@@ -498,6 +502,14 @@ public class WorldRenderer {
         coinsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(coinsSprite);
         World.coinsList.add(new Coins(x, y, coinsSprite));
+    }
+
+    private void addBossKeySprite(float x, float y) {
+        Sprite bossKeySprite = new Sprite(Assets.bossKey);
+        bossKeySprite.setSize(32, 32);
+        bossKeySprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(bossKeySprite);
+        World.itemsList.add(new Item(x, y, bossKeySprite));
     }
 
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {

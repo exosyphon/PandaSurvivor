@@ -37,6 +37,7 @@ public class World {
     public static final int ENEMY_MOVE_SPEED = 60;
     public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
+    public static final int BOSS_KEY_DROP_CHANCE = 2;
     public static final int COINS_VISIBLE_TIME = 7;
     public static final int COINS_BLINK_TIME = 5;
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
@@ -48,6 +49,7 @@ public class World {
     public static List<Fireball> fireballList;
     public static List<Fireball> enemyFireballList;
     public static List<Coins> coinsList;
+    public static List<Item> itemsList;
     public static Set<GameObject> treeList;
     public static Set<GameObject> wallList;
     public static List<GameObject> redNinjaList;
@@ -126,6 +128,7 @@ public class World {
         checkEnemyFireballCollisions(deltaTime);
         checkFireballCollisions(deltaTime);
         checkCoinCollisions(deltaTime);
+        checkItemCollisions(deltaTime);
     }
 
     public void checkStaticObjectCollisionsFor(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean checkEnemyCollisionsFlag) {
@@ -166,6 +169,32 @@ public class World {
                     tiledMapRenderer.addSprite(coins.getSprite());
                 }
                 coins.toggleVisible();
+            }
+        }
+    }
+
+    private void checkItemCollisions(float deltaTime) {
+        for (Item item : itemsList) {
+            if (OverlapTester.overlapRectangles(item.bounds, hero.bounds)) {
+                tiledMapRenderer.removeSprite(item.getSprite());
+                itemsList.remove(item);
+                break;
+            }
+            item.update(deltaTime);
+
+            if (item.getStateTime() > COINS_VISIBLE_TIME) {
+                tiledMapRenderer.removeSprite(item.getSprite());
+                itemsList.remove(item);
+                break;
+            }
+
+            if (item.getStateTime() > COINS_BLINK_TIME) {
+                if (item.isVisible()) {
+                    tiledMapRenderer.removeSprite(item.getSprite());
+                } else {
+                    tiledMapRenderer.addSprite(item.getSprite());
+                }
+                item.toggleVisible();
             }
         }
     }
@@ -412,8 +441,11 @@ public class World {
                                 if (ninja.getHealth() <= 0) {
                                     hero.handleXpGain(ninja.getXpGain());
                                     float percentageChance = (float) Math.random() * 100;
-                                    if (percentageChance > COIN_DROP_CHANCE) {
+                                    if (percentageChance < COIN_DROP_CHANCE) {
                                         worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y);
+                                    }
+                                    if(percentageChance < BOSS_KEY_DROP_CHANCE) {
+                                        worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 5, ninja.position.y);
                                     }
                                     tiledMapRenderer.removeSprite(ninja.getSprite());
                                     list.remove(ninja);
@@ -600,6 +632,7 @@ public class World {
         fireballList = new ArrayList<Fireball>();
         enemyFireballList = new ArrayList<Fireball>();
         coinsList = new ArrayList<Coins>();
+        itemsList = new ArrayList<Item>();
         treeList = new HashSet<GameObject>();
         wallList = new HashSet<GameObject>();
         redNinjaList = new ArrayList<GameObject>();

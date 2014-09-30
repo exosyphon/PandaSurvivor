@@ -14,6 +14,7 @@ public class Assets {
     public static Texture coins;
     public static Texture retryPrompt;
     public static Texture pumpkinBossSpriteSheet;
+    public static Texture bossKey;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -28,6 +29,7 @@ public class Assets {
         wall = loadTexture("wall.png");
         healthBar = loadTexture("healthbar.png");
         coins = loadTexture("gold_coins.png");
+        bossKey = loadTexture("boss_key.png");
         retryPrompt = loadTexture("tryagain.png");
         pumpkinBossSpriteSheet = loadTexture("pumpkin_boss.png");
     }
