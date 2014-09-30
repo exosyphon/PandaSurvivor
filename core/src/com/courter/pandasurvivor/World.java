@@ -1,6 +1,5 @@
 package com.courter.pandasurvivor;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
@@ -176,9 +175,12 @@ public class World {
     private void checkItemCollisions(float deltaTime) {
         for (Item item : itemsList) {
             if (OverlapTester.overlapRectangles(item.bounds, hero.bounds)) {
-                tiledMapRenderer.removeSprite(item.getSprite());
-                itemsList.remove(item);
-                break;
+                if (hero.getInventory().size() < hero.getMaxInventorySize()) {
+                    hero.addItemToInventory(item);
+                    tiledMapRenderer.removeSprite(item.getSprite());
+                    itemsList.remove(item);
+                    break;
+                }
             }
             item.update(deltaTime);
 
@@ -444,8 +446,8 @@ public class World {
                                     if (percentageChance < COIN_DROP_CHANCE) {
                                         worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y);
                                     }
-                                    if(percentageChance < BOSS_KEY_DROP_CHANCE) {
-                                        worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 5, ninja.position.y);
+                                    if (percentageChance < BOSS_KEY_DROP_CHANCE) {
+                                        worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 10, ninja.position.y);
                                     }
                                     tiledMapRenderer.removeSprite(ninja.getSprite());
                                     list.remove(ninja);

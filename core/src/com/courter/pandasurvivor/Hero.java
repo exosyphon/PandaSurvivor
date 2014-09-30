@@ -1,5 +1,7 @@
 package com.courter.pandasurvivor;
 
+import java.util.ArrayList;
+
 public class Hero extends GameObject {
     public static final float WALKING_BOUNDS_HERO_HEIGHT = 20;
     public static final float WALKING_BOUNDS_HERO_WIDTH = 20;
@@ -21,6 +23,8 @@ public class Hero extends GameObject {
     private long moneyTotal;
     private long ninjaKillCount;
     private long bossKillCount;
+    private ArrayList<Item> inventory;
+    private int maxInventorySize;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -41,6 +45,8 @@ public class Hero extends GameObject {
         this.moneyTotal = 0;
         this.ninjaKillCount = 0;
         this.bossKillCount = 0;
+        this.inventory = new ArrayList<Item>();
+        this.maxInventorySize = 12;
     }
 
     public void update(float deltaTime) {
@@ -71,6 +77,18 @@ public class Hero extends GameObject {
 
     public long getBossKillCount() {
         return this.bossKillCount;
+    }
+
+    public ArrayList<Item> getInventory() {
+        return this.inventory;
+    }
+
+    public void addItemToInventory(Item item) {
+        this.inventory.add(item);
+    }
+
+    public int getMaxInventorySize() {
+        return this.maxInventorySize;
     }
 
     public void setCurrentDirection(World.HeroDirections updatedDirection) {
