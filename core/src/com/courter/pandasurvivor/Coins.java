@@ -2,7 +2,7 @@ package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Coins extends GameObject{
+public class Coins extends GameObject {
     public static final float HERO_WALKING_BOUNDS_COINS_HEIGHT = 90;
     public static final float HERO_WALKING_BOUNDS_COINS_WIDTH = 90;
     public static final int HIGHEST_MONEY_VALUE = 100;
@@ -12,7 +12,7 @@ public class Coins extends GameObject{
     private boolean visible;
 
     public Coins(float x, float y, Sprite sprite) {
-        super(x - HERO_WALKING_BOUNDS_COINS_WIDTH/2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
+        super(x - HERO_WALKING_BOUNDS_COINS_WIDTH / 2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
         this.sprite = sprite;
         this.stateTime = 0;
         float randomValue = (float) Math.random() * HIGHEST_MONEY_VALUE;
