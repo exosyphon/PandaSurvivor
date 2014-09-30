@@ -37,9 +37,8 @@ public class World {
     public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
     public static final int BOSS_KEY_DROP_CHANCE = 2;
-    public static final int COINS_VISIBLE_TIME = 7;
-    public static final int COINS_BLINK_TIME = 5;
-    public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
+    public static final int ITEMS_VISIBLE_TIME = 7;
+    public static final int ITEMS_BLINK_TIME = 5;
     public static final float timeBeforeRegeneration = 25;
     public static final int ninjaKillCountThreshold = 2;
     static final int numberOfRedNinjaEnemies = 10;
@@ -155,13 +154,13 @@ public class World {
             }
             coins.update(deltaTime);
 
-            if (coins.getStateTime() > COINS_VISIBLE_TIME) {
+            if (coins.getStateTime() > ITEMS_VISIBLE_TIME) {
                 tiledMapRenderer.removeSprite(coins.getSprite());
                 coinsList.remove(coins);
                 break;
             }
 
-            if (coins.getStateTime() > COINS_BLINK_TIME) {
+            if (coins.getStateTime() > ITEMS_BLINK_TIME) {
                 if (coins.isVisible()) {
                     tiledMapRenderer.removeSprite(coins.getSprite());
                 } else {
@@ -184,13 +183,13 @@ public class World {
             }
             item.update(deltaTime);
 
-            if (item.getStateTime() > COINS_VISIBLE_TIME) {
+            if (item.getStateTime() > ITEMS_VISIBLE_TIME) {
                 tiledMapRenderer.removeSprite(item.getSprite());
                 itemsList.remove(item);
                 break;
             }
 
-            if (item.getStateTime() > COINS_BLINK_TIME) {
+            if (item.getStateTime() > ITEMS_BLINK_TIME) {
                 if (item.isVisible()) {
                     tiledMapRenderer.removeSprite(item.getSprite());
                 } else {

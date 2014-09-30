@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 
 public class WorldRenderer {
+    public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static Rectangle aButtonBounds;
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
@@ -99,7 +100,7 @@ public class WorldRenderer {
 
         setupControlSprites(w);
 
-        tiledMap = new TmxMapLoader().load(World.PANDA_SNOW_MAP_NAME);
+        tiledMap = new TmxMapLoader().load(PANDA_SNOW_MAP_NAME);
         tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
         tiledMapRenderer.addSprite(heroSprite);
         tiledMapRenderer.addControlSprite(dpadSprite);
