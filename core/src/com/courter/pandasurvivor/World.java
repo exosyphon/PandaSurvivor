@@ -36,7 +36,7 @@ public class World {
     public static final int ENEMY_MOVE_SPEED = 60;
     public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
-    public static final int BOSS_KEY_DROP_CHANCE = 2;
+    public static final int BOSS_KEY_DROP_CHANCE = 200;
     public static final int ITEMS_VISIBLE_TIME = 7;
     public static final int ITEMS_BLINK_TIME = 5;
     public static final float timeBeforeRegeneration = 25;

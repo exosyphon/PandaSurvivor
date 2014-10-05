@@ -108,11 +108,26 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         batcher.begin();
         if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
-            batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth/2 - 360, WorldRenderer.camera.viewportHeight/2 - 360, 720, 720);
+            batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth / 2 - 360, WorldRenderer.camera.viewportHeight / 2 - 360, 720, 720);
         }
 
         if (WorldRenderer.showInventory) {
-            batcher.draw(WorldRenderer.inventorySprite, WorldRenderer.camera.viewportWidth - 520, WorldRenderer.camera.viewportHeight/2 - 260, 500, 720);
+            batcher.draw(WorldRenderer.inventorySprite, WorldRenderer.camera.viewportWidth - 520, WorldRenderer.camera.viewportHeight / 2 - 260, 500, 720);
+            float baseX = WorldRenderer.camera.viewportWidth - 520;
+            float baseY = WorldRenderer.camera.viewportHeight - 250;
+
+            int row = 0;
+            int col = 0;
+            ArrayList<Item> list = World.hero.getInventory();
+            for (int x = 0; x < list.size(); x++) {
+                Item item = list.get(x);
+                batcher.draw(item.getSprite(), baseX + 32 + (col * 170), baseY + 48 - (row * 180), 64, 64);
+                if ((x+1) % 3 == 0)
+                    row++;
+                col++;
+                if(col > 2)
+                    col = 0;
+            }
         }
         batcher.draw(WorldRenderer.dpadSprite, 135, 135);
         batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - Assets.aButton.getWidth() - 135, 120);
