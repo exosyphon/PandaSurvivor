@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Assets {
     public static Texture dpad;
     public static Texture aButton;
+    public static Texture bagButton;
     public static Texture pandaSpriteSheet;
     public static Texture ninjaSpriteSheet;
     public static Texture fireball;
@@ -32,5 +33,6 @@ public class Assets {
         bossKey = loadTexture("boss_key.png");
         retryPrompt = loadTexture("tryagain.png");
         pumpkinBossSpriteSheet = loadTexture("pumpkin_boss.png");
+        bagButton = loadTexture("bag_button.png");
     }
 }

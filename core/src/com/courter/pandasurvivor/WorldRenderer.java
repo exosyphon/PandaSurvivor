@@ -15,11 +15,13 @@ import com.badlogic.gdx.math.Rectangle;
 public class WorldRenderer {
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static Rectangle aButtonBounds;
+    public static Rectangle bagButtonBounds;
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
+    public static Sprite bagButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite healthBarSprite;
     public static Sprite xpBarSprite;
@@ -76,6 +78,7 @@ public class WorldRenderer {
 
     public WorldRenderer() {
         aButtonBounds = new Rectangle(1540, 70, 196, 196);
+        bagButtonBounds = new Rectangle(1300, 70, 100, 100);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale(3, 3);
@@ -311,6 +314,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
+        bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.hero.position.x), bagButtonBounds.getY());
         camera.translate(-(originalx - World.hero.position.x), 0);
     }
 
@@ -318,6 +322,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
+        bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
         camera.translate((World.hero.position.x - originalx), 0);
     }
 
@@ -325,6 +330,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
+        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.hero.position.y));
         camera.translate(0, -(originaly - World.hero.position.y));
     }
 
@@ -332,6 +338,7 @@ public class WorldRenderer {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
+        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
         camera.translate(0, (World.hero.position.y - originaly));
     }
 
@@ -439,6 +446,7 @@ public class WorldRenderer {
         dpadSprite.setPosition(135, 135);
 
         aButtonSprite = new Sprite(Assets.aButton);
+        bagButtonSprite = new Sprite(Assets.bagButton);
         healthBarSprite = new Sprite(Assets.healthBar);
         xpBarSprite = new Sprite(Assets.healthBar);
 

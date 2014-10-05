@@ -80,6 +80,8 @@ public class PandaSurvivor extends ApplicationAdapter {
                 handleAButtonPress(heroOriginalX, heroOriginalY);
             } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
                 handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
+            } else if(OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
+                System.out.println("unicorn bags");
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {
             if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
