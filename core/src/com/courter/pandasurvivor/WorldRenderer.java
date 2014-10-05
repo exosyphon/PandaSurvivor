@@ -27,12 +27,14 @@ public class WorldRenderer {
     public static Sprite xpBarSprite;
     public static Sprite heroSprite;
     public static Sprite retrySprite;
+    public static Sprite inventorySprite;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     public static OrthographicCamera camera;
     public static ShapeRenderer shapeRenderer;
     public static BitmapFont levelFont;
     public static BitmapFont coinFont;
     public static BitmapFont coinFont2;
+    public static boolean showInventory;
 
     TextureRegion[] pumpkinBossFrames;
     Animation pumpkinBossDownAnimation;
@@ -70,11 +72,6 @@ public class WorldRenderer {
     Animation blackNinjaUpAnimation;
 
     TiledMap tiledMap;
-
-    public void addRetryBounds() {
-        retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - 960, aButtonBounds.getY() + 270, 250, 200);
-        retryNoButtonBounds = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
-    }
 
     public WorldRenderer() {
         aButtonBounds = new Rectangle(1540, 70, 196, 196);
@@ -120,6 +117,15 @@ public class WorldRenderer {
         updatePandaWalkingSpriteTexture(direction);
 
         renderObjectSprites();
+    }
+
+    public void toggleInventory() {
+        this.showInventory = !showInventory;
+    }
+
+    public void addRetryBounds() {
+        retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - 960, aButtonBounds.getY() + 270, 250, 200);
+        retryNoButtonBounds = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
     }
 
     private void slurpFrames() {
@@ -451,6 +457,7 @@ public class WorldRenderer {
         xpBarSprite = new Sprite(Assets.healthBar);
 
         retrySprite = new Sprite(Assets.retryPrompt);
+        inventorySprite = new Sprite(Assets.inventorySprite);
     }
 
     private void renderFireballs() {

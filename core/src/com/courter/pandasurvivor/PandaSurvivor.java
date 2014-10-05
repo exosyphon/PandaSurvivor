@@ -16,6 +16,8 @@ public class PandaSurvivor extends ApplicationAdapter {
     World world;
     WorldRenderer worldRenderer;
     public static GAME_STATES game_state;
+    boolean firstFingerAlreadyDown;
+    boolean secondFingerAlreadyDown;
 
     enum GAME_STATES {
         RUNNING, GAME_OVER, PAUSED
@@ -28,6 +30,8 @@ public class PandaSurvivor extends ApplicationAdapter {
         worldRenderer = new WorldRenderer();
         world = new World(null, worldRenderer);
         game_state = GAME_STATES.RUNNING;
+        firstFingerAlreadyDown = false;
+        secondFingerAlreadyDown = false;
     }
 
     @Override
@@ -39,12 +43,31 @@ public class PandaSurvivor extends ApplicationAdapter {
             worldRenderer.render(World.hero.getCurrentDirection());
 
             if (Gdx.input.isTouched(0)) {
-                touchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+                if (Gdx.input.justTouched()) {
+                    if (!firstFingerAlreadyDown) {
+                        tapTouchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+                        firstFingerAlreadyDown = true;
+                    }
+                }
+
+                continualTouchDown(Gdx.input.getX(0), Gdx.input.getY(0));
                 if (Gdx.input.isTouched(1)) {
-                    touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                    continualTouchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                    if (Gdx.input.justTouched()) {
+                        if (!secondFingerAlreadyDown) {
+                            tapTouchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                            secondFingerAlreadyDown = true;
+                        }
+                    }
+                } else {
+                    secondFingerAlreadyDown = false;
                 }
             } else if (Gdx.input.isTouched(1)) {
-                touchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                continualTouchDown(Gdx.input.getX(1), Gdx.input.getY(1));
+                firstFingerAlreadyDown = false;
+            } else {
+                firstFingerAlreadyDown = false;
+                secondFingerAlreadyDown = false;
             }
 
             if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
@@ -63,12 +86,34 @@ public class PandaSurvivor extends ApplicationAdapter {
             worldRenderer.render(World.hero.getCurrentDirection());
 
             if (Gdx.input.isTouched(0)) {
-                touchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+                if (Gdx.input.justTouched()) {
+                    tapTouchDown(Gdx.input.getX(0), Gdx.input.getY(0));
+                }
             }
         }
     }
 
-    public boolean touchDown(float screenX, float screenY) {
+    public boolean tapTouchDown(float screenX, float screenY) {
+        Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
+        Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
+
+        if (game_state == GAME_STATES.RUNNING) {
+            if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
+                worldRenderer.toggleInventory();
+            }
+        } else if (game_state == GAME_STATES.GAME_OVER) {
+            if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
+                worldRenderer = new WorldRenderer();
+                world = new World(null, worldRenderer);
+                game_state = GAME_STATES.RUNNING;
+            } else if (OverlapTester.pointInRectangle(WorldRenderer.retryNoButtonBounds, clickPosition.x, clickPosition.y)) {
+                //Do something else
+            }
+        }
+        return true;
+    }
+
+    public boolean continualTouchDown(float screenX, float screenY) {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
@@ -80,16 +125,6 @@ public class PandaSurvivor extends ApplicationAdapter {
                 handleAButtonPress(heroOriginalX, heroOriginalY);
             } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
                 handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
-            } else if(OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
-                System.out.println("unicorn bags");
-            }
-        } else if (game_state == GAME_STATES.GAME_OVER) {
-            if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
-                worldRenderer = new WorldRenderer();
-                world = new World(null, worldRenderer);
-                game_state = GAME_STATES.RUNNING;
-            } else if (OverlapTester.pointInRectangle(WorldRenderer.retryNoButtonBounds, clickPosition.x, clickPosition.y)) {
-                //Do something else
             }
         }
         return true;

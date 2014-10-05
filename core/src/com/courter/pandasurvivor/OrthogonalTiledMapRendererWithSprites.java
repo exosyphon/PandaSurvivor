@@ -110,6 +110,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
             batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth/2 - 360, WorldRenderer.camera.viewportHeight/2 - 360, 720, 720);
         }
+
+        if (WorldRenderer.showInventory) {
+            batcher.draw(WorldRenderer.inventorySprite, WorldRenderer.camera.viewportWidth - 520, WorldRenderer.camera.viewportHeight/2 - 260, 500, 720);
+        }
         batcher.draw(WorldRenderer.dpadSprite, 135, 135);
         batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - Assets.aButton.getWidth() - 135, 120);
         batcher.draw(WorldRenderer.bagButtonSprite, WorldRenderer.camera.viewportWidth - Assets.bagButton.getWidth() - 435, 40);

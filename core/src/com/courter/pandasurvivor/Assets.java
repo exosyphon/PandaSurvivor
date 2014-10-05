@@ -16,6 +16,7 @@ public class Assets {
     public static Texture retryPrompt;
     public static Texture pumpkinBossSpriteSheet;
     public static Texture bossKey;
+    public static Texture inventorySprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -34,5 +35,6 @@ public class Assets {
         retryPrompt = loadTexture("tryagain.png");
         pumpkinBossSpriteSheet = loadTexture("pumpkin_boss.png");
         bagButton = loadTexture("bag_button.png");
+        inventorySprite = loadTexture("inventory.png");
     }
 }
