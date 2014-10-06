@@ -174,8 +174,10 @@ public class World {
     private void checkItemCollisions(float deltaTime) {
         for (Item item : itemsList) {
             if (OverlapTester.overlapRectangles(item.bounds, hero.bounds)) {
-                if (hero.getInventory().size() < hero.getMaxInventorySize()) {
+                int currentHeroInventorySize = hero.getInventory().size();
+                if (currentHeroInventorySize < hero.getMaxInventorySize()) {
                     hero.addItemToInventory(item);
+                    worldRenderer.addInventoryUnitBounds(currentHeroInventorySize + 1);
                     tiledMapRenderer.removeSprite(item.getSprite());
                     itemsList.remove(item);
                     break;

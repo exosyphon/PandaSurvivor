@@ -29,8 +29,8 @@ public class Hero extends GameObject {
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(
-                x - (SHOOTING_BOUNDS_HERO_WIDTH / 6),
-                y - (SHOOTING_BOUNDS_HERO_HEIGHT / 5.5f),
+                x + (SHOOTING_BOUNDS_HERO_WIDTH / 6),
+                y,
                 SHOOTING_BOUNDS_HERO_WIDTH,
                 SHOOTING_BOUNDS_HERO_HEIGHT
         );

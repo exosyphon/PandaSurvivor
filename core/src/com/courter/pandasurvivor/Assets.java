@@ -17,6 +17,7 @@ public class Assets {
     public static Texture pumpkinBossSpriteSheet;
     public static Texture bossKey;
     public static Texture inventorySprite;
+    public static Texture useDestroyInventoryOptionsSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -36,5 +37,6 @@ public class Assets {
         pumpkinBossSpriteSheet = loadTexture("pumpkin_boss.png");
         bagButton = loadTexture("bag_button.png");
         inventorySprite = loadTexture("inventory.png");
+        useDestroyInventoryOptionsSprite = loadTexture("use_destroy.png");
     }
 }

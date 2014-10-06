@@ -129,6 +129,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     col = 0;
             }
         }
+
+        if(WorldRenderer.showInventoryOptions) {
+            batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - 750 + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - 275 - WorldRenderer.showInventoryOptionsOffsetY, 280, 200);
+        }
+
         batcher.draw(WorldRenderer.dpadSprite, 135, 135);
         batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - Assets.aButton.getWidth() - 135, 120);
         batcher.draw(WorldRenderer.bagButtonSprite, WorldRenderer.camera.viewportWidth - Assets.bagButton.getWidth() - 435, 40);

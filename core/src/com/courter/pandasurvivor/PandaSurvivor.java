@@ -2,6 +2,7 @@ package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class PandaSurvivor extends ApplicationAdapter {
@@ -100,6 +101,15 @@ public class PandaSurvivor extends ApplicationAdapter {
         if (game_state == GAME_STATES.RUNNING) {
             if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleInventory();
+            }
+            if (worldRenderer.showInventory) {
+                int counter = 1;
+                for (Rectangle inventoryUnitBounds : worldRenderer.currentInventoryUnitBoundsList) {
+                    if (OverlapTester.pointInRectangle(inventoryUnitBounds, clickPosition.x, clickPosition.y)) {
+                        worldRenderer.toggleInventoryOptions(counter);
+                    }
+                    counter++;
+                }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {
             if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
