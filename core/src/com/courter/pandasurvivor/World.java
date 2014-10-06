@@ -23,6 +23,10 @@ public class World {
         PUMPKIN_BOSS
     }
 
+    enum ItemActions {
+        EQUIP, SPAWN_BOSS
+    }
+
     public interface WorldListener {
         public void hit();
 
@@ -36,11 +40,10 @@ public class World {
     public static final int ENEMY_MOVE_SPEED = 60;
     public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
-    public static final int BOSS_KEY_DROP_CHANCE = 200;
+    public static final float BOSS_KEY_DROP_CHANCE = .5f;
     public static final int ITEMS_VISIBLE_TIME = 7;
     public static final int ITEMS_BLINK_TIME = 5;
     public static final float timeBeforeRegeneration = 25;
-    public static final int ninjaKillCountThreshold = 2;
     static final int numberOfRedNinjaEnemies = 10;
     static final int numberOfBlackNinjaEnemies = 15;
     static final int numberOfPurpleNinjaEnemies = 15;
@@ -119,7 +122,6 @@ public class World {
         checkGameOver();
         checkHealthRegen(deltaTime);
         checkEnemyCount();
-        checkBossSpawn();
     }
 
     public void checkCollisions(float deltaTime) {
@@ -137,11 +139,6 @@ public class World {
             checkEnemyCollisions(direction);
             checkBossCollisions(direction);
         }
-    }
-
-    private void checkBossSpawn() {
-        if ((hero.getNinjaKillCount() % ninjaKillCountThreshold) == 0 && bossList.size() == 0 && hero.getNinjaKillCount() > 0)
-            worldRenderer.addPumpkinBoss(hero.position.x, hero.position.y);
     }
 
     private void checkCoinCollisions(float deltaTime) {

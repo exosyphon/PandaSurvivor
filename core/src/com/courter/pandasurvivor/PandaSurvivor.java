@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.ArrayList;
+
 public class PandaSurvivor extends ApplicationAdapter {
     public static final int RIGHT_SIDE_OF_MAP = 7584;
     public static final int LEFT_SIDE_OF_MAP = 0;
@@ -104,8 +106,16 @@ public class PandaSurvivor extends ApplicationAdapter {
             }
             if (worldRenderer.showInventory) {
                 if (WorldRenderer.showInventoryOptions) {
-                    if (OverlapTester.pointInRectangle(WorldRenderer.currentDestroyItemBounds, clickPosition.x, clickPosition.y)) {
-                        World.hero.getInventory().remove(WorldRenderer.currentlySelectedItemIndex);
+                    ArrayList<Item> inventory = World.hero.getInventory();
+                    if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
+                        World.ItemActions itemAction = inventory.get(WorldRenderer.currentlySelectedItemIndex).getItemAction();
+                        if(itemAction == World.ItemActions.SPAWN_BOSS) {
+                            worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
+                        }
+                        inventory.remove(WorldRenderer.currentlySelectedItemIndex);
+                        worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.currentDestroyItemBounds, clickPosition.x, clickPosition.y)) {
+                        inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                         worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                     }
                     worldRenderer.toggleInventoryOptions(0);

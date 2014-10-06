@@ -22,7 +22,9 @@ public class WorldRenderer {
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
     public static Rectangle currentDestroyItemBounds;
+    public static Rectangle currentUseItemBounds;
     public static List<Rectangle> destroyItemBoundsList;
+    public static List<Rectangle> useItemBoundsList;
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
@@ -112,6 +114,33 @@ public class WorldRenderer {
         destroyItemBoundsList.add(destroyItemBounds10);
         destroyItemBoundsList.add(destroyItemBounds11);
         destroyItemBoundsList.add(destroyItemBounds12);
+
+        Rectangle useItemBounds1 = new Rectangle(1100, 900, 220, 80);
+        Rectangle useItemBounds2 = new Rectangle(1280, 900, 220, 80);
+        Rectangle useItemBounds3 = new Rectangle(1460, 900, 220, 80);
+        Rectangle useItemBounds4 = new Rectangle(1100, 720, 220, 80);
+        Rectangle useItemBounds5 = new Rectangle(1280, 720, 220, 80);
+        Rectangle useItemBounds6 = new Rectangle(1460, 720, 220, 80);
+        Rectangle useItemBounds7 = new Rectangle(1100, 540, 220, 80);
+        Rectangle useItemBounds8 = new Rectangle(1280, 540, 220, 80);
+        Rectangle useItemBounds9 = new Rectangle(1460, 540, 220, 80);
+        Rectangle useItemBounds10 = new Rectangle(1100, 360, 220, 80);
+        Rectangle useItemBounds11 = new Rectangle(1280, 360, 220, 80);
+        Rectangle useItemBounds12 = new Rectangle(1460, 360, 220, 80);
+        useItemBoundsList = new ArrayList<Rectangle>();
+        useItemBoundsList.add(useItemBounds1);
+        useItemBoundsList.add(useItemBounds2);
+        useItemBoundsList.add(useItemBounds3);
+        useItemBoundsList.add(useItemBounds4);
+        useItemBoundsList.add(useItemBounds5);
+        useItemBoundsList.add(useItemBounds6);
+        useItemBoundsList.add(useItemBounds7);
+        useItemBoundsList.add(useItemBounds8);
+        useItemBoundsList.add(useItemBounds9);
+        useItemBoundsList.add(useItemBounds10);
+        useItemBoundsList.add(useItemBounds11);
+        useItemBoundsList.add(useItemBounds12);
+
         inventoryUnitBoundsList = new ArrayList<Rectangle>();
         currentInventoryUnitBoundsList = new ArrayList<Rectangle>();
         Rectangle inventoryUnitBounds1 = new Rectangle(1300, 870, 170, 120);
@@ -200,9 +229,8 @@ public class WorldRenderer {
     public void toggleInventoryOptions(int input) {
         this.showInventoryOptions = !showInventoryOptions;
 
-        currentlySelectedItemIndex = input - 1;
-
         if (input == 0) {
+            currentlySelectedItemIndex = 0;
             return;
         } else if (input == 1) {
             showInventoryOptionsOffsetX = 0;
@@ -241,7 +269,10 @@ public class WorldRenderer {
             showInventoryOptionsOffsetX = 340;
             showInventoryOptionsOffsetY = 540;
         }
+        currentlySelectedItemIndex = input - 1;
+
         currentDestroyItemBounds = destroyItemBoundsList.get(input - 1);
+        currentUseItemBounds = useItemBoundsList.get(input - 1);
     }
 
     public void addRetryBounds() {
@@ -445,6 +476,9 @@ public class WorldRenderer {
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
+        for (Rectangle useItemBounds : useItemBoundsList) {
+            useItemBounds.setPosition(useItemBounds.getX() - (originalx - World.hero.position.x), useItemBounds.getY());
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() - (originalx - World.hero.position.x), inventoryUnitBounds.getY());
         }
@@ -458,6 +492,9 @@ public class WorldRenderer {
         bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
+        }
+        for (Rectangle useItemBounds : useItemBoundsList) {
+            useItemBounds.setPosition(useItemBounds.getX() + (World.hero.position.x - originalx), useItemBounds.getY());
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() + (World.hero.position.x - originalx), inventoryUnitBounds.getY());
@@ -473,6 +510,9 @@ public class WorldRenderer {
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
+        for (Rectangle useItemBounds : useItemBoundsList) {
+            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() - (originaly - World.hero.position.y));
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -486,6 +526,9 @@ public class WorldRenderer {
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
+        }
+        for (Rectangle useItemBounds : useItemBoundsList) {
+            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() + (World.hero.position.y - originaly));
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() + (World.hero.position.y - originaly));
@@ -671,7 +714,9 @@ public class WorldRenderer {
         bossKeySprite.setSize(32, 32);
         bossKeySprite.setPosition(x, y);
         tiledMapRenderer.addSprite(bossKeySprite);
-        World.itemsList.add(new Item(x, y, bossKeySprite));
+        BossKey bossKey = new BossKey(x, y, bossKeySprite);
+        bossKey.setItemAction(World.ItemActions.SPAWN_BOSS);
+        World.itemsList.add(bossKey);
     }
 
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {

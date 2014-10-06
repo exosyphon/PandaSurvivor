@@ -10,6 +10,7 @@ public class Item extends GameObject {
     private float stateTime;
     private int sellValue;
     private boolean visible;
+    private World.ItemActions itemAction;
 
     public Item(float x, float y, Sprite sprite) {
         super(x - HERO_WALKING_BOUNDS_COINS_WIDTH / 2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
@@ -54,5 +55,13 @@ public class Item extends GameObject {
 
     public void setStateTime(float stateTime) {
         this.stateTime = stateTime;
+    }
+
+    public World.ItemActions getItemAction() {
+        return itemAction;
+    }
+
+    public void setItemAction(World.ItemActions itemAction) {
+        this.itemAction = itemAction;
     }
 }
