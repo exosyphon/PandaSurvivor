@@ -21,6 +21,8 @@ public class WorldRenderer {
     public static Rectangle bagButtonBounds;
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
+    public static Rectangle currentDestroyItemBounds;
+    public static List<Rectangle> destroyItemBoundsList;
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
@@ -44,6 +46,7 @@ public class WorldRenderer {
     public static boolean showInventoryOptions;
     public static int showInventoryOptionsOffsetX;
     public static int showInventoryOptionsOffsetY;
+    public static int currentlySelectedItemIndex;
 
     TextureRegion[] pumpkinBossFrames;
     Animation pumpkinBossDownAnimation;
@@ -83,6 +86,32 @@ public class WorldRenderer {
     TiledMap tiledMap;
 
     public WorldRenderer() {
+        currentlySelectedItemIndex = 0;
+        Rectangle destroyItemBounds1 = new Rectangle(1100, 820, 200, 60);
+        Rectangle destroyItemBounds2 = new Rectangle(1280, 820, 200, 60);
+        Rectangle destroyItemBounds3 = new Rectangle(1460, 820, 200, 60);
+        Rectangle destroyItemBounds4 = new Rectangle(1100, 640, 200, 60);
+        Rectangle destroyItemBounds5 = new Rectangle(1280, 640, 200, 60);
+        Rectangle destroyItemBounds6 = new Rectangle(1460, 640, 200, 60);
+        Rectangle destroyItemBounds7 = new Rectangle(1100, 460, 200, 60);
+        Rectangle destroyItemBounds8 = new Rectangle(1280, 460, 200, 60);
+        Rectangle destroyItemBounds9 = new Rectangle(1460, 460, 200, 60);
+        Rectangle destroyItemBounds10 = new Rectangle(1100, 280, 200, 60);
+        Rectangle destroyItemBounds11 = new Rectangle(1280, 280, 200, 60);
+        Rectangle destroyItemBounds12 = new Rectangle(1460, 280, 200, 60);
+        destroyItemBoundsList = new ArrayList<Rectangle>();
+        destroyItemBoundsList.add(destroyItemBounds1);
+        destroyItemBoundsList.add(destroyItemBounds2);
+        destroyItemBoundsList.add(destroyItemBounds3);
+        destroyItemBoundsList.add(destroyItemBounds4);
+        destroyItemBoundsList.add(destroyItemBounds5);
+        destroyItemBoundsList.add(destroyItemBounds6);
+        destroyItemBoundsList.add(destroyItemBounds7);
+        destroyItemBoundsList.add(destroyItemBounds8);
+        destroyItemBoundsList.add(destroyItemBounds9);
+        destroyItemBoundsList.add(destroyItemBounds10);
+        destroyItemBoundsList.add(destroyItemBounds11);
+        destroyItemBoundsList.add(destroyItemBounds12);
         inventoryUnitBoundsList = new ArrayList<Rectangle>();
         currentInventoryUnitBoundsList = new ArrayList<Rectangle>();
         Rectangle inventoryUnitBounds1 = new Rectangle(1300, 870, 170, 120);
@@ -171,7 +200,11 @@ public class WorldRenderer {
     public void toggleInventoryOptions(int input) {
         this.showInventoryOptions = !showInventoryOptions;
 
-        if (input == 1) {
+        currentlySelectedItemIndex = input - 1;
+
+        if (input == 0) {
+            return;
+        } else if (input == 1) {
             showInventoryOptionsOffsetX = 0;
             showInventoryOptionsOffsetY = 0;
         } else if (input == 2) {
@@ -208,6 +241,7 @@ public class WorldRenderer {
             showInventoryOptionsOffsetX = 340;
             showInventoryOptionsOffsetY = 540;
         }
+        currentDestroyItemBounds = destroyItemBoundsList.get(input - 1);
     }
 
     public void addRetryBounds() {
@@ -408,6 +442,9 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.hero.position.x), bagButtonBounds.getY());
+        for (Rectangle destroyItemBounds : destroyItemBoundsList) {
+            destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() - (originalx - World.hero.position.x), inventoryUnitBounds.getY());
         }
@@ -419,6 +456,9 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
+        for (Rectangle destroyItemBounds : destroyItemBoundsList) {
+            destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() + (World.hero.position.x - originalx), inventoryUnitBounds.getY());
         }
@@ -430,6 +470,9 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.hero.position.y));
+        for (Rectangle destroyItemBounds : destroyItemBoundsList) {
+            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -441,6 +484,9 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
+        for (Rectangle destroyItemBounds : destroyItemBoundsList) {
+            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
+        }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
             inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() + (World.hero.position.y - originaly));
         }

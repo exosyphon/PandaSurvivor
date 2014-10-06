@@ -103,12 +103,20 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.toggleInventory();
             }
             if (worldRenderer.showInventory) {
-                int counter = 1;
-                for (Rectangle inventoryUnitBounds : worldRenderer.currentInventoryUnitBoundsList) {
-                    if (OverlapTester.pointInRectangle(inventoryUnitBounds, clickPosition.x, clickPosition.y)) {
-                        worldRenderer.toggleInventoryOptions(counter);
+                if (WorldRenderer.showInventoryOptions) {
+                    if (OverlapTester.pointInRectangle(WorldRenderer.currentDestroyItemBounds, clickPosition.x, clickPosition.y)) {
+                        World.hero.getInventory().remove(WorldRenderer.currentlySelectedItemIndex);
+                        worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                     }
-                    counter++;
+                    worldRenderer.toggleInventoryOptions(0);
+                } else {
+                    int counter = 1;
+                    for (Rectangle inventoryUnitBounds : worldRenderer.currentInventoryUnitBoundsList) {
+                        if (OverlapTester.pointInRectangle(inventoryUnitBounds, clickPosition.x, clickPosition.y)) {
+                            worldRenderer.toggleInventoryOptions(counter);
+                        }
+                        counter++;
+                    }
                 }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {
