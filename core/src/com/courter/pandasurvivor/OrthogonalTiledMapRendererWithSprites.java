@@ -107,10 +107,6 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
 
         batcher.begin();
-        if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
-            batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth / 2 - 360, WorldRenderer.camera.viewportHeight / 2 - 360, 720, 720);
-        }
-
         if (WorldRenderer.showInventory) {
             batcher.draw(WorldRenderer.inventorySprite, WorldRenderer.camera.viewportWidth - 520, WorldRenderer.camera.viewportHeight / 2 - 260, 500, 720);
             float baseX = WorldRenderer.camera.viewportWidth - 520;
@@ -132,6 +128,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         if(WorldRenderer.showInventoryOptions) {
             batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - 750 + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - 275 - WorldRenderer.showInventoryOptionsOffsetY, 280, 200);
+        }
+
+        if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
+            batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth / 2 - 360, WorldRenderer.camera.viewportHeight / 2 - 360, 720, 720);
         }
 
         batcher.draw(WorldRenderer.dpadSprite, 135, 135);
