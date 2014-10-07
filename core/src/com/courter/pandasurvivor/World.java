@@ -41,6 +41,7 @@ public class World {
     public static final int BOSS_MOVE_SPEED = 80;
     public static final int COIN_DROP_CHANCE = 50;
     public static final float BOSS_KEY_DROP_CHANCE = .5f;
+    public static final float COMMON_GEAR_DROP_CHANCE = 5f;
     public static final int ITEMS_VISIBLE_TIME = 7;
     public static final int ITEMS_BLINK_TIME = 5;
     public static final float timeBeforeRegeneration = 25;
@@ -446,6 +447,9 @@ public class World {
                                     }
                                     if (percentageChance < BOSS_KEY_DROP_CHANCE) {
                                         worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 10, ninja.position.y);
+                                    }
+                                    if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
+                                        worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - 10, ninja.position.y + 20);
                                     }
                                     tiledMapRenderer.removeSprite(ninja.getSprite());
                                     list.remove(ninja);

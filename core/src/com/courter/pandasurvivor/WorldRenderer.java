@@ -673,6 +673,16 @@ public class WorldRenderer {
         addCoinsSprite(x, y);
     }
 
+    public void addGear(float x, float y) {
+        float percentageChance = (float) Math.random() * 100;
+
+        if (percentageChance < 50) {
+            addSwordSprite(x, y);
+        } else {
+            addStaffSprite(x, y);
+        }
+    }
+
     public void addBossKey(float x, float y) {
         addBossKeySprite(x, y);
     }
@@ -717,6 +727,26 @@ public class WorldRenderer {
         BossKey bossKey = new BossKey(x, y, bossKeySprite);
         bossKey.setItemAction(World.ItemActions.SPAWN_BOSS);
         World.itemsList.add(bossKey);
+    }
+
+    private void addSwordSprite(float x, float y) {
+        Sprite swordSprite = new Sprite(Assets.swordSprite);
+        swordSprite.setSize(64, 64);
+        swordSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(swordSprite);
+        Sword sword = new Sword(x, y, swordSprite);
+        sword.setItemAction(World.ItemActions.EQUIP);
+        World.itemsList.add(sword);
+    }
+
+    private void addStaffSprite(float x, float y) {
+        Sprite staffSprite = new Sprite(Assets.staffSprite);
+        staffSprite.setSize(64, 64);
+        staffSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(staffSprite);
+        Staff staff = new Staff(x, y, staffSprite);
+        staff.setItemAction(World.ItemActions.EQUIP);
+        World.itemsList.add(staff);
     }
 
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {

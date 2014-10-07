@@ -16,6 +16,8 @@ public class Assets {
     public static Texture retryPrompt;
     public static Texture pumpkinBossSpriteSheet;
     public static Texture bossKey;
+    public static Texture swordSprite;
+    public static Texture staffSprite;
     public static Texture inventorySprite;
     public static Texture useDestroyInventoryOptionsSprite;
 
@@ -38,5 +40,7 @@ public class Assets {
         bagButton = loadTexture("bag_button.png");
         inventorySprite = loadTexture("inventory.png");
         useDestroyInventoryOptionsSprite = loadTexture("use_destroy.png");
+        swordSprite = loadTexture("sword.png");
+        staffSprite = loadTexture("staff.png");
     }
 }
