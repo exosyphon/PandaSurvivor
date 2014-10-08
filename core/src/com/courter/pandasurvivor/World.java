@@ -59,7 +59,7 @@ public class World {
     public static List<GameObject> blackNinjaList;
     public static List<GameObject> bossList;
     public static List<List<GameObject>> enemyList;
-    public static Set<Set> worldObjectLists;
+    public static List<Set> worldObjectLists;
     public static Hero hero;
     public final WorldListener listener;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
@@ -631,7 +631,7 @@ public class World {
     }
 
     private void createObjects() {
-        worldObjectLists = new HashSet<Set>();
+        worldObjectLists = new ArrayList<Set>();
 
         fireballList = new ArrayList<Fireball>();
         enemyFireballList = new ArrayList<Fireball>();
@@ -650,7 +650,7 @@ public class World {
         list.add(purpleNinjaList);
         enemyList = list;
 
-        Set<Set> input = new HashSet<Set>();
+        ArrayList<Set> input = new ArrayList<Set>();
         input.add(treeList);
         input.add(wallList);
         worldObjectLists = input;
