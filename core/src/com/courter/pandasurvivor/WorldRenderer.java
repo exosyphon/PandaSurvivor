@@ -170,7 +170,7 @@ public class WorldRenderer {
         inventoryUnitBoundsList.add(inventoryUnitBounds11);
         inventoryUnitBoundsList.add(inventoryUnitBounds12);
         aButtonBounds = new Rectangle(1540, 70, 196, 196);
-        bagButtonBounds = new Rectangle(1300, 30, 120, 120);
+        bagButtonBounds = new Rectangle(1230, 30, 170, 150);
         armorButtonBounds = new Rectangle(470, Gdx.graphics.getHeight() - 170, 170, 170);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
