@@ -104,6 +104,9 @@ public class PandaSurvivor extends ApplicationAdapter {
             if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleInventory();
             }
+            if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
+                System.out.println("unicorn fun");
+            }
             if (worldRenderer.showInventory) {
                 if (WorldRenderer.showInventoryOptions) {
                     ArrayList<Item> inventory = World.hero.getInventory();

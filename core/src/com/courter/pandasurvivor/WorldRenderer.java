@@ -19,6 +19,7 @@ public class WorldRenderer {
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static Rectangle aButtonBounds;
     public static Rectangle bagButtonBounds;
+    public static Rectangle armorButtonBounds;
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
     public static Rectangle currentDestroyItemBounds;
@@ -29,6 +30,7 @@ public class WorldRenderer {
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
     public static Sprite bagButtonSprite;
+    public static Sprite armorButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite healthBarSprite;
     public static Sprite xpBarSprite;
@@ -169,6 +171,7 @@ public class WorldRenderer {
         inventoryUnitBoundsList.add(inventoryUnitBounds12);
         aButtonBounds = new Rectangle(1540, 70, 196, 196);
         bagButtonBounds = new Rectangle(1300, 30, 120, 120);
+        armorButtonBounds = new Rectangle(470, Gdx.graphics.getHeight() - 170, 170, 170);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale(3, 3);
@@ -473,6 +476,7 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.hero.position.x), bagButtonBounds.getY());
+        armorButtonBounds.setPosition(armorButtonBounds.getX() - (originalx - World.hero.position.x), armorButtonBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
@@ -490,6 +494,7 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
+        armorButtonBounds.setPosition(armorButtonBounds.getX() + (World.hero.position.x - originalx), armorButtonBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
         }
@@ -507,6 +512,7 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.hero.position.y));
+        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() - (originaly - World.hero.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -524,6 +530,7 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
+        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
         }
@@ -641,6 +648,7 @@ public class WorldRenderer {
 
         aButtonSprite = new Sprite(Assets.aButton);
         bagButtonSprite = new Sprite(Assets.bagButton);
+        armorButtonSprite = new Sprite(Assets.armorButton);
         healthBarSprite = new Sprite(Assets.healthBar);
         xpBarSprite = new Sprite(Assets.healthBar);
 

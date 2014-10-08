@@ -138,6 +138,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - Assets.aButton.getWidth() - 135, 120);
         batcher.draw(WorldRenderer.bagButtonSprite, WorldRenderer.camera.viewportWidth - Assets.bagButton.getWidth() - 435, 40);
         batcher.draw(WorldRenderer.healthBarSprite, 25, WorldRenderer.camera.viewportHeight - Assets.healthBar.getHeight() - 10, 384, 32);
+        batcher.draw(WorldRenderer.armorButtonSprite, 200 + WorldRenderer.healthBarSprite.getWidth(), WorldRenderer.camera.viewportHeight - Assets.armorButton.getHeight() - 10);
         batcher.draw(WorldRenderer.xpBarSprite, 25, WorldRenderer.camera.viewportHeight - Assets.healthBar.getHeight() * 2 - 20, 384, 32);
         batcher.end();
 
