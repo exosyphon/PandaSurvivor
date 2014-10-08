@@ -117,7 +117,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             ArrayList<Item> list = World.hero.getInventory();
             for (int x = 0; x < list.size(); x++) {
                 Item item = list.get(x);
-                batcher.draw(item.getSprite(), baseX + 32 + (col * 170), baseY + 24 - (row * 180), 96, 96);
+                batcher.draw(item.getSprite(), baseX + 32 + (col * 170), baseY + 24 - (row * 180), item.inventoryRenderX(), item.inventoryRenderY());
                 if ((x+1) % 3 == 0)
                     row++;
                 col++;

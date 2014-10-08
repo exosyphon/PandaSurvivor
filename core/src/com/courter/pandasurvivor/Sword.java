@@ -18,6 +18,16 @@ public class Sword extends Item {
         generateRandomAttributes();
     }
 
+    @Override
+    public float inventoryRenderX() {
+        return 96;
+    }
+
+    @Override
+    public float inventoryRenderY() {
+        return 96;
+    }
+
     private void generateRandomAttributes() {
         //TODO
         return;

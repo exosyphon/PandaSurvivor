@@ -21,6 +21,14 @@ public class Item extends GameObject {
         this.visible = true;
     }
 
+    public float inventoryRenderX() {
+        return 0;
+    }
+
+    public float inventoryRenderY() {
+        return 0;
+    }
+
     public void update(float deltaTime) {
         this.stateTime += deltaTime;
     }
