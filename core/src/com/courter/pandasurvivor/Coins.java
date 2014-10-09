@@ -1,10 +1,11 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Coins extends GameObject {
-    public static final float HERO_WALKING_BOUNDS_COINS_HEIGHT = 90;
-    public static final float HERO_WALKING_BOUNDS_COINS_WIDTH = 90;
+    public static final float HERO_WALKING_BOUNDS_COINS_HEIGHT = (Gdx.graphics.getHeight() * .083f);
+    public static final float HERO_WALKING_BOUNDS_COINS_WIDTH = (Gdx.graphics.getWidth() * .05f);
     public static final int HIGHEST_MONEY_VALUE = 100;
     private Sprite sprite;
     private float stateTime;

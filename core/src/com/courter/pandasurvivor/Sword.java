@@ -1,5 +1,6 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
@@ -20,12 +21,12 @@ public class Sword extends Item {
 
     @Override
     public float inventoryRenderX() {
-        return 96;
+        return (Gdx.graphics.getWidth() * .053f);
     }
 
     @Override
     public float inventoryRenderY() {
-        return 96;
+        return (Gdx.graphics.getHeight() * .088f);
     }
 
     private void generateRandomAttributes() {

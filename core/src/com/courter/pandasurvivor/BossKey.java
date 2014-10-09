@@ -1,5 +1,6 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
@@ -12,11 +13,11 @@ public class BossKey extends Item {
 
     @Override
     public float inventoryRenderX() {
-        return 64;
+        return (Gdx.graphics.getWidth() * .035f);
     }
 
     @Override
     public float inventoryRenderY() {
-        return 64;
+        return (Gdx.graphics.getHeight() * .059f);
     }
 }

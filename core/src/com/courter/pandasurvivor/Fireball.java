@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Fireball extends DynamicGameObject{
     public static final float FIREBALL_WIDTH = 1f;
     public static final float FIREBALL_HEIGHT = .5f;
-    public static final int FIREBALL_SPEED = 750;
+    public static final int FIREBALL_SPEED = (int) (WorldRenderer.w * .418f);
     public static final float FIREBALL_DISTANCE = 1;
 
     float stateTime = 0;

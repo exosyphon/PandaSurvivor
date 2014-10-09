@@ -1,13 +1,15 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 
 public class Hero extends GameObject {
-    public static final float WALKING_BOUNDS_HERO_HEIGHT = 20;
-    public static final float WALKING_BOUNDS_HERO_WIDTH = 20;
+    public static final float WALKING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .018f);
+    public static final float WALKING_BOUNDS_HERO_WIDTH = (Gdx.graphics.getWidth() * .011f);
 
-    public static final float SHOOTING_BOUNDS_HERO_HEIGHT = 115;
-    public static final float SHOOTING_BOUNDS_HERO_WIDTH = 80;
+    public static final float SHOOTING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .106f);
+    public static final float SHOOTING_BOUNDS_HERO_WIDTH = (Gdx.graphics.getWidth() * .044f);
 
     private static final float XP_LEVEL_MULTIPLIER = 2;
 

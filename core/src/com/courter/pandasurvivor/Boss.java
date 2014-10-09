@@ -1,23 +1,24 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Created by andrew on 9/28/14.
  */
 public class Boss extends Enemy {
-    public static final float WALKING_BOUNDS_BOSS_HEIGHT = 140;
-    public static final float WALKING_BOUNDS_BOSS_WIDTH = 160;
+    public static final float WALKING_BOUNDS_BOSS_HEIGHT = (Gdx.graphics.getHeight() * .129f);
+    public static final float WALKING_BOUNDS_BOSS_WIDTH = (Gdx.graphics.getWidth() * .089f);
 
-    public static final float SHOOTING_BOUNDS_BOSS_HEIGHT = 115;
-    public static final float SHOOTING_BOUNDS_BOSS_WIDTH = 130;
+    public static final float SHOOTING_BOUNDS_BOSS_HEIGHT = (Gdx.graphics.getHeight() * .106f);
+    public static final float SHOOTING_BOUNDS_BOSS_WIDTH = (Gdx.graphics.getWidth() * .072f);
 
     private World.BossTypes bossType;
 
     public Boss(float x, float y, Sprite sprite, World.BossTypes bossType) {
         super(
-                x - WALKING_BOUNDS_BOSS_WIDTH - 30,
-                y - WALKING_BOUNDS_BOSS_HEIGHT - 45,
+                x - WALKING_BOUNDS_BOSS_WIDTH - (Gdx.graphics.getWidth() * .016f),
+                y - WALKING_BOUNDS_BOSS_HEIGHT - (Gdx.graphics.getHeight() * .041f),
                 sprite,
                 WALKING_BOUNDS_BOSS_WIDTH,
                 WALKING_BOUNDS_BOSS_HEIGHT,
@@ -27,7 +28,7 @@ public class Boss extends Enemy {
                 150,
                 10
         );
-        this.shooting_bounds = createBoundsRectangle(x - SHOOTING_BOUNDS_BOSS_WIDTH - 20, y - SHOOTING_BOUNDS_BOSS_HEIGHT - 40, SHOOTING_BOUNDS_BOSS_WIDTH, SHOOTING_BOUNDS_BOSS_HEIGHT);
+        this.shooting_bounds = createBoundsRectangle(x - SHOOTING_BOUNDS_BOSS_WIDTH - (Gdx.graphics.getWidth() * .011f), y - SHOOTING_BOUNDS_BOSS_HEIGHT - (Gdx.graphics.getHeight() * .037f), SHOOTING_BOUNDS_BOSS_WIDTH, SHOOTING_BOUNDS_BOSS_HEIGHT);
         this.bossType = bossType;
     }
 

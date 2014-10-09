@@ -1,16 +1,17 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Created by andrew on 9/28/14.
  */
 public class Ninja extends Enemy {
-    public static final float WALKING_BOUNDS_ENEMY_HEIGHT = 120;
-    public static final float WALKING_BOUNDS_ENEMY_WIDTH = 110;
+    public static final float WALKING_BOUNDS_ENEMY_HEIGHT = (WorldRenderer.h * .111f);
+    public static final float WALKING_BOUNDS_ENEMY_WIDTH = (WorldRenderer.w * .061f);
 
-    public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = 110;
-    public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = 80;
+    public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = (WorldRenderer.h * .101f);
+    public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = (WorldRenderer.w * .044f);
 
     private World.NinjaTypes ninjaType;
 

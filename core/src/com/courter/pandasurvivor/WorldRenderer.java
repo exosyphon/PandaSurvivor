@@ -88,21 +88,26 @@ public class WorldRenderer {
     Animation blackNinjaUpAnimation;
 
     TiledMap tiledMap;
+    public static float w;
+    public static float h;
 
     public WorldRenderer() {
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
+
         currentlySelectedItemIndex = 0;
-        Rectangle destroyItemBounds1 = new Rectangle(1100, 820, 200, 60);
-        Rectangle destroyItemBounds2 = new Rectangle(1280, 820, 200, 60);
-        Rectangle destroyItemBounds3 = new Rectangle(1460, 820, 200, 60);
-        Rectangle destroyItemBounds4 = new Rectangle(1100, 640, 200, 60);
-        Rectangle destroyItemBounds5 = new Rectangle(1280, 640, 200, 60);
-        Rectangle destroyItemBounds6 = new Rectangle(1460, 640, 200, 60);
-        Rectangle destroyItemBounds7 = new Rectangle(1100, 460, 200, 60);
-        Rectangle destroyItemBounds8 = new Rectangle(1280, 460, 200, 60);
-        Rectangle destroyItemBounds9 = new Rectangle(1460, 460, 200, 60);
-        Rectangle destroyItemBounds10 = new Rectangle(1100, 280, 200, 60);
-        Rectangle destroyItemBounds11 = new Rectangle(1280, 280, 200, 60);
-        Rectangle destroyItemBounds12 = new Rectangle(1460, 280, 200, 60);
+        Rectangle destroyItemBounds1 = new Rectangle((w * .613f), (h * .76f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds2 = new Rectangle((w * .713f), (h * .76f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds3 = new Rectangle((w * .813f), (h * .76f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds4 = new Rectangle((w * .613f), (h * .59f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds5 = new Rectangle((w * .713f), (h * .59f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds6 = new Rectangle((w * .813f), (h * .59f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds7 = new Rectangle((w * .613f), (h * .425f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds8 = new Rectangle((w * .713f), (h * .425f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds9 = new Rectangle((w * .813f), (h * .425f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds10 = new Rectangle((w * .613f), (h * .295f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds11 = new Rectangle((w * .713f), (h * .295f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds12 = new Rectangle((w * .813f), (h * .295f), (w * .111f), (h * .055f));
         destroyItemBoundsList = new ArrayList<Rectangle>();
         destroyItemBoundsList.add(destroyItemBounds1);
         destroyItemBoundsList.add(destroyItemBounds2);
@@ -117,18 +122,18 @@ public class WorldRenderer {
         destroyItemBoundsList.add(destroyItemBounds11);
         destroyItemBoundsList.add(destroyItemBounds12);
 
-        Rectangle useItemBounds1 = new Rectangle(1100, 900, 220, 80);
-        Rectangle useItemBounds2 = new Rectangle(1280, 900, 220, 80);
-        Rectangle useItemBounds3 = new Rectangle(1460, 900, 220, 80);
-        Rectangle useItemBounds4 = new Rectangle(1100, 720, 220, 80);
-        Rectangle useItemBounds5 = new Rectangle(1280, 720, 220, 80);
-        Rectangle useItemBounds6 = new Rectangle(1460, 720, 220, 80);
-        Rectangle useItemBounds7 = new Rectangle(1100, 540, 220, 80);
-        Rectangle useItemBounds8 = new Rectangle(1280, 540, 220, 80);
-        Rectangle useItemBounds9 = new Rectangle(1460, 540, 220, 80);
-        Rectangle useItemBounds10 = new Rectangle(1100, 360, 220, 80);
-        Rectangle useItemBounds11 = new Rectangle(1280, 360, 220, 80);
-        Rectangle useItemBounds12 = new Rectangle(1460, 360, 220, 80);
+        Rectangle useItemBounds1 = new Rectangle((w * .613f), (h * .833f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds2 = new Rectangle((w * .713f), (h * .833f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds3 = new Rectangle((w * .813f), (h * .833f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds4 = new Rectangle((w * .613f), (h * .666f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds5 = new Rectangle((w * .713f), (h * .666f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds6 = new Rectangle((w * .813f), (h * .666f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds7 = new Rectangle((w * .613f), (h * .5f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds8 = new Rectangle((w * .713f), (h * .5f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds9 = new Rectangle((w * .813f), (h * .5f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds10 = new Rectangle((w * .613f), (h * .333f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds11 = new Rectangle((w * .713f), (h * .333f), (w * .122f), (h * .074f));
+        Rectangle useItemBounds12 = new Rectangle((w * .813f), (h * .333f), (w * .122f), (h * .074f));
         useItemBoundsList = new ArrayList<Rectangle>();
         useItemBoundsList.add(useItemBounds1);
         useItemBoundsList.add(useItemBounds2);
@@ -145,18 +150,18 @@ public class WorldRenderer {
 
         inventoryUnitBoundsList = new ArrayList<Rectangle>();
         currentInventoryUnitBoundsList = new ArrayList<Rectangle>();
-        Rectangle inventoryUnitBounds1 = new Rectangle(1300, 840, 170, 140);
-        Rectangle inventoryUnitBounds2 = new Rectangle(1480, 840, 170, 140);
-        Rectangle inventoryUnitBounds3 = new Rectangle(1660, 840, 170, 140);
-        Rectangle inventoryUnitBounds4 = new Rectangle(1300, 650, 170, 140);
-        Rectangle inventoryUnitBounds5 = new Rectangle(1480, 650, 170, 140);
-        Rectangle inventoryUnitBounds6 = new Rectangle(1660, 650, 170, 140);
-        Rectangle inventoryUnitBounds7 = new Rectangle(1300, 460, 170, 140);
-        Rectangle inventoryUnitBounds8 = new Rectangle(1480, 460, 170, 140);
-        Rectangle inventoryUnitBounds9 = new Rectangle(1660, 460, 170, 140);
-        Rectangle inventoryUnitBounds10 = new Rectangle(1300, 270, 170, 140);
-        Rectangle inventoryUnitBounds11 = new Rectangle(1480, 270, 170, 140);
-        Rectangle inventoryUnitBounds12 = new Rectangle(1660, 270, 170, 140);
+        Rectangle inventoryUnitBounds1 = new Rectangle((w * .724f), (h * .777f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds2 = new Rectangle((w * .824f), (h * .777f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds3 = new Rectangle((w * .925f), (h * .777f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds4 = new Rectangle((w * .724f), (h * .601f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds5 = new Rectangle((w * .824f), (h * .601f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds6 = new Rectangle((w * .925f), (h * .601f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds7 = new Rectangle((w * .724f), (h * .425f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds8 = new Rectangle((w * .824f), (h * .425f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds9 = new Rectangle((w * .925f), (h * .425f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds10 = new Rectangle((w * .724f), (h * .25f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds11 = new Rectangle((w * .824f), (h * .25f), (w * .094f), (h * .129f));
+        Rectangle inventoryUnitBounds12 = new Rectangle((w * .925f), (h * .25f), (w * .094f), (h * .129f));
         inventoryUnitBoundsList.add(inventoryUnitBounds1);
         inventoryUnitBoundsList.add(inventoryUnitBounds2);
         inventoryUnitBoundsList.add(inventoryUnitBounds3);
@@ -169,21 +174,19 @@ public class WorldRenderer {
         inventoryUnitBoundsList.add(inventoryUnitBounds10);
         inventoryUnitBoundsList.add(inventoryUnitBounds11);
         inventoryUnitBoundsList.add(inventoryUnitBounds12);
-        aButtonBounds = new Rectangle(1540, 70, 196, 196);
-        bagButtonBounds = new Rectangle(1230, 30, 170, 150);
-        armorButtonBounds = new Rectangle(470, Gdx.graphics.getHeight() - 170, 170, 170);
+        aButtonBounds = new Rectangle((w * .858f), (h * .064f), (w * .109f), (h * .181f));
+        bagButtonBounds = new Rectangle((w * .685f), (h * .027f), (w * .094f), (h * .138f));
+        armorButtonBounds = new Rectangle((w * .261f), h - (h * .157f), (w * .094f), (h * .157f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
-        levelFont.setScale(3, 3);
+        levelFont.setScale((w * .0016f), (h * .0027f));
         coinFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         coinFont.setColor(1, 1, 0, 1);
-        coinFont.setScale(2, 2);
+        coinFont.setScale((w * .0011f), (h * .0018f));
         coinFont2 = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         coinFont2.setColor(0, 0, 0, 1);
-        coinFont2.setScale(2, 2);
+        coinFont2.setScale((w * .0011f), (h * .0018f));
         shapeRenderer = new ShapeRenderer();
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
@@ -239,38 +242,38 @@ public class WorldRenderer {
             showInventoryOptionsOffsetX = 0;
             showInventoryOptionsOffsetY = 0;
         } else if (input == 2) {
-            showInventoryOptionsOffsetX = 170;
+            showInventoryOptionsOffsetX = (int) (w * .094f);
             showInventoryOptionsOffsetY = 0;
         } else if (input == 3) {
-            showInventoryOptionsOffsetX = 340;
+            showInventoryOptionsOffsetX = (int) (w * .189f);
             showInventoryOptionsOffsetY = 0;
         } else if (input == 4) {
             showInventoryOptionsOffsetX = 0;
-            showInventoryOptionsOffsetY = 180;
+            showInventoryOptionsOffsetY = (int) (h * .166f);
         } else if (input == 5) {
-            showInventoryOptionsOffsetX = 170;
-            showInventoryOptionsOffsetY = 180;
+            showInventoryOptionsOffsetX = (int) (w * .094f);
+            showInventoryOptionsOffsetY = (int) (h * .166f);
         } else if (input == 6) {
-            showInventoryOptionsOffsetX = 340;
-            showInventoryOptionsOffsetY = 180;
+            showInventoryOptionsOffsetX = (int) (w * .189f);
+            showInventoryOptionsOffsetY = (int) (h * .166f);
         } else if (input == 7) {
             showInventoryOptionsOffsetX = 0;
-            showInventoryOptionsOffsetY = 360;
+            showInventoryOptionsOffsetY = (int) (h * .333f);
         } else if (input == 8) {
-            showInventoryOptionsOffsetX = 170;
-            showInventoryOptionsOffsetY = 360;
+            showInventoryOptionsOffsetX = (int) (w * .094f);
+            showInventoryOptionsOffsetY = (int) (h * .333f);
         } else if (input == 9) {
-            showInventoryOptionsOffsetX = 340;
-            showInventoryOptionsOffsetY = 360;
+            showInventoryOptionsOffsetX = (int) (w * .189f);
+            showInventoryOptionsOffsetY = (int) (h * .333f);
         } else if (input == 10) {
             showInventoryOptionsOffsetX = 0;
-            showInventoryOptionsOffsetY = 540;
+            showInventoryOptionsOffsetY = (int) (h * .5f);
         } else if (input == 11) {
-            showInventoryOptionsOffsetX = 170;
-            showInventoryOptionsOffsetY = 540;
+            showInventoryOptionsOffsetX = (int) (w * .094f);
+            showInventoryOptionsOffsetY = (int) (h * .5f);
         } else if (input == 12) {
-            showInventoryOptionsOffsetX = 340;
-            showInventoryOptionsOffsetY = 540;
+            showInventoryOptionsOffsetX = (int) (w * .189f);
+            showInventoryOptionsOffsetY = (int) (h * .5f);
         }
         currentlySelectedItemIndex = input - 1;
 
@@ -279,8 +282,8 @@ public class WorldRenderer {
     }
 
     public void addRetryBounds() {
-        retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - 960, aButtonBounds.getY() + 270, 250, 200);
-        retryNoButtonBounds = new Rectangle(aButtonBounds.getX() - 560, aButtonBounds.getY() + 270, 250, 200);
+        retryYesButtonBounds = new Rectangle(aButtonBounds.getX() - (w * .535f), aButtonBounds.getY() + (h * .25f), (w * .139f), (h * .185f));
+        retryNoButtonBounds = new Rectangle(aButtonBounds.getX() - (w * .312f), aButtonBounds.getY() + (h * .25f), (w * .139f), (h * .185f));
     }
 
     private void slurpFrames() {
@@ -291,14 +294,14 @@ public class WorldRenderer {
 
     public void addHero(float w, float h) {
         heroSprite = new Sprite(firstPandaFrames[0]);
-        heroSprite.setSize(96, 96);
+        heroSprite.setSize((w * .053f), (h * .088f));
         heroSprite.setPosition(w / 2, h / 2);
         World.hero = new Hero(w / 2, h / 2);
     }
 
     public void addFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
-        fireballSprite.setSize(32, 32);
+        fireballSprite.setSize((h * .029f), (h * .029f));
         float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
         if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
@@ -326,7 +329,7 @@ public class WorldRenderer {
 
     public void addEnemyFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
-        fireballSprite.setSize(32, 32);
+        fireballSprite.setSize((h * .029f), (h * .029f));
         float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
         if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
@@ -644,7 +647,7 @@ public class WorldRenderer {
 
     private void setupControlSprites(float w) {
         dpadSprite = new Sprite(Assets.dpad);
-        dpadSprite.setPosition(135, 135);
+        dpadSprite.setPosition((w * .075f), (w * .075f));
 
         aButtonSprite = new Sprite(Assets.aButton);
         bagButtonSprite = new Sprite(Assets.bagButton);
@@ -705,15 +708,15 @@ public class WorldRenderer {
 
     private void addBossSprite(float x, float y) {
         Sprite bossSprite = new Sprite(pumpkinBossFrames[0]);
-        bossSprite.setSize(128, 128);
-        bossSprite.setPosition(x - 200, y - 200);
+        bossSprite.setSize((w * .071f), (h * .118f));
+        bossSprite.setPosition(x - (w * .111f), y - (h * .185f));
         tiledMapRenderer.addSprite(bossSprite);
         World.bossList.add(new Boss(x, y, bossSprite, World.BossTypes.PUMPKIN_BOSS));
     }
 
     private void addWallSprite(float x, float y) {
         Sprite wallSprite = new Sprite(Assets.wall);
-        wallSprite.setSize(64, 64);
+        wallSprite.setSize((w * .035f), (h * .059f));
         wallSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(wallSprite);
         World.wallList.add(new Wall(x, y, wallSprite));
@@ -721,7 +724,7 @@ public class WorldRenderer {
 
     private void addCoinsSprite(float x, float y) {
         Sprite coinsSprite = new Sprite(Assets.coins);
-        coinsSprite.setSize(32, 32);
+        coinsSprite.setSize((w * .017f), (h * .029f));
         coinsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(coinsSprite);
         World.coinsList.add(new Coins(x, y, coinsSprite));
@@ -729,7 +732,7 @@ public class WorldRenderer {
 
     private void addBossKeySprite(float x, float y) {
         Sprite bossKeySprite = new Sprite(Assets.bossKey);
-        bossKeySprite.setSize(32, 32);
+        bossKeySprite.setSize((w * .017f), (h * .029f));
         bossKeySprite.setPosition(x, y);
         tiledMapRenderer.addSprite(bossKeySprite);
         BossKey bossKey = new BossKey(x, y, bossKeySprite);
@@ -739,7 +742,7 @@ public class WorldRenderer {
 
     private void addSwordSprite(float x, float y) {
         Sprite swordSprite = new Sprite(Assets.swordSprite);
-        swordSprite.setSize(64, 64);
+        swordSprite.setSize((w * .035f), (h * .059f));
         swordSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(swordSprite);
         Sword sword = new Sword(x, y, swordSprite);
@@ -749,7 +752,7 @@ public class WorldRenderer {
 
     private void addStaffSprite(float x, float y) {
         Sprite staffSprite = new Sprite(Assets.staffSprite);
-        staffSprite.setSize(64, 64);
+        staffSprite.setSize((w * .035f), (h * .059f));
         staffSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(staffSprite);
         Staff staff = new Staff(x, y, staffSprite);
@@ -760,19 +763,19 @@ public class WorldRenderer {
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {
         if (ninjaType == World.NinjaTypes.RED) {
             Sprite enemySprite = new Sprite(redNinjaFrames[0]);
-            enemySprite.setSize(96, 96);
+            enemySprite.setSize((w * .053f), (h * .088f));
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.redNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.RED));
         } else if (ninjaType == World.NinjaTypes.BLACK) {
             Sprite enemySprite = new Sprite(blackNinjaFrames[0]);
-            enemySprite.setSize(96, 96);
+            enemySprite.setSize((w * .053f), (h * .088f));
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.blackNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.BLACK));
         } else if (ninjaType == World.NinjaTypes.PURPLE) {
             Sprite enemySprite = new Sprite(purpleNinjaFrames[0]);
-            enemySprite.setSize(96, 96);
+            enemySprite.setSize((w * .053f), (h * .088f));
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE));
