@@ -13,6 +13,13 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static final int BOTTOM_OF_MAP = 0;
     public static final int TOP_OF_MAP = 7616;
     public static final float BUTTON_ACTION_BUFFER = 15;
+    public static float DPAD_X_MOVE_OFFSET ;
+    public static float DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET;
+    public static float DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET;
+    public static float DPAD_Y_MOVE_DOWN_OFFSET;
+    public static float DPAD_Y_MOVE_UP_OFFSET;
+    public static float HERO_X_BOUNDS_OFFSET;
+    public static float HERO_Y_BOUNDS_OFFSET;
     float lastActionTime = 0;
     float testActionTime = 0;
     float deltaTime;
@@ -32,9 +39,22 @@ public class PandaSurvivor extends ApplicationAdapter {
         Assets.load();
         worldRenderer = new WorldRenderer();
         world = new World(null, worldRenderer);
+
+        setConstants();
+
         game_state = GAME_STATES.RUNNING;
         firstFingerAlreadyDown = false;
         secondFingerAlreadyDown = false;
+    }
+
+    private void setConstants() {
+        DPAD_X_MOVE_OFFSET = (WorldRenderer.w * .075f);
+        DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET = (WorldRenderer.h * .166f);
+        DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET = (WorldRenderer.h * .095f);
+        DPAD_Y_MOVE_DOWN_OFFSET = (WorldRenderer.h * .117f);
+        DPAD_Y_MOVE_UP_OFFSET = (WorldRenderer.h * .174f);
+        HERO_X_BOUNDS_OFFSET = (WorldRenderer.w * .0066f);
+        HERO_Y_BOUNDS_OFFSET = (WorldRenderer.h * .011f);
     }
 
     @Override
@@ -171,49 +191,49 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void handleDpadMovement(Vector3 position, float heroOriginalX, float heroOriginalY) {
-        if (position.y < (WorldRenderer.dpadSprite.getY() + (WorldRenderer.h * .166f)) && position.y > (WorldRenderer.dpadSprite.getY() + (WorldRenderer.h * .044f))) {
-            if (position.x < (WorldRenderer.dpadSprite.getX() + (WorldRenderer.w * .092f)) && heroOriginalX > LEFT_SIDE_OF_MAP) {
+        if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET) && position.y > (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET)) {
+            if (position.x < (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX > LEFT_SIDE_OF_MAP) {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, 10, true);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, HERO_X_BOUNDS_OFFSET, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.LEFT);
-            } else if (position.x > (WorldRenderer.dpadSprite.getX() + (WorldRenderer.w * .092f)) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
+            } else if (position.x > (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
                 World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
                 World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, 10, true);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, HERO_X_BOUNDS_OFFSET, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
             }
         } else {
-            if (position.y < (WorldRenderer.dpadSprite.getY() + (WorldRenderer.h * .115f)) && heroOriginalY > BOTTOM_OF_MAP) {
+            if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_DOWN_OFFSET) && heroOriginalY > BOTTOM_OF_MAP) {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, 10, true);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, HERO_Y_BOUNDS_OFFSET, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.DOWN);
-            } else if (position.y > (WorldRenderer.dpadSprite.getY() + (WorldRenderer.h * .174f)) && heroOriginalY < TOP_OF_MAP) {
+            } else if (position.y > (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_UP_OFFSET) && heroOriginalY < TOP_OF_MAP) {
                 //up
                 World.hero.setCurrentDirection(World.HeroDirections.UP);
                 World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
                 World.hero.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, 10, true);
+                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, HERO_Y_BOUNDS_OFFSET, true);
                 World.hero.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);

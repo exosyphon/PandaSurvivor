@@ -15,8 +15,25 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+// Tested using a screen size of 1794 by 1080 Nexus 5
 public class WorldRenderer {
+    public static float w = Gdx.graphics.getWidth();
+    public static float h = Gdx.graphics.getHeight();
+
     public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
+    public static final float FIREBALL_WIDTH = (h * .029f);
+    public static final float FIREBALL_HEIGHT = (h * .029f);
+    public static final float FIREBALL_Y_POSITION = (h * .022f);
+    public static final float BOSS_KEY_WIDTH = (w * .017f);
+    public static final float BOSS_KEY_HEIGHT = (h * .029f);
+    public static final float COINS_WIDTH = (w * .017f);
+    public static final float COINS_HEIGHT = (h * .029f);
+    public static final float SWORD_WIDTH = (w * .035f);
+    public static final float SWORD_HEIGHT = (h * .059f);
+    public static final float STAFF_WIDTH = (w * .035f);
+    public static final float STAFF_HEIGHT = (h * .059f);
+    public static final float NINJA_WIDTH = (w * .053f);
+    public static final float NINJA_HEIGHT = (h * .088f);
     public static Rectangle aButtonBounds;
     public static Rectangle bagButtonBounds;
     public static Rectangle armorButtonBounds;
@@ -88,13 +105,8 @@ public class WorldRenderer {
     Animation blackNinjaUpAnimation;
 
     TiledMap tiledMap;
-    public static float w;
-    public static float h;
 
     public WorldRenderer() {
-        w = Gdx.graphics.getWidth();
-        h = Gdx.graphics.getHeight();
-
         currentlySelectedItemIndex = 0;
         Rectangle destroyItemBounds1 = new Rectangle((w * .613f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds2 = new Rectangle((w * .713f), (h * .76f), (w * .111f), (h * .055f));
@@ -301,13 +313,15 @@ public class WorldRenderer {
 
     public void addFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
-        fireballSprite.setSize((h * .029f), (h * .029f));
-        float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        fireballSprite.setSize(FIREBALL_WIDTH, FIREBALL_HEIGHT);
+        float fireballSpriteXOffset;
         if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
-        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
+        else
+            fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION);
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite, direction));
+        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction));
     }
 
     public void updateControlSprites(float heroOriginalX, float heroOriginalY, World.HeroDirections direction) {
@@ -329,13 +343,15 @@ public class WorldRenderer {
 
     public void addEnemyFireballSprite(float x, float y, World.HeroDirections direction) {
         Sprite fireballSprite = new Sprite(Assets.fireball);
-        fireballSprite.setSize((h * .029f), (h * .029f));
-        float fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        fireballSprite.setSize(FIREBALL_WIDTH, FIREBALL_HEIGHT);
+        float fireballSpriteXOffset;
         if (direction == World.HeroDirections.LEFT)
             fireballSpriteXOffset = heroSprite.getWidth() / 3;
-        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4));
+        else
+            fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        fireballSprite.setPosition(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION);
         tiledMapRenderer.addSprite(fireballSprite);
-        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + (heroSprite.getHeight() / 4), fireballSprite, direction));
+        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
@@ -724,7 +740,7 @@ public class WorldRenderer {
 
     private void addCoinsSprite(float x, float y) {
         Sprite coinsSprite = new Sprite(Assets.coins);
-        coinsSprite.setSize((w * .017f), (h * .029f));
+        coinsSprite.setSize(COINS_WIDTH, COINS_HEIGHT);
         coinsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(coinsSprite);
         World.coinsList.add(new Coins(x, y, coinsSprite));
@@ -732,7 +748,7 @@ public class WorldRenderer {
 
     private void addBossKeySprite(float x, float y) {
         Sprite bossKeySprite = new Sprite(Assets.bossKey);
-        bossKeySprite.setSize((w * .017f), (h * .029f));
+        bossKeySprite.setSize(BOSS_KEY_WIDTH, BOSS_KEY_HEIGHT);
         bossKeySprite.setPosition(x, y);
         tiledMapRenderer.addSprite(bossKeySprite);
         BossKey bossKey = new BossKey(x, y, bossKeySprite);
@@ -742,7 +758,7 @@ public class WorldRenderer {
 
     private void addSwordSprite(float x, float y) {
         Sprite swordSprite = new Sprite(Assets.swordSprite);
-        swordSprite.setSize((w * .035f), (h * .059f));
+        swordSprite.setSize(SWORD_WIDTH, SWORD_HEIGHT);
         swordSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(swordSprite);
         Sword sword = new Sword(x, y, swordSprite);
@@ -752,7 +768,7 @@ public class WorldRenderer {
 
     private void addStaffSprite(float x, float y) {
         Sprite staffSprite = new Sprite(Assets.staffSprite);
-        staffSprite.setSize((w * .035f), (h * .059f));
+        staffSprite.setSize(STAFF_WIDTH, STAFF_HEIGHT);
         staffSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(staffSprite);
         Staff staff = new Staff(x, y, staffSprite);
@@ -763,19 +779,19 @@ public class WorldRenderer {
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {
         if (ninjaType == World.NinjaTypes.RED) {
             Sprite enemySprite = new Sprite(redNinjaFrames[0]);
-            enemySprite.setSize((w * .053f), (h * .088f));
+            enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.redNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.RED));
         } else if (ninjaType == World.NinjaTypes.BLACK) {
             Sprite enemySprite = new Sprite(blackNinjaFrames[0]);
-            enemySprite.setSize((w * .053f), (h * .088f));
+            enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.blackNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.BLACK));
         } else if (ninjaType == World.NinjaTypes.PURPLE) {
             Sprite enemySprite = new Sprite(purpleNinjaFrames[0]);
-            enemySprite.setSize((w * .053f), (h * .088f));
+            enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
             World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE));
