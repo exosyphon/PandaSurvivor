@@ -1,6 +1,5 @@
 package com.courter.pandasurvivor;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -39,6 +38,58 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y3;
 import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
 
 public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRenderer {
+    public static float INVENTORY_X_OFFSET;
+    public static float INVENTORY_Y_OFFSET;
+    public static float INVENTORY_X_OFFSET_2;
+    public static float INVENTORY_COLUMN_OFFSET;
+    public static float INVENTORY_Y_OFFSET_2;
+    public static float INVENTORY_ROW_OFFSET;
+    public static float INVENTORY_SPRITE_RENDER_X_SIZE;
+    public static float INVENTORY_SPRITE_RENDER_Y_SIZE;
+    public static float USE_DESTROY_X_OFFSET;
+    public static float USE_DESTROY_Y_OFFSET;
+    public static float USE_DESTROY_SPRITE_RENDER_X_SIZE;
+    public static float USE_DESTROY_SPRITE_RENDER_Y_SIZE;
+    public static float UNIT_SCALE;
+    public static float XP_LVL_FONT_X;
+    public static float XP_LVL_FONT_Y;
+    public static float COIN_BACKGROUND_FONT_X;
+    public static float COIN_BACKGROUND_FONT_Y;
+    public static float MONEY_INCREMENT_OFFSET;
+    public static float COIN_FONT_Y;
+    public static float COIN_FONT_X;
+    public static float DPAD_X;
+    public static float DPAD_Y;
+    public static float DPAD_RENDER_SIZE_X;
+    public static float DPAD_RENDER_SIZE_Y;
+    public static float A_BUTTON_X;
+    public static float A_BUTTON_Y;
+    public static float A_BUTTON_RENDER_X;
+    public static float A_BUTTON_RENDER_Y;
+    public static float BAG_BUTTON_X;
+    public static float BAG_BUTTON_Y;
+    public static float BAG_BUTTON_RENDER_X;
+    public static float BAG_BUTTON_RENDER_Y;
+    public static float HEALTH_BAR_Y;
+    public static float HEALTH_BAR_X;
+    public static float HEALTH_BAR_RENDER_X;
+    public static float HEALTH_BAR_RENDER_Y;
+    public static float ARMOR_BUTTON_X;
+    public static float ARMOR_BUTTON_Y;
+    public static float ARMOR_BUTTON_RENDER_X;
+    public static float ARMOR_BUTTON_RENDER_Y;
+    public static float XP_BAR_X;
+    public static float XP_BAR_Y;
+    public static float XP_BAR_RENDER_X;
+    public static float XP_BAR_RENDER_Y;
+    public static float HEALTH_FILL_X;
+    public static float HEALTH_FILL_Y;
+    public static float HEALTH_FILL_RENDER_Y;
+    public static float HEALTH_FILL_RENDER_X;
+    public static float XP_FILL_X;
+    public static float XP_FILL_Y;
+    public static float XP_FILL_RENDER_X;
+    public static float XP_FILL_RENDER_Y;
     private List<Sprite> sprites;
     private List<Sprite> controlSprites;
     private int backgroundLayer = 0;
@@ -53,6 +104,62 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         sprites = new ArrayList<Sprite>();
         controlSprites = new ArrayList<Sprite>();
         batcher = new SpriteBatch();
+        setConstants();
+    }
+    
+    private void setConstants() {
+        INVENTORY_X_OFFSET = WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f);
+        INVENTORY_Y_OFFSET = (WorldRenderer.h * .231f);
+        INVENTORY_X_OFFSET_2 = (WorldRenderer.w * .017f);
+        INVENTORY_COLUMN_OFFSET = (WorldRenderer.w * .094f);
+        INVENTORY_Y_OFFSET_2 = (WorldRenderer.h * .022f);
+        INVENTORY_ROW_OFFSET = (WorldRenderer.h * .166f);
+        INVENTORY_SPRITE_RENDER_X_SIZE = (WorldRenderer.w * .278f);
+        INVENTORY_SPRITE_RENDER_Y_SIZE = (WorldRenderer.h * .666f);
+        USE_DESTROY_X_OFFSET = (WorldRenderer.w * .418f);
+        USE_DESTROY_Y_OFFSET = (WorldRenderer.h * .254f);
+        USE_DESTROY_SPRITE_RENDER_X_SIZE = (WorldRenderer.w * .156f);
+        USE_DESTROY_SPRITE_RENDER_Y_SIZE = (WorldRenderer.h * .185f);
+        UNIT_SCALE = (WorldRenderer.h * .000925f);
+        XP_LVL_FONT_X = (WorldRenderer.w * .015f);
+        XP_LVL_FONT_Y = WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f);
+        COIN_BACKGROUND_FONT_X = (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .032f));
+        COIN_BACKGROUND_FONT_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .022f));
+        MONEY_INCREMENT_OFFSET = (WorldRenderer.w * .022f);
+        COIN_FONT_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .019f));
+        COIN_FONT_X = (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .034f));
+        DPAD_X = (WorldRenderer.w * .075f);
+        DPAD_Y = (WorldRenderer.h * .125f);
+        DPAD_RENDER_SIZE_X = (WorldRenderer.w * .142f);
+        DPAD_RENDER_SIZE_Y = (WorldRenderer.h * .237f);
+        A_BUTTON_X = ((WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .071f)) - (WorldRenderer.w * .075f));
+        A_BUTTON_Y = (WorldRenderer.h * .111f);
+        A_BUTTON_RENDER_X = (WorldRenderer.w * .071f);
+        A_BUTTON_RENDER_Y = (WorldRenderer.h * .118f);
+        BAG_BUTTON_X = (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .071f) - (WorldRenderer.w * .242f));
+        BAG_BUTTON_Y = (WorldRenderer.h * .037f);
+        BAG_BUTTON_RENDER_X = (WorldRenderer.w * .071f);
+        BAG_BUTTON_RENDER_Y = (WorldRenderer.h * .118f);
+        HEALTH_BAR_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .029f) - (WorldRenderer.h * .009f));
+        HEALTH_BAR_X = (WorldRenderer.w * .013f);
+        HEALTH_BAR_RENDER_X = (WorldRenderer.w * .214f);
+        HEALTH_BAR_RENDER_Y = (WorldRenderer.h * .029f);
+        ARMOR_BUTTON_X = ((WorldRenderer.w * .111f) + (WorldRenderer.w * .142f));
+        ARMOR_BUTTON_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .118f) - (WorldRenderer.h * .009f));
+        ARMOR_BUTTON_RENDER_X = (WorldRenderer.w * .071f);
+        ARMOR_BUTTON_RENDER_Y = (WorldRenderer.h * .118f);
+        XP_BAR_X = (WorldRenderer.w * .013f);
+        XP_BAR_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .029f) * 2 - (WorldRenderer.h * .018f));
+        XP_BAR_RENDER_X = (WorldRenderer.w * .214f);
+        XP_BAR_RENDER_Y = (WorldRenderer.h * .029f);
+        HEALTH_FILL_X = (WorldRenderer.w * .015f);
+        HEALTH_FILL_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .035f));
+        HEALTH_FILL_RENDER_Y = (WorldRenderer.h * .024f);
+        HEALTH_FILL_RENDER_X = (WorldRenderer.w * .208f);
+        XP_FILL_X = (WorldRenderer.w * .015f);
+        XP_FILL_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f));
+        XP_FILL_RENDER_X = (WorldRenderer.w * .208f);
+        XP_FILL_RENDER_Y = (WorldRenderer.h * .024f);
     }
 
     public void addSprite(Sprite sprite) {
@@ -109,16 +216,16 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         batcher.begin();
         if (WorldRenderer.showInventory) {
-            batcher.draw(WorldRenderer.inventorySprite, WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f), WorldRenderer.camera.viewportHeight / 2 - (WorldRenderer.h * .231f), (WorldRenderer.w * .278f), (WorldRenderer.h * .666f));
-            float baseX = WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f);
-            float baseY = WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .231f);
+            batcher.draw(WorldRenderer.inventorySprite, INVENTORY_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - INVENTORY_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
+            float baseX = INVENTORY_X_OFFSET;
+            float baseY = WorldRenderer.camera.viewportHeight - INVENTORY_Y_OFFSET;
 
             int row = 0;
             int col = 0;
             ArrayList<Item> list = World.hero.getInventory();
             for (int x = 0; x < list.size(); x++) {
                 Item item = list.get(x);
-                batcher.draw(item.getSprite(), baseX + (WorldRenderer.w * .017f) + (col * (WorldRenderer.w * .094f)), baseY + (WorldRenderer.h * .022f) - (row * (WorldRenderer.h * .166f)), item.inventoryRenderX(), item.inventoryRenderY());
+                batcher.draw(item.getSprite(), baseX + INVENTORY_X_OFFSET_2 + (col * INVENTORY_COLUMN_OFFSET), baseY + INVENTORY_Y_OFFSET_2 - (row * INVENTORY_ROW_OFFSET), item.inventoryRenderX(), item.inventoryRenderY());
                 if ((x+1) % 3 == 0)
                     row++;
                 col++;
@@ -128,37 +235,37 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
 
         if(WorldRenderer.showInventoryOptions) {
-            batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .418f) + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .254f) - WorldRenderer.showInventoryOptionsOffsetY, (WorldRenderer.w * .156f), (WorldRenderer.h * .185f));
+            batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
         }
 
         if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
             batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth / 2 - (WorldRenderer.w * .200f), WorldRenderer.camera.viewportHeight / 2 - (WorldRenderer.h * .333f), (WorldRenderer.w * .401f), (WorldRenderer.h * .666f));
         }
 
-        batcher.draw(WorldRenderer.dpadSprite, (WorldRenderer.w * .075f), (WorldRenderer.h * .125f), (WorldRenderer.w * .142f), (WorldRenderer.h * .237f));
-        batcher.draw(WorldRenderer.aButtonSprite, WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .071f) - (WorldRenderer.w * .075f), (WorldRenderer.h * .111f), (WorldRenderer.w * .071f), (WorldRenderer.h * .118f));
-        batcher.draw(WorldRenderer.bagButtonSprite, WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .071f) - (WorldRenderer.w * .242f), (WorldRenderer.h * .037f), (WorldRenderer.w * .071f), (WorldRenderer.h * .118f));
-        batcher.draw(WorldRenderer.healthBarSprite, (WorldRenderer.w * .013f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .029f) - (WorldRenderer.h * .009f), (WorldRenderer.w * .214f), (WorldRenderer.h * .029f));
-        batcher.draw(WorldRenderer.armorButtonSprite, (WorldRenderer.w * .111f) + (WorldRenderer.w * .142f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .118f) - (WorldRenderer.h * .009f), (WorldRenderer.w * .071f), (WorldRenderer.h * .118f));
-        batcher.draw(WorldRenderer.xpBarSprite, (WorldRenderer.w * .013f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .029f) * 2 - (WorldRenderer.h * .018f), (WorldRenderer.w * .214f), (WorldRenderer.h * .029f));
+        batcher.draw(WorldRenderer.dpadSprite, DPAD_X, DPAD_Y, DPAD_RENDER_SIZE_X, DPAD_RENDER_SIZE_Y);
+        batcher.draw(WorldRenderer.aButtonSprite, A_BUTTON_X, A_BUTTON_Y, A_BUTTON_RENDER_X, A_BUTTON_RENDER_Y);
+        batcher.draw(WorldRenderer.bagButtonSprite, BAG_BUTTON_X, BAG_BUTTON_Y, BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
+        batcher.draw(WorldRenderer.healthBarSprite, HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_RENDER_X, HEALTH_BAR_RENDER_Y);
+        batcher.draw(WorldRenderer.armorButtonSprite, ARMOR_BUTTON_X, ARMOR_BUTTON_Y, ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
+        batcher.draw(WorldRenderer.xpBarSprite, XP_BAR_X, XP_BAR_Y, XP_BAR_RENDER_X, XP_BAR_RENDER_Y);
         batcher.end();
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
-        WorldRenderer.shapeRenderer.rect((WorldRenderer.w * .015f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .035f), (WorldRenderer.w * .208f) * (World.hero.getHealth() * .01f), (WorldRenderer.h * .024f));
+        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * .01f), HEALTH_FILL_RENDER_Y);
         WorldRenderer.shapeRenderer.end();
 
         float xpPercentage = (float) World.hero.getCurrentXp() / World.hero.getCurrentLevelXpRequired();
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 0, 1, 1);
-        WorldRenderer.shapeRenderer.rect((WorldRenderer.w * .015f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f), (WorldRenderer.w * .208f) * (xpPercentage), (WorldRenderer.h * .024f));
+        WorldRenderer.shapeRenderer.rect(XP_FILL_X, XP_FILL_Y, XP_FILL_RENDER_X * (xpPercentage), XP_FILL_RENDER_Y);
         WorldRenderer.shapeRenderer.end();
         endRender();
 
         batcher.begin();
-        WorldRenderer.levelFont.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), (WorldRenderer.w * .015f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f));
-        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .032f) - (String.valueOf(World.hero.getMoneyTotal()).length() * (WorldRenderer.w * .022f)), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .022f));
-        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .034f) - (String.valueOf(World.hero.getMoneyTotal()).length() * (WorldRenderer.w * .022f)), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .019f));
+        WorldRenderer.levelFont.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), XP_LVL_FONT_X, XP_LVL_FONT_Y);
+        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_BACKGROUND_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * MONEY_INCREMENT_OFFSET), COIN_BACKGROUND_FONT_Y);
+        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * MONEY_INCREMENT_OFFSET), COIN_FONT_Y);
         batcher.end();
     }
 
@@ -171,8 +278,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         final int layerWidth = layer.getWidth();
         final int layerHeight = layer.getHeight();
 
-        final float layerTileWidth = layer.getTileWidth() * (WorldRenderer.h * .000925f);
-        final float layerTileHeight = layer.getTileHeight() * (WorldRenderer.h * .000925f);
+        final float layerTileWidth = layer.getTileWidth() * UNIT_SCALE;
+        final float layerTileHeight = layer.getTileHeight() * UNIT_SCALE;
 
         final int col1 = Math.max(0, (int) (viewBounds.x / layerTileWidth));
         final int col2 = Math.min(layerWidth, (int) ((viewBounds.x + viewBounds.width + layerTileWidth) / layerTileWidth));
@@ -201,10 +308,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
                     TextureRegion region = tile.getTextureRegion();
 
-                    float x1 = x + tile.getOffsetX() * (WorldRenderer.h * .000925f);
-                    float y1 = y + tile.getOffsetY() * (WorldRenderer.h * .000925f);
-                    float x2 = x1 + region.getRegionWidth() * (WorldRenderer.h * .000925f);
-                    float y2 = y1 + region.getRegionHeight() * (WorldRenderer.h * .000925f);
+                    float x1 = x + tile.getOffsetX() * UNIT_SCALE;
+                    float y1 = y + tile.getOffsetY() * UNIT_SCALE;
+                    float x2 = x1 + region.getRegionWidth() * UNIT_SCALE;
+                    float y2 = y1 + region.getRegionHeight() * UNIT_SCALE;
 
                     float u1 = region.getU();
                     float v1 = region.getV2();
@@ -322,8 +429,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
 
 
-        final float layerTileWidth = layer.getTileWidth() * (WorldRenderer.h * .000925f);
-        final float layerTileHeight = layer.getTileHeight() * (WorldRenderer.h * .000925f);
+        final float layerTileWidth = layer.getTileWidth() * UNIT_SCALE;
+        final float layerTileHeight = layer.getTileHeight() * UNIT_SCALE;
 
         final int col1 = Math.max(0, (int) (viewBounds.x / layerTileWidth));
         final int col2 = Math.min(layerWidth, (int) ((viewBounds.x + viewBounds.width + layerTileWidth) / layerTileWidth));
@@ -352,10 +459,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
                     TextureRegion region = tile.getTextureRegion();
 
-                    float x1 = x + tile.getOffsetX() * (WorldRenderer.h * .000925f);
-                    float y1 = y + tile.getOffsetY() * (WorldRenderer.h * .000925f);
-                    float x2 = x1 + region.getRegionWidth() * (WorldRenderer.h * .000925f);
-                    float y2 = y1 + region.getRegionHeight() * (WorldRenderer.h * .000925f);
+                    float x1 = x + tile.getOffsetX() * UNIT_SCALE;
+                    float y1 = y + tile.getOffsetY() * UNIT_SCALE;
+                    float x2 = x1 + region.getRegionWidth() * UNIT_SCALE;
+                    float y2 = y1 + region.getRegionHeight() * UNIT_SCALE;
 
                     float u1 = region.getU();
                     float v1 = region.getV2();

@@ -48,9 +48,9 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void setConstants() {
-        DPAD_X_MOVE_OFFSET = (WorldRenderer.w * .075f);
+        DPAD_X_MOVE_OFFSET = (WorldRenderer.w * .080f);
         DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET = (WorldRenderer.h * .166f);
-        DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET = (WorldRenderer.h * .095f);
+        DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET = (WorldRenderer.h * .054f);
         DPAD_Y_MOVE_DOWN_OFFSET = (WorldRenderer.h * .117f);
         DPAD_Y_MOVE_UP_OFFSET = (WorldRenderer.h * .174f);
         HERO_X_BOUNDS_OFFSET = (WorldRenderer.w * .0066f);
