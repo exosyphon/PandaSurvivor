@@ -13,7 +13,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static final int BOTTOM_OF_MAP = 0;
     public static final int TOP_OF_MAP = 7616;
     public static final float BUTTON_ACTION_BUFFER = 15;
-    public static float DPAD_X_MOVE_OFFSET ;
+    public static float DPAD_X_MOVE_OFFSET;
     public static float DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET;
     public static float DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET;
     public static float DPAD_Y_MOVE_DOWN_OFFSET;
@@ -48,7 +48,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void setConstants() {
-        DPAD_X_MOVE_OFFSET = (WorldRenderer.w * .080f);
+        DPAD_X_MOVE_OFFSET = (WorldRenderer.w * .075f);
         DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET = (WorldRenderer.h * .166f);
         DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET = (WorldRenderer.h * .054f);
         DPAD_Y_MOVE_DOWN_OFFSET = (WorldRenderer.h * .117f);
@@ -95,10 +95,14 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             if (testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
 //        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
+                float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
+                float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
                 for (GameObject gameObject : World.redNinjaList) {
                     Ninja ninja = (Ninja) gameObject;
-                    if (ninja.getCurrentDirection() == World.HeroDirections.RIGHT || ninja.getCurrentDirection() == World.HeroDirections.LEFT)
-                        worldRenderer.addEnemyFireballSprite(ninja.position.x, ninja.position.y, ninja.getCurrentDirection());
+                    if ((ninja.position.x < (x + WorldRenderer.w) && ninja.position.x > x) && ((ninja.position.y < (y + WorldRenderer.h) && ninja.position.y > y))) {
+                        if (ninja.getCurrentDirection() == World.HeroDirections.RIGHT || ninja.getCurrentDirection() == World.HeroDirections.LEFT)
+                            worldRenderer.addEnemyFireballSprite(ninja.position.x, ninja.position.y, ninja.getCurrentDirection());
+                    }
                 }
                 testActionTime = deltaTime;
             }
@@ -132,7 +136,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                     ArrayList<Item> inventory = World.hero.getInventory();
                     if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
                         World.ItemActions itemAction = inventory.get(WorldRenderer.currentlySelectedItemIndex).getItemAction();
-                        if(itemAction == World.ItemActions.SPAWN_BOSS) {
+                        if (itemAction == World.ItemActions.SPAWN_BOSS) {
                             worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
                         }
                         inventory.remove(WorldRenderer.currentlySelectedItemIndex);
