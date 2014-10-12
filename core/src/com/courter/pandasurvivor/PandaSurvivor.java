@@ -133,7 +133,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.toggleInventory();
             }
             if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
-                System.out.println("unicorn fun");
+                worldRenderer.toggleArmorView();
             }
             if (worldRenderer.showInventory) {
                 if (WorldRenderer.showInventoryOptions) {

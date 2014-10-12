@@ -40,12 +40,16 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
 public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRenderer {
     public static float INVENTORY_X_OFFSET;
     public static float INVENTORY_Y_OFFSET;
+    public static float ARMOR_VIEW_X_OFFSET;
+    public static float ARMOR_VIEW_Y_OFFSET;
     public static float INVENTORY_X_OFFSET_2;
     public static float INVENTORY_COLUMN_OFFSET;
     public static float INVENTORY_Y_OFFSET_2;
     public static float INVENTORY_ROW_OFFSET;
     public static float INVENTORY_SPRITE_RENDER_X_SIZE;
     public static float INVENTORY_SPRITE_RENDER_Y_SIZE;
+    public static float ARMOR_VIEW_SPRITE_RENDER_X_SIZE;
+    public static float ARMOR_VIEW_SPRITE_RENDER_Y_SIZE;
     public static float USE_DESTROY_X_OFFSET;
     public static float USE_DESTROY_Y_OFFSET;
     public static float USE_DESTROY_SPRITE_RENDER_X_SIZE;
@@ -110,12 +114,16 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private void setConstants() {
         INVENTORY_X_OFFSET = WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f);
         INVENTORY_Y_OFFSET = (WorldRenderer.h * .231f);
+        ARMOR_VIEW_X_OFFSET = WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f);
+        ARMOR_VIEW_Y_OFFSET = (WorldRenderer.h * .231f);
         INVENTORY_X_OFFSET_2 = (WorldRenderer.w * .017f);
         INVENTORY_COLUMN_OFFSET = (WorldRenderer.w * .094f);
         INVENTORY_Y_OFFSET_2 = (WorldRenderer.h * .022f);
         INVENTORY_ROW_OFFSET = (WorldRenderer.h * .166f);
         INVENTORY_SPRITE_RENDER_X_SIZE = (WorldRenderer.w * .278f);
         INVENTORY_SPRITE_RENDER_Y_SIZE = (WorldRenderer.h * .666f);
+        ARMOR_VIEW_SPRITE_RENDER_X_SIZE = (WorldRenderer.w * .278f);
+        ARMOR_VIEW_SPRITE_RENDER_Y_SIZE = (WorldRenderer.h * .666f);
         USE_DESTROY_X_OFFSET = (WorldRenderer.w * .418f);
         USE_DESTROY_Y_OFFSET = (WorldRenderer.h * .254f);
         USE_DESTROY_SPRITE_RENDER_X_SIZE = (WorldRenderer.w * .156f);
@@ -213,6 +221,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 }
             }
         }
+
+
+        batcher.begin();
+        if (WorldRenderer.showArmorView) {
+            batcher.draw(WorldRenderer.armorViewSprite, ARMOR_VIEW_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - ARMOR_VIEW_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
+        }
+        batcher.end();
 
         batcher.begin();
         if (WorldRenderer.showInventory) {

@@ -56,6 +56,7 @@ public class WorldRenderer {
     public static Sprite heroSprite;
     public static Sprite retrySprite;
     public static Sprite inventorySprite;
+    public static Sprite armorViewSprite;
     public static Sprite useDestroyInventoryOptionsSprite;
     public static List<Rectangle> inventoryUnitBoundsList;
     public static List<Rectangle> currentInventoryUnitBoundsList;
@@ -66,6 +67,7 @@ public class WorldRenderer {
     public static BitmapFont coinFont;
     public static BitmapFont coinFont2;
     public static boolean showInventory;
+    public static boolean showArmorView;
     public static boolean showInventoryOptions;
     public static int showInventoryOptionsOffsetX;
     public static int showInventoryOptionsOffsetY;
@@ -220,6 +222,7 @@ public class WorldRenderer {
 
         showInventory = false;
         showInventoryOptions = false;
+        showArmorView = false;
     }
 
     public void addInventoryUnitBounds(int inventorySize) {
@@ -240,10 +243,17 @@ public class WorldRenderer {
     }
 
     public void toggleInventory() {
+        this.showArmorView = false;
         this.showInventory = !showInventory;
-        if (!showInventory) {
-            showInventoryOptions = false;
+        if (!this.showInventory) {
+            this.showInventoryOptions = false;
         }
+    }
+
+    public void toggleArmorView() {
+        this.showArmorView = !showArmorView;
+        this.showInventory = false;
+        this.showInventoryOptions = false;
     }
 
     public void toggleInventoryOptions(int input) {
@@ -675,6 +685,7 @@ public class WorldRenderer {
 
         retrySprite = new Sprite(Assets.retryPrompt);
         inventorySprite = new Sprite(Assets.inventorySprite);
+        armorViewSprite = new Sprite(Assets.armorViewSprite);
         useDestroyInventoryOptionsSprite = new Sprite(Assets.useDestroyInventoryOptionsSprite);
     }
 

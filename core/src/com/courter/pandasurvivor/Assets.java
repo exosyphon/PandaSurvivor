@@ -21,6 +21,7 @@ public class Assets {
     public static Texture inventorySprite;
     public static Texture useDestroyInventoryOptionsSprite;
     public static Texture armorButton;
+    public static Texture armorViewSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -44,5 +45,6 @@ public class Assets {
         useDestroyInventoryOptionsSprite = loadTexture("use_destroy.png");
         swordSprite = loadTexture("sword.png");
         staffSprite = loadTexture("staff.png");
+        armorViewSprite = loadTexture("armor_view.png");
     }
 }
