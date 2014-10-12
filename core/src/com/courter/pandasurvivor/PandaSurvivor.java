@@ -139,9 +139,12 @@ public class PandaSurvivor extends ApplicationAdapter {
                 if (WorldRenderer.showInventoryOptions) {
                     ArrayList<Item> inventory = World.hero.getInventory();
                     if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
-                        World.ItemActions itemAction = inventory.get(WorldRenderer.currentlySelectedItemIndex).getItemAction();
+                        Item item = inventory.get(WorldRenderer.currentlySelectedItemIndex);
+                        World.ItemActions itemAction = item.getItemAction();
                         if (itemAction == World.ItemActions.SPAWN_BOSS) {
                             worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
+                        } else if (itemAction == World.ItemActions.EQUIP) {
+                            World.hero.equipItem(item);
                         }
                         inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                         worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);

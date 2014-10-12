@@ -258,31 +258,45 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.begin();
         if (WorldRenderer.showArmorView) {
             batcher.draw(WorldRenderer.armorViewSprite, ARMOR_VIEW_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - ARMOR_VIEW_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
-            if (true) {
+            if (World.hero.hasHelmetEquipped()) {
+                batcher.draw(World.hero.getHelmetSprite(), ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            } else {
                 batcher.draw(WorldRenderer.emptyHelmetSprite, ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (true) {
+            if (World.hero.hasChestpieceEquipped()) {
+                batcher.draw(World.hero.getChestpieceSprite(), ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            } else {
                 batcher.draw(WorldRenderer.emptyChestpieceSprite, ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
-            if (true) {
+            if (World.hero.hasBracersEquipped()) {
+                batcher.draw(World.hero.getBracersSprite(), ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            } else {
                 batcher.draw(WorldRenderer.emptyBracersSprite, ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (true) {
+            if (World.hero.hasGlovesEquipped()) {
+                batcher.draw(World.hero.getGlovesSprite(), ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            } else {
                 batcher.draw(WorldRenderer.emptyGloveSprite, ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (true) {
+            if (World.hero.hasStaffEquipped()) {
+                batcher.draw(World.hero.getStaffSprite(), ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            } else {
                 batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
-            if (true) {
+            if (World.hero.hasPantsEquipped()) {
+                batcher.draw(World.hero.getPantsSprite(), ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            } else {
                 batcher.draw(WorldRenderer.emptyPantsSprite, ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
-            if (true) {
+            if (World.hero.hasBootsEquipped()) {
+                batcher.draw(World.hero.getBootsSprite(), ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            } else {
                 batcher.draw(WorldRenderer.emptyBootsSprite, ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
         }

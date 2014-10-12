@@ -1,10 +1,16 @@
 package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Hero extends GameObject {
+    enum GearSlot {
+        BOOTS, PANTS, CHESTPIECE, HELMET, STAFF, GLOVES, BRACERS
+    }
+
     public static final float WALKING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .018f);
     public static final float WALKING_BOUNDS_HERO_WIDTH = (Gdx.graphics.getWidth() * .011f);
 
@@ -27,6 +33,7 @@ public class Hero extends GameObject {
     private long bossKillCount;
     private ArrayList<Item> inventory;
     private int maxInventorySize;
+    private HashMap<Enum, Item> equippedGear;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -49,6 +56,69 @@ public class Hero extends GameObject {
         this.bossKillCount = 0;
         this.inventory = new ArrayList<Item>();
         this.maxInventorySize = 12;
+        this.equippedGear = new HashMap<Enum, Item>();
+    }
+
+    public boolean hasHelmetEquipped() {
+        return (equippedGear.containsKey(GearSlot.HELMET)) ? true : false;
+    }
+
+    public Sprite getHelmetSprite() {
+        return equippedGear.get(GearSlot.HELMET).getSprite();
+    }
+
+    public boolean hasStaffEquipped() {
+        return (equippedGear.containsKey(GearSlot.STAFF)) ? true : false;
+    }
+
+    public Sprite getStaffSprite() {
+        return equippedGear.get(GearSlot.STAFF).getSprite();
+    }
+
+    public boolean hasChestpieceEquipped() {
+        return (equippedGear.containsKey(GearSlot.CHESTPIECE)) ? true : false;
+    }
+
+    public Sprite getChestpieceSprite() {
+        return equippedGear.get(GearSlot.CHESTPIECE).getSprite();
+    }
+
+    public boolean hasBracersEquipped() {
+        return (equippedGear.containsKey(GearSlot.BRACERS)) ? true : false;
+    }
+
+    public Sprite getBracersSprite() {
+        return equippedGear.get(GearSlot.BRACERS).getSprite();
+    }
+
+    public boolean hasGlovesEquipped() {
+        return (equippedGear.containsKey(GearSlot.GLOVES)) ? true : false;
+    }
+
+    public Sprite getGlovesSprite() {
+        return equippedGear.get(GearSlot.GLOVES).getSprite();
+    }
+
+    public boolean hasBootsEquipped() {
+        return (equippedGear.containsKey(GearSlot.BOOTS)) ? true : false;
+    }
+
+    public Sprite getBootsSprite() {
+        return equippedGear.get(GearSlot.BOOTS).getSprite();
+    }
+
+    public boolean hasPantsEquipped() {
+        return (equippedGear.containsKey(GearSlot.PANTS)) ? true : false;
+    }
+
+    public Sprite getPantsSprite() {
+        return equippedGear.get(GearSlot.PANTS).getSprite();
+    }
+
+    public void equipItem(Item item) {
+        if (item.getClass() == Staff.class) {
+            equippedGear.put(GearSlot.STAFF, item);
+        }
     }
 
     public void update(float deltaTime) {
