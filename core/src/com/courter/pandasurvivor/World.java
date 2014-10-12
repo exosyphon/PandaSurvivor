@@ -102,7 +102,7 @@ public class World {
         generateLevel();
         setConstants();
     }
-    
+
     private void setConstants() {
         BOSS_COLLISION_X_BOUNDS_OFFSET = (WorldRenderer.h * .06f);
         BOSS_COLLISION_Y_BOUNDS_OFFSET = (WorldRenderer.w * .036f);
@@ -274,8 +274,8 @@ public class World {
                 float heroOriginalY = hero.position.y;
                 if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
                     if (direction == HeroDirections.RIGHT) {
-                        enemy.position.x = hero.position.x - NINJA_KNOCKBACK_X;;
-                        hero.position.x = hero.position.x + NINJA_HERO_KNOCKBACK_X;;
+                        enemy.position.x = hero.position.x - NINJA_KNOCKBACK_X;
+                        hero.position.x = hero.position.x + NINJA_HERO_KNOCKBACK_X;
 
                         enemy.update(deltaTime);
                         enemy.getSprite().setPosition(enemy.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, enemy.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);

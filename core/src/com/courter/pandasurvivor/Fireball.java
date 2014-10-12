@@ -2,7 +2,7 @@ package com.courter.pandasurvivor;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Fireball extends DynamicGameObject{
+public class Fireball extends DynamicGameObject {
     public static final float FIREBALL_WIDTH = 1f;
     public static final float FIREBALL_HEIGHT = .5f;
     public static final int FIREBALL_SPEED = (int) (WorldRenderer.w * .418f);
@@ -21,17 +21,16 @@ public class Fireball extends DynamicGameObject{
         this.fireballDirection = direction;
     }
 
-    public void update(float deltaTime)
-    {
+    public void update(float deltaTime) {
         stateTime += deltaTime;
 
-        if(this.fireballDirection == World.HeroDirections.RIGHT)
+        if (this.fireballDirection == World.HeroDirections.RIGHT)
             position.add(velocity.x * deltaTime, 1 * deltaTime);
-        else if(this.fireballDirection == World.HeroDirections.LEFT)
+        else if (this.fireballDirection == World.HeroDirections.LEFT)
             position.add(-velocity.x * deltaTime, 1 * deltaTime);
-        else if(this.fireballDirection == World.HeroDirections.DOWN)
+        else if (this.fireballDirection == World.HeroDirections.DOWN)
             position.add(1 * deltaTime, -velocity.x * deltaTime);
-        else if(this.fireballDirection == World.HeroDirections.UP)
+        else if (this.fireballDirection == World.HeroDirections.UP)
             position.add(1 * deltaTime, velocity.x * deltaTime);
 
         bounds.x = position.x - FIREBALL_WIDTH / 2;

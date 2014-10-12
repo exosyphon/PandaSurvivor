@@ -275,11 +275,11 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             }
 
             if (true) {
-                batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X*2, ARMOR_PIECES_RENDER_SIZE_Y*2);
+                batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
             if (true) {
-                batcher.draw(WorldRenderer.emptyPantsSprite, ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X*2, ARMOR_PIECES_RENDER_SIZE_Y*2);
+                batcher.draw(WorldRenderer.emptyPantsSprite, ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
             if (true) {
@@ -300,15 +300,15 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             for (int x = 0; x < list.size(); x++) {
                 Item item = list.get(x);
                 batcher.draw(item.getSprite(), baseX + INVENTORY_X_OFFSET_2 + (col * INVENTORY_COLUMN_OFFSET), baseY + INVENTORY_Y_OFFSET_2 - (row * INVENTORY_ROW_OFFSET), item.inventoryRenderX(), item.inventoryRenderY());
-                if ((x+1) % 3 == 0)
+                if ((x + 1) % 3 == 0)
                     row++;
                 col++;
-                if(col > 2)
+                if (col > 2)
                     col = 0;
             }
         }
 
-        if(WorldRenderer.showInventoryOptions) {
+        if (WorldRenderer.showInventoryOptions) {
             batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
         }
 
@@ -500,7 +500,6 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         final int layerWidth = layer.getWidth();
         final int layerHeight = layer.getHeight();
-
 
 
         final float layerTileWidth = layer.getTileWidth() * UNIT_SCALE;
