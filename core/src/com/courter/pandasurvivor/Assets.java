@@ -22,6 +22,13 @@ public class Assets {
     public static Texture useDestroyInventoryOptionsSprite;
     public static Texture armorButton;
     public static Texture armorViewSprite;
+    public static Texture emptyBootsSprite;
+    public static Texture emptyBracersSprite;
+    public static Texture emptyChestpieceSprite;
+    public static Texture emptyPantsSprite;
+    public static Texture emptyStaffSprite;
+    public static Texture emptyGloveSprite;
+    public static Texture emptyHelmetSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -46,5 +53,12 @@ public class Assets {
         swordSprite = loadTexture("sword.png");
         staffSprite = loadTexture("staff.png");
         armorViewSprite = loadTexture("armor_view.png");
+        emptyHelmetSprite = loadTexture("empty_helmet.png");
+        emptyBootsSprite = loadTexture("empty_boots.png");
+        emptyBracersSprite = loadTexture("empty_bracers.png");
+        emptyChestpieceSprite = loadTexture("empty_chestpiece.png");
+        emptyGloveSprite = loadTexture("empty_glove.png");
+        emptyPantsSprite = loadTexture("empty_pants.png");
+        emptyStaffSprite = loadTexture("empty_staff.png");
     }
 }

@@ -38,6 +38,22 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y3;
 import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
 
 public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRenderer {
+    public static float ARMOR_BOOTS_POSITION_X;
+    public static float ARMOR_BOOTS_POSITION_Y;
+    public static float ARMOR_PANTS_POSITION_X;
+    public static float ARMOR_PANTS_POSITION_Y;
+    public static float ARMOR_STAFF_POSITION_Y;
+    public static float ARMOR_STAFF_POSITION_X;
+    public static float ARMOR_GLOVE_POSITION_X;
+    public static float ARMOR_GLOVE_POSITION_Y;
+    public static float ARMOR_BRACERS_POSITION_X;
+    public static float ARMOR_BRACERS_POSITION_Y;
+    public static float ARMOR_CHESTPIECE_POSITION_X;
+    public static float ARMOR_CHESTPIECE_POSITION_Y;
+    public static float ARMOR_PIECES_RENDER_SIZE_X;
+    public static float ARMOR_PIECES_RENDER_SIZE_Y;
+    public static float ARMOR_HELMET_POSITION_X;
+    public static float ARMOR_HELMET_POSITION_Y;
     public static float INVENTORY_X_OFFSET;
     public static float INVENTORY_Y_OFFSET;
     public static float ARMOR_VIEW_X_OFFSET;
@@ -110,7 +126,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher = new SpriteBatch();
         setConstants();
     }
-    
+
     private void setConstants() {
         INVENTORY_X_OFFSET = WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .289f);
         INVENTORY_Y_OFFSET = (WorldRenderer.h * .231f);
@@ -168,6 +184,22 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         XP_FILL_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f));
         XP_FILL_RENDER_X = (WorldRenderer.w * .208f);
         XP_FILL_RENDER_Y = (WorldRenderer.h * .024f);
+        ARMOR_HELMET_POSITION_X = (ARMOR_VIEW_X_OFFSET + (WorldRenderer.w * .115f));
+        ARMOR_HELMET_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .151f));
+        ARMOR_PIECES_RENDER_SIZE_X = (WorldRenderer.w * .035f);
+        ARMOR_PIECES_RENDER_SIZE_Y = (WorldRenderer.h * .059f);
+        ARMOR_CHESTPIECE_POSITION_X = (ARMOR_HELMET_POSITION_X - (WorldRenderer.w * .018f));
+        ARMOR_CHESTPIECE_POSITION_Y = (ARMOR_HELMET_POSITION_Y - (WorldRenderer.h * .111f));
+        ARMOR_BRACERS_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
+        ARMOR_BRACERS_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .259f));
+        ARMOR_GLOVE_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
+        ARMOR_GLOVE_POSITION_Y = (WorldRenderer.camera.viewportHeight - 190);
+        ARMOR_BOOTS_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
+        ARMOR_BOOTS_POSITION_Y = (WorldRenderer.camera.viewportHeight - 400);
+        ARMOR_PANTS_POSITION_X = (ARMOR_HELMET_POSITION_X - (WorldRenderer.w * .018f));
+        ARMOR_PANTS_POSITION_Y = (ARMOR_HELMET_POSITION_Y - 260);
+        ARMOR_STAFF_POSITION_Y = (WorldRenderer.camera.viewportHeight - 220);
+        ARMOR_STAFF_POSITION_X = (ARMOR_VIEW_X_OFFSET + 340);
     }
 
     public void addSprite(Sprite sprite) {
@@ -226,6 +258,33 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.begin();
         if (WorldRenderer.showArmorView) {
             batcher.draw(WorldRenderer.armorViewSprite, ARMOR_VIEW_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - ARMOR_VIEW_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
+            if (true) {
+                batcher.draw(WorldRenderer.emptyHelmetSprite, ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyChestpieceSprite, ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyBracersSprite, ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyGloveSprite, ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X*2, ARMOR_PIECES_RENDER_SIZE_Y*2);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyPantsSprite, ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X*2, ARMOR_PIECES_RENDER_SIZE_Y*2);
+            }
+
+            if (true) {
+                batcher.draw(WorldRenderer.emptyBootsSprite, ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            }
         }
         batcher.end();
 

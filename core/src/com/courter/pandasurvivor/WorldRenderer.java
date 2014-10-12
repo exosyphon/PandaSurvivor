@@ -58,6 +58,14 @@ public class WorldRenderer {
     public static Sprite inventorySprite;
     public static Sprite armorViewSprite;
     public static Sprite useDestroyInventoryOptionsSprite;
+    public static Sprite emptyBootsSprite;
+    public static Sprite emptyBracersSprite;
+    public static Sprite emptyPantsSprite;
+    public static Sprite emptyGloveSprite;
+    public static Sprite emptyChestpieceSprite;
+    public static Sprite emptyStaffSprite;
+    public static Sprite emptyHelmetSprite;
+
     public static List<Rectangle> inventoryUnitBoundsList;
     public static List<Rectangle> currentInventoryUnitBoundsList;
     public static OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
@@ -685,8 +693,16 @@ public class WorldRenderer {
 
         retrySprite = new Sprite(Assets.retryPrompt);
         inventorySprite = new Sprite(Assets.inventorySprite);
-        armorViewSprite = new Sprite(Assets.armorViewSprite);
         useDestroyInventoryOptionsSprite = new Sprite(Assets.useDestroyInventoryOptionsSprite);
+
+        armorViewSprite = new Sprite(Assets.armorViewSprite);
+        emptyBootsSprite = new Sprite(Assets.emptyBootsSprite);
+        emptyBracersSprite = new Sprite(Assets.emptyBracersSprite);
+        emptyPantsSprite = new Sprite(Assets.emptyPantsSprite);
+        emptyGloveSprite = new Sprite(Assets.emptyGloveSprite);
+        emptyChestpieceSprite = new Sprite(Assets.emptyChestpieceSprite);
+        emptyStaffSprite = new Sprite(Assets.emptyStaffSprite);
+        emptyHelmetSprite = new Sprite(Assets.emptyHelmetSprite);
     }
 
     private void renderFireballs() {
