@@ -13,6 +13,8 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static final int BOTTOM_OF_MAP = 0;
     public static final int TOP_OF_MAP = 7616;
     public static final float BUTTON_ACTION_BUFFER = 15;
+    public static float DPAD_EXTRA_X_SPACE;
+    public static float DPAD_EXTRA_Y_SPACE;
     public static float DPAD_X_MOVE_OFFSET;
     public static float DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET;
     public static float DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET;
@@ -55,6 +57,8 @@ public class PandaSurvivor extends ApplicationAdapter {
         DPAD_Y_MOVE_UP_OFFSET = (WorldRenderer.h * .174f);
         HERO_X_BOUNDS_OFFSET = (WorldRenderer.w * .0066f);
         HERO_Y_BOUNDS_OFFSET = (WorldRenderer.h * .011f);
+        DPAD_EXTRA_X_SPACE = (WorldRenderer.w * .156f);
+        DPAD_EXTRA_Y_SPACE = (WorldRenderer.h * .212f);
     }
 
     @Override
@@ -178,7 +182,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
                 handleAButtonPress(heroOriginalX, heroOriginalY);
-            } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.dpadSprite.getWidth() + 220) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.dpadSprite.getHeight() + 200)) {
+            } else if (clickPosition.x < (WorldRenderer.dpadSprite.getX() + WorldRenderer.DPAD_RENDER_SIZE_X + DPAD_EXTRA_X_SPACE) && clickPosition.y < (WorldRenderer.dpadSprite.getY() + WorldRenderer.DPAD_RENDER_SIZE_Y + DPAD_EXTRA_Y_SPACE)) {
                 handleDpadMovement(clickPosition, heroOriginalX, heroOriginalY);
             }
         }

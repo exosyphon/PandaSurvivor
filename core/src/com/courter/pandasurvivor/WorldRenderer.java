@@ -34,6 +34,8 @@ public class WorldRenderer {
     public static final float STAFF_HEIGHT = (h * .059f);
     public static final float NINJA_WIDTH = (w * .053f);
     public static final float NINJA_HEIGHT = (h * .088f);
+    public static final float DPAD_RENDER_SIZE_X = (w * .075f);
+    public static final float DPAD_RENDER_SIZE_Y = (w * .075f);
     public static Rectangle aButtonBounds;
     public static Rectangle bagButtonBounds;
     public static Rectangle armorButtonBounds;
@@ -663,7 +665,7 @@ public class WorldRenderer {
 
     private void setupControlSprites(float w) {
         dpadSprite = new Sprite(Assets.dpad);
-        dpadSprite.setPosition((w * .075f), (w * .075f));
+        dpadSprite.setPosition(DPAD_RENDER_SIZE_X, DPAD_RENDER_SIZE_Y);
 
         aButtonSprite = new Sprite(Assets.aButton);
         bagButtonSprite = new Sprite(Assets.bagButton);
