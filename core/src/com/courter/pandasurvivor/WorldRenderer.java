@@ -141,9 +141,9 @@ public class WorldRenderer {
         Rectangle destroyItemBounds7 = new Rectangle((w * .613f), (h * .425f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds8 = new Rectangle((w * .713f), (h * .425f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds9 = new Rectangle((w * .813f), (h * .425f), (w * .111f), (h * .055f));
-        Rectangle destroyItemBounds10 = new Rectangle((w * .613f), (h * .295f), (w * .111f), (h * .055f));
-        Rectangle destroyItemBounds11 = new Rectangle((w * .713f), (h * .295f), (w * .111f), (h * .055f));
-        Rectangle destroyItemBounds12 = new Rectangle((w * .813f), (h * .295f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds10 = new Rectangle((w * .613f), (h * .287f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds11 = new Rectangle((w * .713f), (h * .287f), (w * .111f), (h * .055f));
+        Rectangle destroyItemBounds12 = new Rectangle((w * .813f), (h * .287f), (w * .111f), (h * .055f));
         destroyItemBoundsList = new ArrayList<Rectangle>();
         destroyItemBoundsList.add(destroyItemBounds1);
         destroyItemBoundsList.add(destroyItemBounds2);
