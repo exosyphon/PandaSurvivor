@@ -38,6 +38,10 @@ public class WorldRenderer {
     public static final float BOOTS_HEIGHT = (h * .059f);
     public static final float GLOVES_WIDTH = (w * .035f);
     public static final float GLOVES_HEIGHT = (h * .059f);
+    public static final float BRACERS_WIDTH = (w * .035f);
+    public static final float BRACERS_HEIGHT = (h * .059f);
+    public static final float PANTS_WIDTH = (w * .035f);
+    public static final float PANTS_HEIGHT = (h * .059f);
     public static final float STAFF_WIDTH = (w * .035f);
     public static final float STAFF_HEIGHT = (h * .059f);
     public static final float NINJA_WIDTH = (w * .053f);
@@ -740,18 +744,22 @@ public class WorldRenderer {
     public void addGear(float x, float y) {
         float percentageChance = (float) Math.random() * 100;
 
-        if (percentageChance < 16) {
+        if (percentageChance < 12.5) {
             addSwordSprite(x, y);
-        } else if (percentageChance >= 16 && percentageChance <= 32) {
+        } else if (percentageChance >= 12.5 && percentageChance <= 25) {
             addStaffSprite(x, y);
-        } else if(percentageChance >= 32 && percentageChance <= 48) {
+        } else if (percentageChance >= 25 && percentageChance <= 37.5) {
             addClothHelmetSprite(x, y);
-        } else if(percentageChance >= 48 && percentageChance <= 64) {
+        } else if (percentageChance >= 37.5 && percentageChance <= 50) {
             addClothChestpieceSprite(x, y);
-        } else if(percentageChance >= 64 && percentageChance <= 80) {
+        } else if (percentageChance >= 50 && percentageChance <= 62.5) {
             addClothGlovesSprite(x, y);
-        } else {
+        } else if (percentageChance >= 62.5 && percentageChance <= 75) {
             addClothBootsSprite(x, y);
+        } else if (percentageChance >= 75 && percentageChance <= 87.5) {
+            addClothPantsSprite(x, y);
+        } else {
+            addClothBracersSprite(x, y);
         }
     }
 
@@ -849,6 +857,26 @@ public class WorldRenderer {
         Gloves gloves = new Gloves(x, y, clothGlovesSprite);
         gloves.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(gloves);
+    }
+
+    private void addClothBracersSprite(float x, float y) {
+        Sprite clothBracersSprite = new Sprite(Assets.clothBracersSprite);
+        clothBracersSprite.setSize(BRACERS_WIDTH, BRACERS_HEIGHT);
+        clothBracersSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(clothBracersSprite);
+        Bracers bracers = new Bracers(x, y, clothBracersSprite);
+        bracers.setItemAction(World.ItemActions.EQUIP);
+        World.itemsList.add(bracers);
+    }
+
+    private void addClothPantsSprite(float x, float y) {
+        Sprite clothPantsSprite = new Sprite(Assets.clothPantsSprite);
+        clothPantsSprite.setSize(PANTS_WIDTH, PANTS_HEIGHT);
+        clothPantsSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(clothPantsSprite);
+        Pants pants = new Pants(x, y, clothPantsSprite);
+        pants.setItemAction(World.ItemActions.EQUIP);
+        World.itemsList.add(pants);
     }
 
     private void addStaffSprite(float x, float y) {

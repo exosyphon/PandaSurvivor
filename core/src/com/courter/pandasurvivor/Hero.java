@@ -126,6 +126,10 @@ public class Hero extends GameObject {
             equippedGear.put(GearSlot.BOOTS, item);
         } else if (item.getClass() == Gloves.class) {
             equippedGear.put(GearSlot.GLOVES, item);
+        } else if (item.getClass() == Bracers.class) {
+            equippedGear.put(GearSlot.BRACERS, item);
+        } else if (item.getClass() == Pants.class) {
+            equippedGear.put(GearSlot.PANTS, item);
         }
     }
 
