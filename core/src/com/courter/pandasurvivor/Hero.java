@@ -120,6 +120,8 @@ public class Hero extends GameObject {
             equippedGear.put(GearSlot.STAFF, item);
         } else if (item.getClass() == Helmet.class) {
             equippedGear.put(GearSlot.HELMET, item);
+        } else if (item.getClass() == Chestpiece.class) {
+            equippedGear.put(GearSlot.CHESTPIECE, item);
         }
     }
 
