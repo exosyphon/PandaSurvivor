@@ -30,6 +30,8 @@ public class WorldRenderer {
     public static final float COINS_HEIGHT = (h * .029f);
     public static final float SWORD_WIDTH = (w * .035f);
     public static final float SWORD_HEIGHT = (h * .059f);
+    public static final float HELMET_WIDTH = (w * .035f);
+    public static final float HELMET_HEIGHT = (h * .059f);
     public static final float STAFF_WIDTH = (w * .035f);
     public static final float STAFF_HEIGHT = (h * .059f);
     public static final float NINJA_WIDTH = (w * .053f);
@@ -732,10 +734,12 @@ public class WorldRenderer {
     public void addGear(float x, float y) {
         float percentageChance = (float) Math.random() * 100;
 
-        if (percentageChance < 50) {
+        if (percentageChance < 33) {
             addSwordSprite(x, y);
-        } else {
+        } else if (percentageChance >= 33 && percentageChance <= 66) {
             addStaffSprite(x, y);
+        } else {
+            addClothHelmetSprite(x, y);
         }
     }
 
@@ -793,6 +797,16 @@ public class WorldRenderer {
         Sword sword = new Sword(x, y, swordSprite);
         sword.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(sword);
+    }
+
+    private void addClothHelmetSprite(float x, float y) {
+        Sprite clothHelmetSprite = new Sprite(Assets.clothHelmetSprite);
+        clothHelmetSprite.setSize(HELMET_WIDTH, HELMET_HEIGHT);
+        clothHelmetSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(clothHelmetSprite);
+        Helmet helmet = new Helmet(x, y, clothHelmetSprite);
+        helmet.setItemAction(World.ItemActions.EQUIP);
+        World.itemsList.add(helmet);
     }
 
     private void addStaffSprite(float x, float y) {

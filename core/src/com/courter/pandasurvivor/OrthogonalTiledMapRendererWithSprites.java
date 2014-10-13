@@ -190,16 +190,16 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         ARMOR_PIECES_RENDER_SIZE_Y = (WorldRenderer.h * .059f);
         ARMOR_CHESTPIECE_POSITION_X = (ARMOR_HELMET_POSITION_X - (WorldRenderer.w * .018f));
         ARMOR_CHESTPIECE_POSITION_Y = (ARMOR_HELMET_POSITION_Y - (WorldRenderer.h * .111f));
-        ARMOR_BRACERS_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
+        ARMOR_BRACERS_POSITION_X = (ARMOR_VIEW_X_OFFSET + (WorldRenderer.w * .033f));
         ARMOR_BRACERS_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .259f));
-        ARMOR_GLOVE_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
-        ARMOR_GLOVE_POSITION_Y = (WorldRenderer.camera.viewportHeight - 190);
-        ARMOR_BOOTS_POSITION_X = (ARMOR_VIEW_X_OFFSET + 60);
-        ARMOR_BOOTS_POSITION_Y = (WorldRenderer.camera.viewportHeight - 400);
+        ARMOR_GLOVE_POSITION_X = (ARMOR_VIEW_X_OFFSET + (WorldRenderer.w * .033f));
+        ARMOR_GLOVE_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .175f));
+        ARMOR_BOOTS_POSITION_X = (ARMOR_VIEW_X_OFFSET + (WorldRenderer.w * .033f));
+        ARMOR_BOOTS_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f));
         ARMOR_PANTS_POSITION_X = (ARMOR_HELMET_POSITION_X - (WorldRenderer.w * .018f));
-        ARMOR_PANTS_POSITION_Y = (ARMOR_HELMET_POSITION_Y - 260);
-        ARMOR_STAFF_POSITION_Y = (WorldRenderer.camera.viewportHeight - 220);
-        ARMOR_STAFF_POSITION_X = (ARMOR_VIEW_X_OFFSET + 340);
+        ARMOR_PANTS_POSITION_Y = (ARMOR_HELMET_POSITION_Y - (WorldRenderer.h * .24f));
+        ARMOR_STAFF_POSITION_X = (ARMOR_VIEW_X_OFFSET + (WorldRenderer.w * .189f));
+        ARMOR_STAFF_POSITION_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .203f));
     }
 
     public void addSprite(Sprite sprite) {
