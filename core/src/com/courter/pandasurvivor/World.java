@@ -66,7 +66,7 @@ public class World {
     public static final int BOSS_MOVE_SPEED = (int) (WorldRenderer.h * .074f);
     public static final int COIN_DROP_CHANCE = 50;
     public static final float BOSS_KEY_DROP_CHANCE = 1f;
-    public static final float COMMON_GEAR_DROP_CHANCE = 105f;
+    public static final float COMMON_GEAR_DROP_CHANCE = 5f;
     public static final int ITEMS_VISIBLE_TIME = 7;
     public static final int ITEMS_BLINK_TIME = 5;
     public static final float timeBeforeRegeneration = 25;

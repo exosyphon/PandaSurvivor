@@ -170,15 +170,21 @@ public class PandaSurvivor extends ApplicationAdapter {
             }
 
             if (worldRenderer.showGearStats) {
+                Item item = inventory.get(WorldRenderer.currentlyViewingItemIndex);
                 if (OverlapTester.pointInRectangle(WorldRenderer.equipGearBounds, clickPosition.x, clickPosition.y)) {
-                    Item item = inventory.get(WorldRenderer.currentlyViewingItemIndex);
                     shouldRemoveBounds = World.hero.equipItem(item);
                     if (shouldRemoveBounds) {
                         worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                     }
                     worldRenderer.closeGearStatsView();
+                    worldRenderer.closeGearCompareView();
                 } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearStatsView();
+                    worldRenderer.closeGearCompareView();
+                } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.openGearCompareView(item);
+                } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.closeGearCompareView();
                 }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {

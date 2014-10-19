@@ -166,6 +166,26 @@ public class Hero extends GameObject {
         return shouldRemoveBounds;
     }
 
+    public Item getCurrentlyEquippedItemFromItemClass(Item item) {
+        Item returnItem = null;
+        if (item.getClass() == Staff.class) {
+            returnItem = equippedGear.get(GearSlot.STAFF);
+        } else if (item.getClass() == Helmet.class) {
+            returnItem = equippedGear.get(GearSlot.HELMET);
+        } else if (item.getClass() == Chestpiece.class) {
+            returnItem = equippedGear.get(GearSlot.CHESTPIECE);
+        } else if (item.getClass() == Boots.class) {
+            returnItem = equippedGear.get(GearSlot.BOOTS);
+        } else if (item.getClass() == Gloves.class) {
+            returnItem = equippedGear.get(GearSlot.GLOVES);
+        } else if (item.getClass() == Bracers.class) {
+            returnItem = equippedGear.get(GearSlot.BRACERS);
+        } else if (item.getClass() == Pants.class) {
+            returnItem = equippedGear.get(GearSlot.PANTS);
+        }
+        return returnItem;
+    }
+
     private boolean addToEquippedGear(GearSlot slot, Item item) {
         boolean shouldRemoveBounds = true;
 
