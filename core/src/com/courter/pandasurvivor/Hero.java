@@ -76,7 +76,7 @@ public class Hero extends GameObject {
         this.fullHealth = FULL_HEALTH_DEFAULT;
         this.goldBonus = 0;
         this.attackSpeed = 0;
-        for (Item item : inventory) {
+        for (Item item : equippedGear.values()) {
             this.spellDmg += item.getMagicBonus();
             this.meleeDmg += item.getMeleeBonus();
             this.fullHealth += item.getHealthBonus();
@@ -145,31 +145,39 @@ public class Hero extends GameObject {
         return equippedGear.get(GearSlot.PANTS).getSprite();
     }
 
-    public void equipItem(Item item) {
+    public boolean equipItem(Item item) {
+        boolean shouldRemoveBounds = true;
         if (item.getClass() == Staff.class) {
-            addToEquippedGear(GearSlot.STAFF, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.STAFF, item);
         } else if (item.getClass() == Helmet.class) {
-            equippedGear.put(GearSlot.HELMET, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.HELMET, item);
         } else if (item.getClass() == Chestpiece.class) {
-            equippedGear.put(GearSlot.CHESTPIECE, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.CHESTPIECE, item);
         } else if (item.getClass() == Boots.class) {
-            equippedGear.put(GearSlot.BOOTS, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.BOOTS, item);
         } else if (item.getClass() == Gloves.class) {
-            equippedGear.put(GearSlot.GLOVES, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.GLOVES, item);
         } else if (item.getClass() == Bracers.class) {
-            equippedGear.put(GearSlot.BRACERS, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.BRACERS, item);
         } else if (item.getClass() == Pants.class) {
-            equippedGear.put(GearSlot.PANTS, item);
+            shouldRemoveBounds = addToEquippedGear(GearSlot.PANTS, item);
         }
         recalculateGearBonuses();
+        return shouldRemoveBounds;
     }
 
-    private void addToEquippedGear(GearSlot slot, Item item) {
-        if(equippedGear.containsKey(slot)) {
+    private boolean addToEquippedGear(GearSlot slot, Item item) {
+        boolean shouldRemoveBounds = true;
+
+        inventory.remove(item);
+        if (equippedGear.containsKey(slot)) {
             inventory.add(equippedGear.get(slot));
             equippedGear.remove(slot);
+            shouldRemoveBounds = false;
         }
         equippedGear.put(slot, item);
+
+        return shouldRemoveBounds;
     }
 
     public void update(float deltaTime) {

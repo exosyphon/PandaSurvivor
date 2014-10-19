@@ -55,6 +55,8 @@ public class WorldRenderer {
     public static Rectangle retryNoButtonBounds;
     public static Rectangle currentDestroyItemBounds;
     public static Rectangle currentUseItemBounds;
+    public static Rectangle equipGearBounds;
+    public static Rectangle showGearStatsCloseBounds;
     public static List<Rectangle> destroyItemBoundsList;
     public static List<Rectangle> useItemBoundsList;
     private static final int FRAME_ROWS = 8;
@@ -70,6 +72,7 @@ public class WorldRenderer {
     public static Sprite inventorySprite;
     public static Sprite armorViewSprite;
     public static Sprite useDestroyInventoryOptionsSprite;
+    public static Sprite statsDestroyViewSprite;
     public static Sprite emptyBootsSprite;
     public static Sprite emptyBracersSprite;
     public static Sprite emptyPantsSprite;
@@ -77,6 +80,7 @@ public class WorldRenderer {
     public static Sprite emptyChestpieceSprite;
     public static Sprite emptyStaffSprite;
     public static Sprite emptyHelmetSprite;
+    public static Sprite gearStatsViewSprite;
 
     public static List<Rectangle> inventoryUnitBoundsList;
     public static List<Rectangle> currentInventoryUnitBoundsList;
@@ -90,9 +94,11 @@ public class WorldRenderer {
     public static boolean showInventory;
     public static boolean showArmorView;
     public static boolean showInventoryOptions;
+    public static boolean showGearStats;
     public static int showInventoryOptionsOffsetX;
     public static int showInventoryOptionsOffsetY;
     public static int currentlySelectedItemIndex;
+    public static int currentlyViewingItemIndex;
 
     TextureRegion[] pumpkinBossFrames;
     Animation pumpkinBossDownAnimation;
@@ -133,6 +139,7 @@ public class WorldRenderer {
 
     public WorldRenderer() {
         currentlySelectedItemIndex = 0;
+        currentlyViewingItemIndex = 0;
         Rectangle destroyItemBounds1 = new Rectangle((w * .613f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds2 = new Rectangle((w * .713f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds3 = new Rectangle((w * .813f), (h * .76f), (w * .111f), (h * .055f));
@@ -214,6 +221,8 @@ public class WorldRenderer {
         aButtonBounds = new Rectangle((w * .858f), (h * .064f), (w * .109f), (h * .181f));
         bagButtonBounds = new Rectangle((w * .685f), (h * .027f), (w * .094f), (h * .138f));
         armorButtonBounds = new Rectangle((w * .261f), h - (h * .157f), (w * .094f), (h * .157f));
+        showGearStatsCloseBounds = new Rectangle(700, h - 300, 96, 96);
+        equipGearBounds = new Rectangle(630, h - 600, 150, 96);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));
@@ -247,6 +256,7 @@ public class WorldRenderer {
         showInventory = false;
         showInventoryOptions = false;
         showArmorView = false;
+        showGearStats = false;
     }
 
     public void addInventoryUnitBounds(int inventorySize) {
@@ -532,6 +542,8 @@ public class WorldRenderer {
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.hero.position.x), bagButtonBounds.getY());
         armorButtonBounds.setPosition(armorButtonBounds.getX() - (originalx - World.hero.position.x), armorButtonBounds.getY());
+        equipGearBounds.setPosition(equipGearBounds.getX() - (originalx - World.hero.position.x), equipGearBounds.getY());
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showGearStatsCloseBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
@@ -550,6 +562,8 @@ public class WorldRenderer {
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
         armorButtonBounds.setPosition(armorButtonBounds.getX() + (World.hero.position.x - originalx), armorButtonBounds.getY());
+        equipGearBounds.setPosition(equipGearBounds.getX() + (World.hero.position.x - originalx), equipGearBounds.getY());
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showGearStatsCloseBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
         }
@@ -568,6 +582,8 @@ public class WorldRenderer {
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.hero.position.y));
         armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() - (originaly - World.hero.position.y));
+        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() - (originaly - World.hero.position.y));
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -586,6 +602,8 @@ public class WorldRenderer {
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
         armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() + (World.hero.position.y - originaly));
+        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() + (World.hero.position.y - originaly));
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
         }
@@ -710,6 +728,8 @@ public class WorldRenderer {
         retrySprite = new Sprite(Assets.retryPrompt);
         inventorySprite = new Sprite(Assets.inventorySprite);
         useDestroyInventoryOptionsSprite = new Sprite(Assets.useDestroyInventoryOptionsSprite);
+        statsDestroyViewSprite = new Sprite(Assets.statsDestroyViewSprite);
+        gearStatsViewSprite = new Sprite(Assets.gearStatsViewSprite);
 
         armorViewSprite = new Sprite(Assets.armorViewSprite);
         emptyBootsSprite = new Sprite(Assets.emptyBootsSprite);
@@ -719,6 +739,16 @@ public class WorldRenderer {
         emptyChestpieceSprite = new Sprite(Assets.emptyChestpieceSprite);
         emptyStaffSprite = new Sprite(Assets.emptyStaffSprite);
         emptyHelmetSprite = new Sprite(Assets.emptyHelmetSprite);
+    }
+
+    public void openGearStatsView(int itemToBeViewedIndex) {
+        showGearStats = true;
+        currentlyViewingItemIndex = itemToBeViewedIndex;
+    }
+
+    public void closeGearStatsView() {
+        showGearStats = false;
+        currentlyViewingItemIndex = 0;
     }
 
     private void renderFireballs() {

@@ -254,7 +254,6 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             }
         }
 
-
         batcher.begin();
         if (WorldRenderer.showArmorView) {
             batcher.draw(WorldRenderer.armorViewSprite, ARMOR_VIEW_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - ARMOR_VIEW_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
@@ -334,7 +333,30 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
 
         if (WorldRenderer.showInventoryOptions) {
-            batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
+            Item item = World.hero.getInventory().get(WorldRenderer.currentlySelectedItemIndex);
+            if (item.getItemAction() == World.ItemActions.EQUIP) {
+                batcher.draw(WorldRenderer.statsDestroyViewSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
+            } else {
+                batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
+            }
+        }
+
+        if (WorldRenderer.showGearStats) {
+            Item item = World.hero.getInventory().get(WorldRenderer.currentlyViewingItemIndex);
+
+            batcher.draw(WorldRenderer.gearStatsViewSprite, 150, WorldRenderer.camera.viewportHeight - 575, 600, 400);
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Health: ", 180, (WorldRenderer.camera.viewportHeight - 200));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getHealthBonus()), 700 - (String.valueOf(item.getHealthBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 200));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", 180, (WorldRenderer.camera.viewportHeight - 250));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getAttackSpeedBonus()), 700 - (String.valueOf(item.getAttackSpeedBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 250));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", 180, (WorldRenderer.camera.viewportHeight - 300));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getExtraGoldBonus()), 700 - (String.valueOf(item.getExtraGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 300));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", 180, (WorldRenderer.camera.viewportHeight - 350));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMagicBonus()), 700 - (String.valueOf(item.getMagicBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 350));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", 180, (WorldRenderer.camera.viewportHeight - 400));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMeleeBonus()), 700 - (String.valueOf(item.getMeleeBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 400));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Armr Bns: ", 180, (WorldRenderer.camera.viewportHeight -450));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getArmorBonus()), 700 - (String.valueOf(item.getArmorBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 450));
         }
 
         if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
@@ -351,7 +373,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
-        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * (1.0f/World.hero.getFullHealth())), HEALTH_FILL_RENDER_Y);
+        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * (1.0f / World.hero.getFullHealth())), HEALTH_FILL_RENDER_Y);
         WorldRenderer.shapeRenderer.end();
 
         float xpPercentage = (float) World.hero.getCurrentXp() / World.hero.getCurrentLevelXpRequired();

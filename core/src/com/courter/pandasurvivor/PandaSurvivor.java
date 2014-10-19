@@ -31,6 +31,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static GAME_STATES game_state;
     boolean firstFingerAlreadyDown;
     boolean secondFingerAlreadyDown;
+    boolean shouldRemoveBounds;
 
     enum GAME_STATES {
         RUNNING, GAME_OVER, PAUSED
@@ -136,20 +137,23 @@ public class PandaSurvivor extends ApplicationAdapter {
             if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleArmorView();
             }
+
+            ArrayList<Item> inventory = World.hero.getInventory();
             if (worldRenderer.showInventory) {
                 if (WorldRenderer.showInventoryOptions) {
-                    ArrayList<Item> inventory = World.hero.getInventory();
                     if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
                         Item item = inventory.get(WorldRenderer.currentlySelectedItemIndex);
                         World.ItemActions itemAction = item.getItemAction();
                         if (itemAction == World.ItemActions.SPAWN_BOSS) {
                             worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
+                            worldRenderer.closeGearStatsView();
+                            inventory.remove(WorldRenderer.currentlySelectedItemIndex);
+                            worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                         } else if (itemAction == World.ItemActions.EQUIP) {
-                            World.hero.equipItem(item);
+                            worldRenderer.openGearStatsView(WorldRenderer.currentlySelectedItemIndex);
                         }
-                        inventory.remove(WorldRenderer.currentlySelectedItemIndex);
-                        worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.currentDestroyItemBounds, clickPosition.x, clickPosition.y)) {
+                        worldRenderer.closeGearStatsView();
                         inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                         worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                     }
@@ -162,6 +166,19 @@ public class PandaSurvivor extends ApplicationAdapter {
                         }
                         counter++;
                     }
+                }
+            }
+
+            if (worldRenderer.showGearStats) {
+                if (OverlapTester.pointInRectangle(WorldRenderer.equipGearBounds, clickPosition.x, clickPosition.y)) {
+                    Item item = inventory.get(WorldRenderer.currentlyViewingItemIndex);
+                    shouldRemoveBounds = World.hero.equipItem(item);
+                    if (shouldRemoveBounds) {
+                        worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
+                    }
+                    worldRenderer.closeGearStatsView();
+                } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.closeGearStatsView();
                 }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {

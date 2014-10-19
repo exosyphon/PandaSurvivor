@@ -35,6 +35,8 @@ public class Assets {
     public static Texture clothGlovesSprite;
     public static Texture clothPantsSprite;
     public static Texture clothBracersSprite;
+    public static Texture gearStatsViewSprite;
+    public static Texture statsDestroyViewSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -72,5 +74,7 @@ public class Assets {
         clothBootsSprite = loadTexture("cloth_boots.png");
         clothPantsSprite = loadTexture("cloth_pants.png");
         clothBracersSprite = loadTexture("cloth_bracers.png");
+        gearStatsViewSprite = loadTexture("gear_stat_view.png");
+        statsDestroyViewSprite = loadTexture("stats_destroy.png");
     }
 }
