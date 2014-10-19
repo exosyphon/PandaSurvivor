@@ -146,7 +146,6 @@ public class PandaSurvivor extends ApplicationAdapter {
                         World.ItemActions itemAction = item.getItemAction();
                         if (itemAction == World.ItemActions.SPAWN_BOSS) {
                             worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
-                            worldRenderer.closeGearStatsView();
                             inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                             worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                         } else if (itemAction == World.ItemActions.EQUIP) {
@@ -185,6 +184,11 @@ public class PandaSurvivor extends ApplicationAdapter {
                     worldRenderer.openGearCompareView(item);
                 } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearCompareView();
+                } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsDestroyBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.closeGearStatsView();
+                    worldRenderer.closeGearCompareView();
+                    inventory.remove(WorldRenderer.currentlyViewingItemIndex);
+                    worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                 }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {

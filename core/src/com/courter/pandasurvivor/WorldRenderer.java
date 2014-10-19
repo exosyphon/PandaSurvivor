@@ -57,6 +57,7 @@ public class WorldRenderer {
     public static Rectangle currentUseItemBounds;
     public static Rectangle equipGearBounds;
     public static Rectangle showGearStatsCloseBounds;
+    public static Rectangle showGearStatsDestroyBounds;
     public static Rectangle showCurrentGearStatsBounds;
     public static Rectangle showCurrentGearStatsCloseBounds;
     public static List<Rectangle> destroyItemBoundsList;
@@ -229,6 +230,7 @@ public class WorldRenderer {
         armorButtonBounds = new Rectangle((w * .261f), h - (h * .157f), (w * .094f), (h * .157f));
         showGearStatsCloseBounds = new Rectangle(700, h - 280, 96, 96);
         equipGearBounds = new Rectangle(630, h - 600, 150, 96);
+        showGearStatsDestroyBounds = new Rectangle(390, h - 600, 170, 96);
         showCurrentGearStatsBounds = new Rectangle(150, h - 600, 210, 96);
         showCurrentGearStatsCloseBounds = new Rectangle(1700, h - 280, 96, 96);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
@@ -557,6 +559,7 @@ public class WorldRenderer {
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showGearStatsCloseBounds.getY());
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsBounds.getY());
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsCloseBounds.getY());
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() - (originalx - World.hero.position.x), showGearStatsDestroyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
@@ -579,6 +582,7 @@ public class WorldRenderer {
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showGearStatsCloseBounds.getY());
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsBounds.getY());
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsCloseBounds.getY());
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() + (World.hero.position.x - originalx), showGearStatsDestroyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
         }
@@ -601,6 +605,7 @@ public class WorldRenderer {
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() - (originaly - World.hero.position.y));
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() - (originaly - World.hero.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -623,6 +628,7 @@ public class WorldRenderer {
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() + (World.hero.position.y - originaly));
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
         }
