@@ -13,6 +13,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public static final int BOTTOM_OF_MAP = 0;
     public static final int TOP_OF_MAP = 7616;
     public static final float BUTTON_ACTION_BUFFER = 15;
+    public static final float BASE_ATTACK_SPEED = 30;
     public static float DPAD_EXTRA_X_SPACE;
     public static float DPAD_EXTRA_Y_SPACE;
     public static float DPAD_X_MOVE_OFFSET;
@@ -193,7 +194,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void handleAButtonPress(float heroOriginalX, float heroOriginalY) {
-        if (lastActionTime == 0 || lastActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) {
+        if (lastActionTime == 0 || lastActionTime > (deltaTime * (BASE_ATTACK_SPEED - World.hero.getAttackSpeed()))) {
             worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
             worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.hero.getCurrentDirection());
 

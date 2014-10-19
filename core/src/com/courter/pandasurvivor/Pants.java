@@ -7,13 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Created by andrew on 10/5/14.
  */
 public class Pants extends Item {
-    private float magicBonus;
-    private float meleeBonus;
-    private float attackSpeedBonus;
-    private float healthBonus;
-    private float extraGoldBonus;
-    private float armorBonus;
-
     public Pants(float x, float y, Sprite sprite) {
         super(x, y, sprite);
         generateRandomAttributes();
@@ -30,55 +23,30 @@ public class Pants extends Item {
     }
 
     private void generateRandomAttributes() {
-        //TODO
+        float random = (float) Math.random() * 100;
+        if(random < 50) {
+            magicBonus = 2;
+        }
+        random = (float) Math.random() * 100;
+        if(random < 50) {
+            meleeBonus = 2;
+        }
+        random = (float) Math.random() * 100;
+        if(random < 50) {
+            attackSpeedBonus = 2;
+        }
+        random = (float) Math.random() * 100;
+        if(random < 50) {
+            healthBonus = 2;
+        }
+        random = (float) Math.random() * 100;
+        if(random < 50) {
+            extraGoldBonus = 2;
+        }
+        random = (float) Math.random() * 100;
+        if(random < 50) {
+            armorBonus = 2;
+        }
         return;
-    }
-
-    public float getMagicBonus() {
-        return magicBonus;
-    }
-
-    public void setMagicBonus(float magicBonus) {
-        this.magicBonus = magicBonus;
-    }
-
-    public float getMeleeBonus() {
-        return meleeBonus;
-    }
-
-    public void setMeleeBonus(float meleeBonus) {
-        this.meleeBonus = meleeBonus;
-    }
-
-    public float getAttackSpeedBonus() {
-        return attackSpeedBonus;
-    }
-
-    public void setAttackSpeedBonus(float attackSpeedBonus) {
-        this.attackSpeedBonus = attackSpeedBonus;
-    }
-
-    public float getHealthBonus() {
-        return healthBonus;
-    }
-
-    public void setHealthBonus(float healthBonus) {
-        this.healthBonus = healthBonus;
-    }
-
-    public float getExtraGoldBonus() {
-        return extraGoldBonus;
-    }
-
-    public void setExtraGoldBonus(float extraGoldBonus) {
-        this.extraGoldBonus = extraGoldBonus;
-    }
-
-    public float getArmorBonus() {
-        return armorBonus;
-    }
-
-    public void setArmorBonus(float armorBonus) {
-        this.armorBonus = armorBonus;
     }
 }

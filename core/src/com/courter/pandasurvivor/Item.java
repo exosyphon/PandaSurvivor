@@ -13,6 +13,13 @@ public class Item extends GameObject {
     private boolean visible;
     private World.ItemActions itemAction;
 
+    protected float magicBonus;
+    protected float meleeBonus;
+    protected float attackSpeedBonus;
+    protected float healthBonus;
+    protected float extraGoldBonus;
+    protected float armorBonus;
+
     public Item(float x, float y, Sprite sprite) {
         super(x - HERO_WALKING_BOUNDS_COINS_WIDTH / 2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
         this.sprite = sprite;
@@ -20,6 +27,12 @@ public class Item extends GameObject {
         float randomValue = (float) Math.random() * HIGHEST_MONEY_VALUE;
         this.sellValue = (int) randomValue;
         this.visible = true;
+        magicBonus = 0;
+        meleeBonus = 0;
+        attackSpeedBonus = 0;
+        healthBonus = 0;
+        extraGoldBonus = 0;
+        armorBonus = 0;
     }
 
     public float inventoryRenderX() {
@@ -72,5 +85,53 @@ public class Item extends GameObject {
 
     public void setItemAction(World.ItemActions itemAction) {
         this.itemAction = itemAction;
+    }
+
+    public float getMagicBonus() {
+        return magicBonus;
+    }
+
+    public void setMagicBonus(float magicBonus) {
+        this.magicBonus = magicBonus;
+    }
+
+    public float getMeleeBonus() {
+        return meleeBonus;
+    }
+
+    public void setMeleeBonus(float meleeBonus) {
+        this.meleeBonus = meleeBonus;
+    }
+
+    public float getAttackSpeedBonus() {
+        return attackSpeedBonus;
+    }
+
+    public void setAttackSpeedBonus(float attackSpeedBonus) {
+        this.attackSpeedBonus = attackSpeedBonus;
+    }
+
+    public float getHealthBonus() {
+        return healthBonus;
+    }
+
+    public void setHealthBonus(float healthBonus) {
+        this.healthBonus = healthBonus;
+    }
+
+    public float getExtraGoldBonus() {
+        return extraGoldBonus;
+    }
+
+    public void setExtraGoldBonus(float extraGoldBonus) {
+        this.extraGoldBonus = extraGoldBonus;
+    }
+
+    public float getArmorBonus() {
+        return armorBonus;
+    }
+
+    public void setArmorBonus(float armorBonus) {
+        this.armorBonus = armorBonus;
     }
 }

@@ -487,16 +487,17 @@ public class World {
                 }
 
                 if (fireball != null) {
+                    float heroGoldBonus = hero.getGoldBonus();
                     for (List<GameObject> list : enemyList) {
                         for (GameObject gameObject : list) {
                             Ninja ninja = ((Ninja) gameObject);
                             if (OverlapTester.overlapRectangles(ninja.shooting_bounds, fireball.bounds)) {
-                                ninja.setHealth(ninja.getHealth() - fireball.getDamageValue());
+                                ninja.setHealth(ninja.getHealth() - hero.getSpellDmg());
                                 if (ninja.getHealth() <= 0) {
                                     hero.handleXpGain(ninja.getXpGain());
                                     float percentageChance = (float) Math.random() * 100;
                                     if (percentageChance < COIN_DROP_CHANCE) {
-                                        worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y);
+                                        worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y, heroGoldBonus);
                                     }
                                     if (percentageChance < BOSS_KEY_DROP_CHANCE) {
                                         worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y);
@@ -551,16 +552,16 @@ public class World {
                         for (GameObject gameObject : bossList) {
                             Boss boss = ((Boss) gameObject);
                             if (OverlapTester.overlapRectangles(boss.shooting_bounds, fireball.bounds)) {
-                                boss.setHealth(boss.getHealth() - fireball.getDamageValue());
+                                boss.setHealth(boss.getHealth() - hero.getSpellDmg());
                                 if (boss.getHealth() <= 0) {
                                     hero.handleXpGain(boss.getXpGain());
-                                    worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y);
-                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_1);
-                                    worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_2);
-                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1);
-                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1);
-                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2);
-                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2);
+                                    worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                    worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
                                     tiledMapRenderer.removeSprite(boss.getSprite());
                                     bossList.remove(boss);
                                     hero.addBossKill();

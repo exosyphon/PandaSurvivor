@@ -12,11 +12,11 @@ public class Coins extends GameObject {
     private int moneyValue;
     private boolean visible;
 
-    public Coins(float x, float y, Sprite sprite) {
+    public Coins(float x, float y, Sprite sprite, float goldBonus) {
         super(x - HERO_WALKING_BOUNDS_COINS_WIDTH / 4, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
         this.sprite = sprite;
         this.stateTime = 0;
-        float randomValue = (float) Math.random() * HIGHEST_MONEY_VALUE;
+        float randomValue = (float) Math.random() * (HIGHEST_MONEY_VALUE + goldBonus);
         this.moneyValue = (int) randomValue;
         this.visible = true;
     }

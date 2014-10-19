@@ -17,10 +17,13 @@ public class Hero extends GameObject {
     public static final float SHOOTING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .106f);
     public static final float SHOOTING_BOUNDS_HERO_WIDTH = (Gdx.graphics.getWidth() * .044f);
 
-    private static final float XP_LEVEL_MULTIPLIER = 2;
+    private static final float NEXT_XP_LEVEL_MULTIPLIER = 2;
+
+    private static final int FULL_HEALTH_DEFAULT = 100;
+    private static final int SPELL_DMG_DEFAULT = 5;
 
     private float health;
-    private float fullHealth;
+    private int fullHealth;
     private static float healthRegenerationRate;
     private float lastTimeDamaged;
     private int currentLevel;
@@ -34,6 +37,10 @@ public class Hero extends GameObject {
     private ArrayList<Item> inventory;
     private int maxInventorySize;
     private HashMap<Enum, Item> equippedGear;
+    private float spellDmg;
+    private float attackSpeed;
+    private float goldBonus;
+    private float meleeDmg;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -44,7 +51,7 @@ public class Hero extends GameObject {
                 SHOOTING_BOUNDS_HERO_HEIGHT
         );
         this.currentDirection = World.HeroDirections.DOWN;
-        this.fullHealth = 100;
+        this.fullHealth = FULL_HEALTH_DEFAULT;
         this.health = fullHealth;
         this.healthRegenerationRate = .05f;
         this.lastTimeDamaged = 0;
@@ -57,6 +64,29 @@ public class Hero extends GameObject {
         this.inventory = new ArrayList<Item>();
         this.maxInventorySize = 12;
         this.equippedGear = new HashMap<Enum, Item>();
+        this.attackSpeed = 0;
+        this.goldBonus = 0;
+        this.spellDmg = SPELL_DMG_DEFAULT;
+        this.meleeDmg = 0;
+    }
+
+    private void recalculateGearBonuses() {
+        this.spellDmg = SPELL_DMG_DEFAULT;
+        this.meleeDmg = 0;
+        this.fullHealth = FULL_HEALTH_DEFAULT;
+        this.goldBonus = 0;
+        this.attackSpeed = 0;
+        for (Item item : inventory) {
+            this.spellDmg += item.getMagicBonus();
+            this.meleeDmg += item.getMeleeBonus();
+            this.fullHealth += item.getHealthBonus();
+            this.goldBonus += item.getExtraGoldBonus();
+            this.fullHealth += item.getArmorBonus() / 2;
+            this.attackSpeed += item.getAttackSpeedBonus();
+            if (this.attackSpeed > 20.0f) {
+                this.attackSpeed = 20;
+            }
+        }
     }
 
     public boolean hasHelmetEquipped() {
@@ -117,7 +147,7 @@ public class Hero extends GameObject {
 
     public void equipItem(Item item) {
         if (item.getClass() == Staff.class) {
-            equippedGear.put(GearSlot.STAFF, item);
+            addToEquippedGear(GearSlot.STAFF, item);
         } else if (item.getClass() == Helmet.class) {
             equippedGear.put(GearSlot.HELMET, item);
         } else if (item.getClass() == Chestpiece.class) {
@@ -131,6 +161,15 @@ public class Hero extends GameObject {
         } else if (item.getClass() == Pants.class) {
             equippedGear.put(GearSlot.PANTS, item);
         }
+        recalculateGearBonuses();
+    }
+
+    private void addToEquippedGear(GearSlot slot, Item item) {
+        if(equippedGear.containsKey(slot)) {
+            inventory.add(equippedGear.get(slot));
+            equippedGear.remove(slot);
+        }
+        equippedGear.put(slot, item);
     }
 
     public void update(float deltaTime) {
@@ -207,7 +246,7 @@ public class Hero extends GameObject {
         this.lastTimeDamaged = lastTimeDamaged;
     }
 
-    public float getFullHealth() {
+    public int getFullHealth() {
         return fullHealth;
     }
 
@@ -240,7 +279,7 @@ public class Hero extends GameObject {
         while (this.currentXp >= this.currentLevelXpRequired) {
             long leftoverXp = this.currentXp - this.currentLevelXpRequired;
             this.currentLevel++;
-            this.currentLevelXpRequired *= XP_LEVEL_MULTIPLIER;
+            this.currentLevelXpRequired *= NEXT_XP_LEVEL_MULTIPLIER;
             this.currentXp = leftoverXp;
         }
     }
@@ -255,5 +294,37 @@ public class Hero extends GameObject {
 
     public void addMoney(long moneyToAdd) {
         this.moneyTotal += moneyToAdd;
+    }
+
+    public float getSpellDmg() {
+        return spellDmg;
+    }
+
+    public void setSpellDmg(float spellDmg) {
+        this.spellDmg = spellDmg;
+    }
+
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
+
+    public void setAttackSpeed(float attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
+
+    public float getGoldBonus() {
+        return goldBonus;
+    }
+
+    public void setGoldBonus(float goldBonus) {
+        this.goldBonus = goldBonus;
+    }
+
+    public float getMeleeDmg() {
+        return meleeDmg;
+    }
+
+    public void setMeleeDmg(float meleeDmg) {
+        this.meleeDmg = meleeDmg;
     }
 }

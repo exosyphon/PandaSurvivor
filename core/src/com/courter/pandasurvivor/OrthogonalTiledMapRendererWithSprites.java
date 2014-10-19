@@ -75,7 +75,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     public static float XP_LVL_FONT_Y;
     public static float COIN_BACKGROUND_FONT_X;
     public static float COIN_BACKGROUND_FONT_Y;
-    public static float MONEY_INCREMENT_OFFSET;
+    public static float NUMBER_INCREMENT_OFFSET;
     public static float COIN_FONT_Y;
     public static float COIN_FONT_X;
     public static float DPAD_X;
@@ -149,9 +149,9 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         XP_LVL_FONT_Y = WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .075f);
         COIN_BACKGROUND_FONT_X = (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .032f));
         COIN_BACKGROUND_FONT_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .022f));
-        MONEY_INCREMENT_OFFSET = (WorldRenderer.w * .022f);
-        COIN_FONT_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .019f));
+        NUMBER_INCREMENT_OFFSET = (WorldRenderer.w * .022f);
         COIN_FONT_X = (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .034f));
+        COIN_FONT_Y = (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .019f));
         DPAD_X = (WorldRenderer.w * .075f);
         DPAD_Y = (WorldRenderer.h * .125f);
         DPAD_RENDER_SIZE_X = (WorldRenderer.w * .142f);
@@ -299,6 +299,17 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             } else {
                 batcher.draw(WorldRenderer.emptyBootsSprite, ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
+
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Hlth: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 520));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getFullHealth()), (WorldRenderer.camera.viewportWidth - 35) - (String.valueOf(World.hero.getFullHealth()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 520));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 570));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getAttackSpeed()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getAttackSpeed()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 570));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 620));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getGoldBonus()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 620));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 670));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getSpellDmg()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getSpellDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 670));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 720));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getMeleeDmg()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getMeleeDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 720));
         }
         batcher.end();
 
@@ -340,7 +351,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
-        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * .01f), HEALTH_FILL_RENDER_Y);
+        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * (1.0f/World.hero.getFullHealth())), HEALTH_FILL_RENDER_Y);
         WorldRenderer.shapeRenderer.end();
 
         float xpPercentage = (float) World.hero.getCurrentXp() / World.hero.getCurrentLevelXpRequired();
@@ -352,8 +363,8 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         batcher.begin();
         WorldRenderer.levelFont.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), XP_LVL_FONT_X, XP_LVL_FONT_Y);
-        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_BACKGROUND_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * MONEY_INCREMENT_OFFSET), COIN_BACKGROUND_FONT_Y);
-        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * MONEY_INCREMENT_OFFSET), COIN_FONT_Y);
+        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_BACKGROUND_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_BACKGROUND_FONT_Y);
+        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_FONT_Y);
         batcher.end();
     }
 

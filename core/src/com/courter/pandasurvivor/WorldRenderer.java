@@ -86,6 +86,7 @@ public class WorldRenderer {
     public static BitmapFont levelFont;
     public static BitmapFont coinFont;
     public static BitmapFont coinFont2;
+    public static BitmapFont equipmentStatsFont;
     public static boolean showInventory;
     public static boolean showArmorView;
     public static boolean showInventoryOptions;
@@ -222,6 +223,9 @@ public class WorldRenderer {
         coinFont2 = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         coinFont2.setColor(0, 0, 0, 1);
         coinFont2.setScale((w * .0011f), (h * .0018f));
+        equipmentStatsFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        equipmentStatsFont.setColor(1, 1, 1, 1);
+        equipmentStatsFont.setScale((w * .0011f), (h * .0018f));
         shapeRenderer = new ShapeRenderer();
 
         camera = new OrthographicCamera();
@@ -737,8 +741,8 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
-    public void addCoins(float x, float y) {
-        addCoinsSprite(x, y);
+    public void addCoins(float x, float y, float goldBonus) {
+        addCoinsSprite(x, y, goldBonus);
     }
 
     public void addGear(float x, float y) {
@@ -791,12 +795,12 @@ public class WorldRenderer {
         World.wallList.add(new Wall(x, y, wallSprite));
     }
 
-    private void addCoinsSprite(float x, float y) {
+    private void addCoinsSprite(float x, float y, float goldBonus) {
         Sprite coinsSprite = new Sprite(Assets.coins);
         coinsSprite.setSize(COINS_WIDTH, COINS_HEIGHT);
         coinsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(coinsSprite);
-        World.coinsList.add(new Coins(x, y, coinsSprite));
+        World.coinsList.add(new Coins(x, y, coinsSprite, goldBonus));
     }
 
     private void addBossKeySprite(float x, float y) {
