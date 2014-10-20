@@ -187,7 +187,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsDestroyBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearStatsView();
                     worldRenderer.closeGearCompareView();
-                    inventory.remove(WorldRenderer.currentlyViewingItemIndex);
+                    inventory.remove(item);
                     worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                 }
             }
