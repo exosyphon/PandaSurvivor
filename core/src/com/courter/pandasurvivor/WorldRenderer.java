@@ -228,11 +228,11 @@ public class WorldRenderer {
         aButtonBounds = new Rectangle((w * .858f), (h * .064f), (w * .109f), (h * .181f));
         bagButtonBounds = new Rectangle((w * .685f), (h * .027f), (w * .094f), (h * .138f));
         armorButtonBounds = new Rectangle((w * .261f), h - (h * .157f), (w * .094f), (h * .157f));
-        showGearStatsCloseBounds = new Rectangle(700, h - 280, 96, 96);
-        equipGearBounds = new Rectangle(630, h - 600, 150, 96);
-        showGearStatsDestroyBounds = new Rectangle(390, h - 600, 170, 96);
-        showCurrentGearStatsBounds = new Rectangle(150, h - 600, 210, 96);
-        showCurrentGearStatsCloseBounds = new Rectangle(1700, h - 280, 96, 96);
+        showGearStatsCloseBounds = new Rectangle((w * .39f), h - (h * .259f), (w * .053f), (h * .088f));
+        equipGearBounds = new Rectangle((w * .351f), h - (h * .555f), (w * .083f), (h * .088f));
+        showGearStatsDestroyBounds = new Rectangle((w * .217f), h - (h * .555f), (w * .094f), (h * .088f));
+        showCurrentGearStatsBounds = new Rectangle((w * .083f), h - (h * .555f), (w * .117f), (h * .088f));
+        showCurrentGearStatsCloseBounds = new Rectangle((w * .947f), h - (h * .259f), (w * .053f), (h * .088f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));
