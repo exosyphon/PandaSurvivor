@@ -137,6 +137,11 @@ public class PandaSurvivor extends ApplicationAdapter {
             if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleArmorView();
             }
+            if (world.hero.getXpPointsToUse() > 0) {
+                if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStatsButtonBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.openLevelStatsView();
+                }
+            }
 
             ArrayList<Item> inventory = World.hero.getInventory();
             if (worldRenderer.showInventory) {
@@ -189,6 +194,24 @@ public class PandaSurvivor extends ApplicationAdapter {
                     worldRenderer.closeGearCompareView();
                     inventory.remove(item);
                     worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
+                }
+            }
+
+            if (worldRenderer.showLevelUpStats) {
+                if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStatsCloseBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.closeLevelStatsView();
+                }
+
+                if (world.hero.getXpPointsToUse() > 0) {
+                    if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats1Bounds, clickPosition.x, clickPosition.y)) {
+                        world.hero.incrementHealth();
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats2Bounds, clickPosition.x, clickPosition.y)) {
+                        world.hero.incrementGoldBonus();
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats3Bounds, clickPosition.x, clickPosition.y)) {
+                        world.hero.incrementSpellDmg();
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats4Bounds, clickPosition.x, clickPosition.y)) {
+                        world.hero.incrementMeleeDmg();
+                    }
                 }
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {

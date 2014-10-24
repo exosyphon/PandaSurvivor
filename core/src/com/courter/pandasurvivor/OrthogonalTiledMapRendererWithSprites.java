@@ -118,6 +118,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private int treeMidSpritesLayer = 3;
     private boolean renderTreeBottomsFlag = true;
     private SpriteBatch batcher;
+    private Sprite lvlButtonSprite;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
         super(map);
@@ -339,6 +340,34 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             } else {
                 batcher.draw(WorldRenderer.useDestroyInventoryOptionsSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
             }
+        }
+
+        if (World.hero.getXpPointsToUse() > 0) {
+            batcher.draw(WorldRenderer.addStatButtonSprite, 100, WorldRenderer.camera.viewportHeight - 155, 64, 64);
+        }
+
+        if (WorldRenderer.showLevelUpStats) {
+            batcher.draw(WorldRenderer.gearStatsWithoutButtonsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Health: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
+//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getHealthBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getHealthBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 275));
+//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getAttackSpeedBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getAttackSpeedBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .231f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 350));
+//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getExtraGoldBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getExtraGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .277f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 425));
+
+            if (World.hero.getXpPointsToUse() > 0) {
+                lvlButtonSprite = WorldRenderer.addStatButtonSprite;
+            } else {
+                lvlButtonSprite = WorldRenderer.grayAddStatButtonSprite;
+            }
+
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 250), 48, 48);
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 325), 48, 48);
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 400), 48, 48);
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 475), 48, 48);
+
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Points: " + World.hero.getXpPointsToUse(), (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 500));
         }
 
         if (WorldRenderer.showGearStats) {

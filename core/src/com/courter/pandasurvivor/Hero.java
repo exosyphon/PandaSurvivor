@@ -41,6 +41,7 @@ public class Hero extends GameObject {
     private float attackSpeed;
     private float goldBonus;
     private float meleeDmg;
+    private int xpPointsToUse;
 
     public Hero(float x, float y) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
@@ -68,6 +69,7 @@ public class Hero extends GameObject {
         this.goldBonus = 0;
         this.spellDmg = SPELL_DMG_DEFAULT;
         this.meleeDmg = 0;
+        this.xpPointsToUse = 0;
     }
 
     private void recalculateGearBonuses() {
@@ -309,6 +311,9 @@ public class Hero extends GameObject {
             this.currentLevel++;
             this.currentLevelXpRequired *= NEXT_XP_LEVEL_MULTIPLIER;
             this.currentXp = leftoverXp;
+            if (getCurrentLevel() % 2 == 0) {
+                incrementXpPointsToUse();
+            }
         }
     }
 
@@ -354,5 +359,33 @@ public class Hero extends GameObject {
 
     public void setMeleeDmg(float meleeDmg) {
         this.meleeDmg = meleeDmg;
+    }
+
+    public int getXpPointsToUse() {
+        return xpPointsToUse;
+    }
+
+    public void incrementXpPointsToUse() {
+        this.xpPointsToUse += 1;
+    }
+
+    public void incrementHealth() {
+        this.fullHealth += 2;
+        this.xpPointsToUse -= 1;
+    }
+
+    public void incrementSpellDmg() {
+        this.spellDmg += 1;
+        this.xpPointsToUse -= 1;
+    }
+
+    public void incrementMeleeDmg() {
+        this.meleeDmg += 1;
+        this.xpPointsToUse -= 1;
+    }
+
+    public void incrementGoldBonus() {
+        this.goldBonus += 2;
+        this.xpPointsToUse -= 1;
     }
 }

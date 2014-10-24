@@ -60,6 +60,12 @@ public class WorldRenderer {
     public static Rectangle showGearStatsDestroyBounds;
     public static Rectangle showCurrentGearStatsBounds;
     public static Rectangle showCurrentGearStatsCloseBounds;
+    public static Rectangle showLevelStatsButtonBounds;
+    public static Rectangle showLevelStatsCloseBounds;
+    public static Rectangle showLevelStats1Bounds;
+    public static Rectangle showLevelStats2Bounds;
+    public static Rectangle showLevelStats3Bounds;
+    public static Rectangle showLevelStats4Bounds;
     public static List<Rectangle> destroyItemBoundsList;
     public static List<Rectangle> useItemBoundsList;
     private static final int FRAME_ROWS = 8;
@@ -85,6 +91,8 @@ public class WorldRenderer {
     public static Sprite emptyHelmetSprite;
     public static Sprite gearStatsViewSprite;
     public static Sprite gearStatsWithoutButtonsViewSprite;
+    public static Sprite grayAddStatButtonSprite;
+    public static Sprite addStatButtonSprite;
 
     public static List<Rectangle> inventoryUnitBoundsList;
     public static List<Rectangle> currentInventoryUnitBoundsList;
@@ -100,6 +108,8 @@ public class WorldRenderer {
     public static boolean showInventoryOptions;
     public static boolean showGearStats;
     public static boolean showCurrentGearStats;
+    public static boolean showLevelUpStats;
+    public static boolean showLevelUpStatsButton;
     public static int showInventoryOptionsOffsetX;
     public static int showInventoryOptionsOffsetY;
     public static int currentlySelectedItemIndex;
@@ -233,6 +243,12 @@ public class WorldRenderer {
         showGearStatsDestroyBounds = new Rectangle((w * .217f), h - (h * .555f), (w * .094f), (h * .088f));
         showCurrentGearStatsBounds = new Rectangle((w * .083f), h - (h * .555f), (w * .117f), (h * .088f));
         showCurrentGearStatsCloseBounds = new Rectangle((w * .947f), h - (h * .259f), (w * .053f), (h * .088f));
+        showLevelStatsButtonBounds = new Rectangle(100, h - 190, 120, 120);
+        showLevelStatsCloseBounds = new Rectangle((w * .39f), h - (h * .259f), (w * .053f), (h * .088f));
+        showLevelStats1Bounds = new Rectangle(540, h - 260, 64, 64);
+        showLevelStats2Bounds = new Rectangle(540, h - 335, 64, 64);
+        showLevelStats3Bounds = new Rectangle(540, h - 410, 64, 64);
+        showLevelStats4Bounds = new Rectangle(540, h - 485, 64, 64);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));
@@ -268,6 +284,8 @@ public class WorldRenderer {
         showArmorView = false;
         showGearStats = false;
         showCurrentGearStats = false;
+        showLevelUpStats = false;
+        showLevelUpStatsButton = false;
     }
 
     public void addInventoryUnitBounds(int inventorySize) {
@@ -560,6 +578,12 @@ public class WorldRenderer {
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsBounds.getY());
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsCloseBounds.getY());
         showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() - (originalx - World.hero.position.x), showGearStatsDestroyBounds.getY());
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() - (originalx - World.hero.position.x), showLevelStatsButtonBounds.getY());
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() - (originalx - World.hero.position.x), showLevelStatsCloseBounds.getY());
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() - (originalx - World.hero.position.x), showLevelStats1Bounds.getY());
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (originalx - World.hero.position.x), showLevelStats2Bounds.getY());
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (originalx - World.hero.position.x), showLevelStats3Bounds.getY());
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (originalx - World.hero.position.x), showLevelStats4Bounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
@@ -583,6 +607,12 @@ public class WorldRenderer {
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsBounds.getY());
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsCloseBounds.getY());
         showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() + (World.hero.position.x - originalx), showGearStatsDestroyBounds.getY());
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() + (World.hero.position.x - originalx), showLevelStatsButtonBounds.getY());
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() + (World.hero.position.x - originalx), showLevelStatsCloseBounds.getY());
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() + (World.hero.position.x - originalx), showLevelStats1Bounds.getY());
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() + (World.hero.position.x - originalx), showLevelStats2Bounds.getY());
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() + (World.hero.position.x - originalx), showLevelStats3Bounds.getY());
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() + (World.hero.position.x - originalx), showLevelStats4Bounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
         }
@@ -606,6 +636,12 @@ public class WorldRenderer {
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() - (originaly - World.hero.position.y));
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
         showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() - (originaly - World.hero.position.y));
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() - (originaly - World.hero.position.y));
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() - (originaly - World.hero.position.y));
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() - (originaly - World.hero.position.y));
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() - (originaly - World.hero.position.y));
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() - (originaly - World.hero.position.y));
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() - (originaly - World.hero.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -629,6 +665,12 @@ public class WorldRenderer {
         showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() + (World.hero.position.y - originaly));
         showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
         showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() + (World.hero.position.y - originaly));
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() + (World.hero.position.y - originaly));
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() + (World.hero.position.y - originaly));
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() + (World.hero.position.y - originaly));
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() + (World.hero.position.y - originaly));
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() + (World.hero.position.y - originaly));
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
         }
@@ -756,6 +798,8 @@ public class WorldRenderer {
         statsDestroyViewSprite = new Sprite(Assets.statsDestroyViewSprite);
         gearStatsViewSprite = new Sprite(Assets.gearStatsViewSprite);
         gearStatsWithoutButtonsViewSprite = new Sprite(Assets.gearStatsWithoutButtonsViewSprite);
+        grayAddStatButtonSprite = new Sprite(Assets.grayAddStatButtonSprite);
+        addStatButtonSprite = new Sprite(Assets.addStatButtonSprite);
 
         armorViewSprite = new Sprite(Assets.armorViewSprite);
         emptyBootsSprite = new Sprite(Assets.emptyBootsSprite);
@@ -769,12 +813,23 @@ public class WorldRenderer {
 
     public void openGearStatsView(int itemToBeViewedIndex) {
         showGearStats = true;
+        showLevelUpStats = false;
         currentlyViewingItemIndex = itemToBeViewedIndex;
     }
 
     public void closeGearStatsView() {
         showGearStats = false;
         currentlyViewingItemIndex = 0;
+    }
+
+    public void openLevelStatsView() {
+        this.showInventoryOptions = false;
+        closeGearStatsView();
+        this.showLevelUpStats = true;
+    }
+
+    public void closeLevelStatsView() {
+        showLevelUpStats = false;
     }
 
     public void openGearCompareView(Item item) {
