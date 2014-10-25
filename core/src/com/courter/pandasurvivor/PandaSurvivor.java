@@ -32,6 +32,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     boolean firstFingerAlreadyDown;
     boolean secondFingerAlreadyDown;
     boolean shouldRemoveBounds;
+    int xpPoints;
 
     enum GAME_STATES {
         RUNNING, GAME_OVER, PAUSED
@@ -49,6 +50,7 @@ public class PandaSurvivor extends ApplicationAdapter {
         game_state = GAME_STATES.RUNNING;
         firstFingerAlreadyDown = false;
         secondFingerAlreadyDown = false;
+        xpPoints = 0;
     }
 
     private void setConstants() {
@@ -131,13 +133,14 @@ public class PandaSurvivor extends ApplicationAdapter {
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
         if (game_state == GAME_STATES.RUNNING) {
+            xpPoints = world.hero.getXpPointsToUse();
             if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleInventory();
             }
             if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleArmorView();
             }
-            if (world.hero.getXpPointsToUse() > 0) {
+            if (xpPoints > 0) {
                 if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStatsButtonBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.openLevelStatsView();
                 }
@@ -202,7 +205,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                     worldRenderer.closeLevelStatsView();
                 }
 
-                if (world.hero.getXpPointsToUse() > 0) {
+                if (xpPoints > 0) {
                     if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats1Bounds, clickPosition.x, clickPosition.y)) {
                         world.hero.incrementHealth();
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats2Bounds, clickPosition.x, clickPosition.y)) {

@@ -300,16 +300,16 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 batcher.draw(WorldRenderer.emptyBootsSprite, ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Hlth: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 520));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getFullHealth()), (WorldRenderer.camera.viewportWidth - 35) - (String.valueOf(World.hero.getFullHealth()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 520));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 570));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getAttackSpeed()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getAttackSpeed()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 570));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 620));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getGoldBonus()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 620));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 670));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getSpellDmg()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getSpellDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 670));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.camera.viewportWidth - 480), (WorldRenderer.camera.viewportHeight - 720));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getMeleeDmg()), (WorldRenderer.camera.viewportWidth - 20) - (String.valueOf(World.hero.getMeleeDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - 720));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Hlth: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .481f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getFullHealth()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .019f)) - (String.valueOf(World.hero.getFullHealth()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .481f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .527f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getAttackSpeed()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getAttackSpeed()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .527f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .574f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getGoldBonus()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .574f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .620f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getSpellDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getSpellDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .620f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .666f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getMeleeDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getMeleeDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .666f)));
         }
         batcher.end();
 
@@ -343,18 +343,15 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
 
         if (World.hero.getXpPointsToUse() > 0) {
-            batcher.draw(WorldRenderer.addStatButtonSprite, 100, WorldRenderer.camera.viewportHeight - 155, 64, 64);
+            batcher.draw(WorldRenderer.addStatButtonSprite, (WorldRenderer.w * .055f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .143f), (WorldRenderer.w * .035f), (WorldRenderer.h * .059f));
         }
 
         if (WorldRenderer.showLevelUpStats) {
             batcher.draw(WorldRenderer.gearStatsWithoutButtonsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Health: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
-//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getHealthBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getHealthBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 275));
-//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getAttackSpeedBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getAttackSpeedBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .231f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 350));
-//            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getExtraGoldBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getExtraGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .277f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 425));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .254f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .393f)));
 
             if (World.hero.getXpPointsToUse() > 0) {
                 lvlButtonSprite = WorldRenderer.addStatButtonSprite;
@@ -362,12 +359,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 lvlButtonSprite = WorldRenderer.grayAddStatButtonSprite;
             }
 
-            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 250), 48, 48);
-            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 325), 48, 48);
-            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 400), 48, 48);
-            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - 475), 48, 48);
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .231f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .300f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
+            batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .439f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
 
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Points: " + World.hero.getXpPointsToUse(), (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - 500));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Points: " + World.hero.getXpPointsToUse(), (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .462f)));
         }
 
         if (WorldRenderer.showGearStats) {

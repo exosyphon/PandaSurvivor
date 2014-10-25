@@ -243,12 +243,12 @@ public class WorldRenderer {
         showGearStatsDestroyBounds = new Rectangle((w * .217f), h - (h * .555f), (w * .094f), (h * .088f));
         showCurrentGearStatsBounds = new Rectangle((w * .083f), h - (h * .555f), (w * .117f), (h * .088f));
         showCurrentGearStatsCloseBounds = new Rectangle((w * .947f), h - (h * .259f), (w * .053f), (h * .088f));
-        showLevelStatsButtonBounds = new Rectangle(100, h - 190, 120, 120);
+        showLevelStatsButtonBounds = new Rectangle((w * .055f), h - (h * .175f), (w * .066f), (h * .111f));
         showLevelStatsCloseBounds = new Rectangle((w * .39f), h - (h * .259f), (w * .053f), (h * .088f));
-        showLevelStats1Bounds = new Rectangle(540, h - 260, 64, 64);
-        showLevelStats2Bounds = new Rectangle(540, h - 335, 64, 64);
-        showLevelStats3Bounds = new Rectangle(540, h - 410, 64, 64);
-        showLevelStats4Bounds = new Rectangle(540, h - 485, 64, 64);
+        showLevelStats1Bounds = new Rectangle((w * .301f), h - (h * .240f), (w * .035f), (h * .059f));
+        showLevelStats2Bounds = new Rectangle((w * .301f), h - (h * .310f), (w * .035f), (h * .059f));
+        showLevelStats3Bounds = new Rectangle((w * .301f), h - (h * .379f), (w * .035f), (h * .059f));
+        showLevelStats4Bounds = new Rectangle((w * .301f), h - (h * .449f), (w * .035f), (h * .059f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));
