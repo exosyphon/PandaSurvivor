@@ -3,6 +3,8 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by andrew on 10/5/14.
  */
@@ -23,30 +25,19 @@ public class Chestpiece extends Item {
     }
 
     private void generateRandomAttributes() {
-        float random = (float) Math.random() * 100;
-        if(random < 50) {
-            magicBonus = 2;
-        }
-        random = (float) Math.random() * 100;
-        if(random < 50) {
-            meleeBonus = 2;
-        }
-        random = (float) Math.random() * 100;
-        if(random < 50) {
-            attackSpeedBonus = 2;
-        }
-        random = (float) Math.random() * 100;
-        if(random < 50) {
-            healthBonus = 2;
-        }
-        random = (float) Math.random() * 100;
-        if(random < 50) {
-            extraGoldBonus = 2;
-        }
-        random = (float) Math.random() * 100;
-        if(random < 50) {
-            armorBonus = 2;
-        }
+        DecimalFormat df = new DecimalFormat("0.0");
+        float random = (float) Math.random() * 2.0f;
+        magicBonus = Float.parseFloat(df.format(random));
+        random = (float) Math.random() * 2.0f;
+        meleeBonus = Float.parseFloat(df.format(random));
+        random = (float) Math.random() * 2.0f;
+        attackSpeedBonus = Float.parseFloat(df.format(random));
+        random = (float) Math.random() * 2.0f;
+        healthBonus = Float.parseFloat(df.format(random));
+        random = (float) Math.random() * 2.0f;
+        extraGoldBonus = Float.parseFloat(df.format(random));
+        random = (float) Math.random() * 2.0f;
+        armorBonus = Float.parseFloat(df.format(random));
         return;
     }
 }

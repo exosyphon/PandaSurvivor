@@ -3,6 +3,7 @@ package com.courter.pandasurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,6 +79,7 @@ public class Hero extends GameObject {
         this.fullHealth = FULL_HEALTH_DEFAULT;
         this.goldBonus = 0;
         this.attackSpeed = 0;
+        DecimalFormat df = new DecimalFormat("0.0");
         for (Item item : equippedGear.values()) {
             this.spellDmg += item.getMagicBonus();
             this.meleeDmg += item.getMeleeBonus();
@@ -88,6 +90,10 @@ public class Hero extends GameObject {
             if (this.attackSpeed > 20.0f) {
                 this.attackSpeed = 20;
             }
+            this.spellDmg = Float.parseFloat(df.format(this.spellDmg));
+            this.meleeDmg = Float.parseFloat(df.format(this.meleeDmg));
+            this.goldBonus  = Float.parseFloat(df.format(this.goldBonus));
+            this.attackSpeed = Float.parseFloat(df.format(this.attackSpeed));
         }
     }
 
