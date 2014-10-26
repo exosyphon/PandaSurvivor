@@ -407,6 +407,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             }
         }
 
+        if (WorldRenderer.showPortalMessage) {
+            WorldRenderer.portalFont.draw(batcher, "Portal Active", (WorldRenderer.w * .4f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .042f)));
+        }
+
         if (PandaSurvivor.game_state == PandaSurvivor.GAME_STATES.GAME_OVER) {
             batcher.draw(WorldRenderer.retrySprite, WorldRenderer.camera.viewportWidth / 2 - (WorldRenderer.w * .200f), WorldRenderer.camera.viewportHeight / 2 - (WorldRenderer.h * .333f), (WorldRenderer.w * .401f), (WorldRenderer.h * .666f));
         }

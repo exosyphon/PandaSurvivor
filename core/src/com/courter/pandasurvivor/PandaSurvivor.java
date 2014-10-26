@@ -8,6 +8,14 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
 
 public class PandaSurvivor extends ApplicationAdapter {
+    public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
+    public static final String PANDA_GRASS_MAP_NAME = "panda_grass.tmx";
+    public static ArrayList<String> mapNames = new ArrayList<String>();
+    static {
+        mapNames.add(PANDA_GRASS_MAP_NAME);
+        mapNames.add(PANDA_SNOW_MAP_NAME);
+    }
+    public static int mapNameIndex = 0;
     public static final int RIGHT_SIDE_OF_MAP = 7584;
     public static final int LEFT_SIDE_OF_MAP = 0;
     public static final int BOTTOM_OF_MAP = 0;
@@ -42,7 +50,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     @Override
     public void create() {
         Assets.load();
-        worldRenderer = new WorldRenderer();
+        worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex));
         world = new World(null, worldRenderer);
 
         setConstants();
@@ -68,6 +76,21 @@ public class PandaSurvivor extends ApplicationAdapter {
     @Override
     public void render() {
         if (game_state == GAME_STATES.RUNNING) {
+            if(world.createNewLevel) {
+                mapNameIndex++;
+                if(mapNameIndex > mapNames.size() - 1) {
+                    mapNameIndex = 0;
+                }
+                Hero tmpHero = world.hero;
+                worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex));
+                world = new World(null, worldRenderer);
+                tmpHero.position.x = world.hero.position.x;
+                tmpHero.position.y = world.hero.position.y;
+                world.hero = tmpHero;
+                world.hero.updateBounds();
+                worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+            }
+
             deltaTime = Gdx.graphics.getDeltaTime();
 
             world.update(deltaTime);
@@ -219,7 +242,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {
             if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
-                worldRenderer = new WorldRenderer();
+                worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex));
                 world = new World(null, worldRenderer);
                 game_state = GAME_STATES.RUNNING;
             } else if (OverlapTester.pointInRectangle(WorldRenderer.retryNoButtonBounds, clickPosition.x, clickPosition.y)) {

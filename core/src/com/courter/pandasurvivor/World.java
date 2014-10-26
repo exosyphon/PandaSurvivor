@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class World {
+    public static final int LEVEL_KILL_THRESHOLD = 100;
     public static float BOSS_COLLISION_Y_BOUNDS_OFFSET;
     public static float ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
     public static float ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
@@ -85,7 +86,9 @@ public class World {
     public static List<GameObject> bossList;
     public static List<List<GameObject>> enemyList;
     public static List<Set> worldObjectLists;
+    public static LevelPortal levelPortal;
     public static Hero hero;
+    public static boolean createNewLevel;
     public final WorldListener listener;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     WorldRenderer worldRenderer;
@@ -192,6 +195,9 @@ public class World {
             checkTreeCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
             checkEnemyCollisions(direction);
             checkBossCollisions(direction);
+            if (levelPortal != null) {
+                checkLevelPortalCollisions(gameObject);
+            }
         }
     }
 
@@ -442,6 +448,12 @@ public class World {
         checkStaticCollisionsForSet(wallList, gameObject, direction, boundsOffset, enemyFlag);
     }
 
+    private void checkLevelPortalCollisions(GameObject gameObject) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, levelPortal.bounds)) {
+            this.createNewLevel = true;
+        }
+    }
+
     private void checkStaticCollisionsForSet(Set<GameObject> objectSet, GameObject gameObject, HeroDirections direction, float boundsOffset, boolean enemyFlag) {
         Rectangle boundsForStaticObject;
         for (GameObject existingWorldStaticObject : objectSet) {
@@ -508,6 +520,9 @@ public class World {
                                     tiledMapRenderer.removeSprite(ninja.getSprite());
                                     list.remove(ninja);
                                     hero.addNinjaKill();
+                                    if (hero.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && levelPortal == null) {
+                                        worldRenderer.addLevelPortal();
+                                    }
                                     break;
                                 }
 
@@ -708,6 +723,9 @@ public class World {
         input.add(treeList);
         input.add(wallList);
         worldObjectLists = input;
+
+        levelPortal = null;
+        createNewLevel = false;
     }
 
     private void moveEnemies(float deltaTime) {

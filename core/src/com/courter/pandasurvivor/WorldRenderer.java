@@ -20,7 +20,6 @@ public class WorldRenderer {
     public static float w = Gdx.graphics.getWidth();
     public static float h = Gdx.graphics.getHeight();
 
-    public static final String PANDA_SNOW_MAP_NAME = "panda_snow.tmx";
     public static final float FIREBALL_WIDTH = (h * .029f);
     public static final float FIREBALL_HEIGHT = (h * .029f);
     public static final float FIREBALL_Y_POSITION = (h * .022f);
@@ -103,6 +102,7 @@ public class WorldRenderer {
     public static BitmapFont coinFont;
     public static BitmapFont coinFont2;
     public static BitmapFont equipmentStatsFont;
+    public static BitmapFont portalFont;
     public static boolean showInventory;
     public static boolean showArmorView;
     public static boolean showInventoryOptions;
@@ -115,6 +115,7 @@ public class WorldRenderer {
     public static int currentlySelectedItemIndex;
     public static int currentlyViewingItemIndex;
     public static Item currentlyComparingItem;
+    public static boolean showPortalMessage;
 
     TextureRegion[] pumpkinBossFrames;
     Animation pumpkinBossDownAnimation;
@@ -153,10 +154,11 @@ public class WorldRenderer {
 
     TiledMap tiledMap;
 
-    public WorldRenderer() {
+    public WorldRenderer(String mapName) {
         currentlySelectedItemIndex = 0;
         currentlyViewingItemIndex = 0;
         currentlyComparingItem = null;
+        showPortalMessage = false;
         Rectangle destroyItemBounds1 = new Rectangle((w * .613f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds2 = new Rectangle((w * .713f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds3 = new Rectangle((w * .813f), (h * .76f), (w * .111f), (h * .055f));
@@ -261,6 +263,9 @@ public class WorldRenderer {
         equipmentStatsFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         equipmentStatsFont.setColor(1, 1, 1, 1);
         equipmentStatsFont.setScale((w * .0011f), (h * .0018f));
+        portalFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+        portalFont.setColor(1, 0, 1, 1);
+        portalFont.setScale((w * .0011f), (h * .0018f));
         shapeRenderer = new ShapeRenderer();
 
         camera = new OrthographicCamera();
@@ -274,7 +279,7 @@ public class WorldRenderer {
 
         setupControlSprites(w);
 
-        tiledMap = new TmxMapLoader().load(PANDA_SNOW_MAP_NAME);
+        tiledMap = new TmxMapLoader().load(mapName);
         tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
         tiledMapRenderer.addSprite(heroSprite);
         tiledMapRenderer.addControlSprite(dpadSprite);
@@ -290,6 +295,12 @@ public class WorldRenderer {
 
     public void addInventoryUnitBounds(int inventorySize) {
         currentInventoryUnitBoundsList.add(inventoryUnitBoundsList.get(inventorySize - 1));
+    }
+
+    public void repopulateInventoryUnitBounds(int inventorySize) {
+        for (int x = 0; x < inventorySize; x++) {
+            currentInventoryUnitBoundsList.add(inventoryUnitBoundsList.get(x));
+        }
     }
 
     public void render(World.HeroDirections direction) {
@@ -866,6 +877,11 @@ public class WorldRenderer {
         addWallSprite(600, 600);
     }
 
+    public void addLevelPortal() {
+        this.showPortalMessage = true;
+        addLevelPortalSprite(100, 100);
+    }
+
     public void addCoins(float x, float y, float goldBonus) {
         addCoinsSprite(x, y, goldBonus);
     }
@@ -910,6 +926,14 @@ public class WorldRenderer {
         bossSprite.setPosition(x - (w * .111f), y - (h * .185f));
         tiledMapRenderer.addSprite(bossSprite);
         World.bossList.add(new Boss(x, y, bossSprite, World.BossTypes.PUMPKIN_BOSS));
+    }
+
+    private void addLevelPortalSprite(float x, float y) {
+        Sprite levelPortalSprite = new Sprite(Assets.levelPortalSprite);
+        levelPortalSprite.setSize((w * .035f), (h * .118f));
+        levelPortalSprite.setPosition(100, 100);
+        tiledMapRenderer.addSprite(levelPortalSprite);
+        World.levelPortal = new LevelPortal(x, y);
     }
 
     private void addWallSprite(float x, float y) {

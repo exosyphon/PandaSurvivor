@@ -40,6 +40,7 @@ public class Assets {
     public static Texture gearStatsWithoutButtonsViewSprite;
     public static Texture grayAddStatButtonSprite;
     public static Texture addStatButtonSprite;
+    public static Texture levelPortalSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -82,5 +83,6 @@ public class Assets {
         gearStatsWithoutButtonsViewSprite = loadTexture("gear_stat_view_without_buttons.png");
         grayAddStatButtonSprite = loadTexture("disabled_add_stat_button.png");
         addStatButtonSprite = loadTexture("add_stat_button.png");
+        levelPortalSprite = loadTexture("level_portal.png");
     }
 }
