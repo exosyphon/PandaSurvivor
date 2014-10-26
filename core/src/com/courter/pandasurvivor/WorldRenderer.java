@@ -409,7 +409,7 @@ public class WorldRenderer {
             fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION);
         tiledMapRenderer.addSprite(fireballSprite);
-        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction));
+        World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction, PandaSurvivor.currentLevel));
     }
 
     public void updateControlSprites(float heroOriginalX, float heroOriginalY, World.HeroDirections direction) {
@@ -439,7 +439,7 @@ public class WorldRenderer {
             fireballSpriteXOffset = heroSprite.getWidth() / 2.5f;
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION);
         tiledMapRenderer.addSprite(fireballSprite);
-        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction));
+        World.enemyFireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction, PandaSurvivor.currentLevel));
     }
 
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
@@ -925,7 +925,7 @@ public class WorldRenderer {
         bossSprite.setSize((w * .071f), (h * .118f));
         bossSprite.setPosition(x - (w * .111f), y - (h * .185f));
         tiledMapRenderer.addSprite(bossSprite);
-        World.bossList.add(new Boss(x, y, bossSprite, World.BossTypes.PUMPKIN_BOSS));
+        World.bossList.add(new Boss(x, y, bossSprite, World.BossTypes.PUMPKIN_BOSS, PandaSurvivor.currentLevel));
     }
 
     private void addLevelPortalSprite(float x, float y) {
@@ -967,7 +967,7 @@ public class WorldRenderer {
         swordSprite.setSize(SWORD_WIDTH, SWORD_HEIGHT);
         swordSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(swordSprite);
-        Sword sword = new Sword(x, y, swordSprite);
+        Sword sword = new Sword(x, y, swordSprite, PandaSurvivor.currentLevel);
         sword.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(sword);
     }
@@ -977,7 +977,7 @@ public class WorldRenderer {
         clothHelmetSprite.setSize(HELMET_WIDTH, HELMET_HEIGHT);
         clothHelmetSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothHelmetSprite);
-        Helmet helmet = new Helmet(x, y, clothHelmetSprite);
+        Helmet helmet = new Helmet(x, y, clothHelmetSprite, PandaSurvivor.currentLevel);
         helmet.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(helmet);
     }
@@ -987,7 +987,7 @@ public class WorldRenderer {
         clothChestpieceSprite.setSize(CHESTPIECE_WIDTH, CHESTPIECE_HEIGHT);
         clothChestpieceSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothChestpieceSprite);
-        Chestpiece chestpiece = new Chestpiece(x, y, clothChestpieceSprite);
+        Chestpiece chestpiece = new Chestpiece(x, y, clothChestpieceSprite, PandaSurvivor.currentLevel);
         chestpiece.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(chestpiece);
     }
@@ -997,7 +997,7 @@ public class WorldRenderer {
         clothBootsSprite.setSize(BOOTS_WIDTH, BOOTS_HEIGHT);
         clothBootsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothBootsSprite);
-        Boots boots = new Boots(x, y, clothBootsSprite);
+        Boots boots = new Boots(x, y, clothBootsSprite, PandaSurvivor.currentLevel);
         boots.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(boots);
     }
@@ -1007,7 +1007,7 @@ public class WorldRenderer {
         clothGlovesSprite.setSize(GLOVES_WIDTH, GLOVES_HEIGHT);
         clothGlovesSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothGlovesSprite);
-        Gloves gloves = new Gloves(x, y, clothGlovesSprite);
+        Gloves gloves = new Gloves(x, y, clothGlovesSprite, PandaSurvivor.currentLevel);
         gloves.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(gloves);
     }
@@ -1017,7 +1017,7 @@ public class WorldRenderer {
         clothBracersSprite.setSize(BRACERS_WIDTH, BRACERS_HEIGHT);
         clothBracersSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothBracersSprite);
-        Bracers bracers = new Bracers(x, y, clothBracersSprite);
+        Bracers bracers = new Bracers(x, y, clothBracersSprite, PandaSurvivor.currentLevel);
         bracers.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(bracers);
     }
@@ -1027,7 +1027,7 @@ public class WorldRenderer {
         clothPantsSprite.setSize(PANTS_WIDTH, PANTS_HEIGHT);
         clothPantsSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(clothPantsSprite);
-        Pants pants = new Pants(x, y, clothPantsSprite);
+        Pants pants = new Pants(x, y, clothPantsSprite, PandaSurvivor.currentLevel);
         pants.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(pants);
     }
@@ -1037,7 +1037,7 @@ public class WorldRenderer {
         staffSprite.setSize(STAFF_WIDTH, STAFF_HEIGHT);
         staffSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(staffSprite);
-        Staff staff = new Staff(x, y, staffSprite);
+        Staff staff = new Staff(x, y, staffSprite, PandaSurvivor.currentLevel);
         staff.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(staff);
     }
@@ -1048,19 +1048,19 @@ public class WorldRenderer {
             enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.redNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.RED));
+            World.redNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.RED, PandaSurvivor.currentLevel));
         } else if (ninjaType == World.NinjaTypes.BLACK) {
             Sprite enemySprite = new Sprite(blackNinjaFrames[0]);
             enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.blackNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.BLACK));
+            World.blackNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.BLACK, PandaSurvivor.currentLevel));
         } else if (ninjaType == World.NinjaTypes.PURPLE) {
             Sprite enemySprite = new Sprite(purpleNinjaFrames[0]);
             enemySprite.setSize(NINJA_WIDTH, NINJA_HEIGHT);
             enemySprite.setPosition(x, y);
             tiledMapRenderer.addSprite(enemySprite);
-            World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE));
+            World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE, PandaSurvivor.currentLevel));
         }
     }
 }

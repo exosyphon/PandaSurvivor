@@ -34,6 +34,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     float lastActionTime = 0;
     float testActionTime = 0;
     float deltaTime;
+    public static int currentLevel = 1;
     World world;
     WorldRenderer worldRenderer;
     public static GAME_STATES game_state;
@@ -77,6 +78,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     public void render() {
         if (game_state == GAME_STATES.RUNNING) {
             if(world.createNewLevel) {
+                currentLevel++;
                 mapNameIndex++;
                 if(mapNameIndex > mapNames.size() - 1) {
                     mapNameIndex = 0;

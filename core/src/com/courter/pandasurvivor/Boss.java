@@ -15,7 +15,7 @@ public class Boss extends Enemy {
 
     private World.BossTypes bossType;
 
-    public Boss(float x, float y, Sprite sprite, World.BossTypes bossType) {
+    public Boss(float x, float y, Sprite sprite, World.BossTypes bossType, int currentLevel) {
         super(
                 x - WALKING_BOUNDS_BOSS_WIDTH - (Gdx.graphics.getWidth() * .016f),
                 y - WALKING_BOUNDS_BOSS_HEIGHT - (Gdx.graphics.getHeight() * .041f),
@@ -26,7 +26,8 @@ public class Boss extends Enemy {
                 SHOOTING_BOUNDS_BOSS_WIDTH,
                 300,
                 150,
-                10
+                10,
+                currentLevel
         );
         this.shooting_bounds = createBoundsRectangle(x - SHOOTING_BOUNDS_BOSS_WIDTH - (Gdx.graphics.getWidth() * .011f), y - SHOOTING_BOUNDS_BOSS_HEIGHT - (Gdx.graphics.getHeight() * .037f), SHOOTING_BOUNDS_BOSS_WIDTH, SHOOTING_BOUNDS_BOSS_HEIGHT);
         this.bossType = bossType;

@@ -14,7 +14,7 @@ public class Ninja extends Enemy {
 
     private World.NinjaTypes ninjaType;
 
-    public Ninja(float x, float y, Sprite sprite, World.NinjaTypes ninjaType) {
+    public Ninja(float x, float y, Sprite sprite, World.NinjaTypes ninjaType, int currentLevel) {
         super(
                 x,
                 y + WALKING_BOUNDS_ENEMY_HEIGHT / 4,
@@ -25,7 +25,8 @@ public class Ninja extends Enemy {
                 SHOOTING_BOUNDS_ENEMY_HEIGHT,
                 20,
                 5,
-                2
+                2,
+                currentLevel
         );
         this.shooting_bounds = createBoundsRectangle(x + SHOOTING_BOUNDS_ENEMY_HEIGHT / 2, y - SHOOTING_BOUNDS_ENEMY_WIDTH / 2, SHOOTING_BOUNDS_ENEMY_WIDTH, SHOOTING_BOUNDS_ENEMY_HEIGHT);
         this.ninjaType = ninjaType;

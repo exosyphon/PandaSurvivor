@@ -9,6 +9,7 @@ public class Enemy extends GameObject {
     Sprite sprite;
     private int xpGain;
     private int touchDamage;
+    private int currentLevel;
 
     public Enemy(float x,
                  float y,
@@ -19,15 +20,17 @@ public class Enemy extends GameObject {
                  float shootingBoundsHeight,
                  float health,
                  int xpGain,
-                 int touchDamage
+                 int touchDamage,
+                 int currentLevel
     ) {
         super(x, y, walkingBoundsWidth, walkingBoundsHeight);
         this.shooting_bounds = createBoundsRectangle(x, y, shootingBoundsWidth, shootingBoundsHeight);
         currentDirection = World.HeroDirections.RIGHT;
         this.sprite = sprite;
-        this.health = health;
+        this.health = health * currentLevel;
         this.xpGain = xpGain;
-        this.touchDamage = touchDamage;
+        this.touchDamage = touchDamage * currentLevel;
+        this.currentLevel = currentLevel;
     }
 
     public void update(float deltaTime) {

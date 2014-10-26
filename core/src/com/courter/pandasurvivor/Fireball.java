@@ -13,11 +13,11 @@ public class Fireball extends DynamicGameObject {
     float damageValue;
     World.HeroDirections fireballDirection;
 
-    public Fireball(float x, float y, Sprite sprite, World.HeroDirections direction) {
+    public Fireball(float x, float y, Sprite sprite, World.HeroDirections direction, int currentLevel) {
         super(x, y, FIREBALL_WIDTH, FIREBALL_HEIGHT);
         velocity.set(FIREBALL_SPEED, 0);
         this.sprite = sprite;
-        this.damageValue = 5;
+        this.damageValue = 5 * currentLevel;
         this.fireballDirection = direction;
     }
 
