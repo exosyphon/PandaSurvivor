@@ -155,6 +155,7 @@ public class WorldRenderer {
     TiledMap tiledMap;
     TiledMap insideHouseMap;
     TiledMap grassMap;
+    TiledMap snowMap;
 
     public WorldRenderer(String mapName, float startX, float startY) {
         setupConstants();
@@ -187,6 +188,7 @@ public class WorldRenderer {
 
         insideHouseMap = new TmxMapLoader().load(PandaSurvivor.INSIDE_HOUSE_FILENAME);
         grassMap = new TmxMapLoader().load(PandaSurvivor.PANDA_GRASS_MAP_NAME);
+        snowMap = new TmxMapLoader().load(PandaSurvivor.PANDA_SNOW_MAP_NAME);
     }
 
     private void setupConstants() {
@@ -319,8 +321,10 @@ public class WorldRenderer {
 
         if (mapName.equals(PandaSurvivor.INSIDE_HOUSE_FILENAME)) {
             tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(insideHouseMap);
-        } else {
+        } else if(mapName.equals(PandaSurvivor.PANDA_GRASS_MAP_NAME)) {
             tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(grassMap);
+        } else if (mapName.equals(PandaSurvivor.PANDA_SNOW_MAP_NAME)) {
+            tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(snowMap);
         }
 
         tiledMapRenderer.addSprite(heroSprite);
