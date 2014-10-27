@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="house_tileset" tilewidth="32" tileheight="32">
+  <image source="house_tileset.png" width="545" height="495"/>
+ </tileset>
+ <layer name="background" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGr+f2LrMdQcNVUVVXV1w9/DWQQ
+  </data>
+ </layer>
+ <layer name="sprites" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAADwbhAAAAE=
+  </data>
+ </layer>
+ <layer name="treebottoms" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAADwbhAAAAE=
+  </data>
+ </layer>
+ <layer name="treemids" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt0rEOABAMANH+vr+2IpHG0KvhJDdYPBoR+xpw5/rVr7pf5lfP53b+uid9yn15P/3/KPs2f8LN5q+vT/u0rd9r6/faZmbW1wRBYPJL
+  </data>
+ </layer>
+</map>

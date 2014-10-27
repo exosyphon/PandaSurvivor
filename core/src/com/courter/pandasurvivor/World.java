@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class World {
-    public static final int LEVEL_KILL_THRESHOLD = 100;
+    public static final int LEVEL_KILL_THRESHOLD = 1;
     public static float BOSS_COLLISION_Y_BOUNDS_OFFSET;
     public static float ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
     public static float ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
@@ -65,6 +65,8 @@ public class World {
     public static final int HERO_MOVE_SPEED = (int) (WorldRenderer.h * .481f);
     public static final int ENEMY_MOVE_SPEED = (int) (WorldRenderer.h * .055f);
     public static final int BOSS_MOVE_SPEED = (int) (WorldRenderer.h * .074f);
+    public static final Rectangle HOUSE_DOOR = new Rectangle(60, 340, 70, 40);
+    public static final Rectangle HOUSE_EXIT_DOOR = new Rectangle(400, 5, 100, 10);
     public static final int COIN_DROP_CHANCE = 50;
     public static final float BOSS_KEY_DROP_CHANCE = 1f;
     public static final float COMMON_GEAR_DROP_CHANCE = 5f;
@@ -88,19 +90,24 @@ public class World {
     public static List<Set> worldObjectLists;
     public static LevelPortal levelPortal;
     public static Hero hero;
+    public static Set<GameObject> houseList;
     public static boolean createNewLevel;
+    public static boolean leaveHouse;
+    public static boolean switchToInsideHouse;
+    public static boolean outsideHouse;
     public final WorldListener listener;
     OrthogonalTiledMapRendererWithSprites tiledMapRenderer;
     WorldRenderer worldRenderer;
     int doHorizontal;
     int bossDoHorizontal;
 
-    public World(WorldListener listener, WorldRenderer worldRenderer) {
+    public World(WorldListener listener, WorldRenderer worldRenderer, boolean outsideHouse) {
         doHorizontal = 0;
         bossDoHorizontal = 0;
         this.listener = listener;
         this.worldRenderer = worldRenderer;
         this.tiledMapRenderer = worldRenderer.tiledMapRenderer;
+        this.outsideHouse = outsideHouse;
         createObjects();
         generateLevel();
         setConstants();
@@ -134,21 +141,25 @@ public class World {
     }
 
     private void generateLevel() {
-        worldRenderer.addWalls();
-        for (int i = 0; i <= numberOfRedNinjaEnemies; i++) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addNinja(x, y, NinjaTypes.RED);
-        }
-        for (int t = 0; t <= numberOfBlackNinjaEnemies; t++) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
-        }
-        for (int p = 0; p <= numberOfPurpleNinjaEnemies; p++) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
-            worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
+        if (outsideHouse) {
+            worldRenderer.addWalls();
+            for (int i = 0; i <= numberOfRedNinjaEnemies; i++) {
+                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                worldRenderer.addNinja(x, y, NinjaTypes.RED);
+            }
+            for (int t = 0; t <= numberOfBlackNinjaEnemies; t++) {
+                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
+            }
+            for (int p = 0; p <= numberOfPurpleNinjaEnemies; p++) {
+                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
+            }
+
+            worldRenderer.addHouse(0, 400);
         }
     }
 
@@ -172,18 +183,23 @@ public class World {
 
     public void update(float deltaTime) {
         updateFireballs(deltaTime);
-        updateEnemyFireballs(deltaTime);
-        moveEnemies(deltaTime);
-        moveBosses(deltaTime);
-        checkCollisions(deltaTime);
-        checkGameOver();
-        checkHealthRegen(deltaTime);
-        checkEnemyCount();
+        checkFireballCollisions(deltaTime);
+
+        if (outsideHouse) {
+            updateEnemyFireballs(deltaTime);
+            moveEnemies(deltaTime);
+            moveBosses(deltaTime);
+            checkCollisions(deltaTime);
+            checkGameOver();
+            checkHealthRegen(deltaTime);
+            checkEnemyCount();
+        } else {
+            checkHouseExitCollisions(hero);
+        }
     }
 
     public void checkCollisions(float deltaTime) {
         checkEnemyFireballCollisions(deltaTime);
-        checkFireballCollisions(deltaTime);
         checkCoinCollisions(deltaTime);
         checkItemCollisions(deltaTime);
     }
@@ -198,6 +214,10 @@ public class World {
             if (levelPortal != null) {
                 checkLevelPortalCollisions(gameObject);
             }
+            checkHouseEntranceCollisions(gameObject);
+            checkHouseCollisions(gameObject, direction, boundsOffset, !checkEnemyCollisionsFlag);
+        } else {
+            checkHouseCollisions(gameObject, direction, 80, !checkEnemyCollisionsFlag);
         }
     }
 
@@ -448,9 +468,25 @@ public class World {
         checkStaticCollisionsForSet(wallList, gameObject, direction, boundsOffset, enemyFlag);
     }
 
+    private void checkHouseCollisions(GameObject gameObject, HeroDirections direction, float boundsOffset, boolean enemyFlag) {
+        checkStaticCollisionsForSet(houseList, gameObject, direction, boundsOffset, enemyFlag);
+    }
+
     private void checkLevelPortalCollisions(GameObject gameObject) {
         if (OverlapTester.overlapRectangles(gameObject.bounds, levelPortal.bounds)) {
             this.createNewLevel = true;
+        }
+    }
+
+    private void checkHouseEntranceCollisions(GameObject gameObject) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_DOOR) && hero.getCurrentDirection() == HeroDirections.UP) {
+            this.switchToInsideHouse = true;
+        }
+    }
+
+    private void checkHouseExitCollisions(GameObject gameObject) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_EXIT_DOOR) && hero.getCurrentDirection() == HeroDirections.DOWN) {
+            this.leaveHouse = true;
         }
     }
 
@@ -503,6 +539,16 @@ public class World {
                     }
                 }
 
+                for (GameObject gameObject : houseList) {
+                    if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                        if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
+                            tiledMapRenderer.removeSprite(fireball.getSprite());
+                            fireballList.remove(fireball);
+                            break;
+                        }
+                    }
+                }
+
                 if (fireball != null) {
                     float heroGoldBonus = hero.getGoldBonus();
                     for (List<GameObject> list : enemyList) {
@@ -526,7 +572,7 @@ public class World {
                                         tiledMapRenderer.removeSprite(ninja.getSprite());
                                         list.remove(ninja);
                                         hero.addNinjaKill();
-                                        if (hero.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && levelPortal == null) {
+                                        if (hero.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
                                             worldRenderer.addLevelPortal();
                                         }
                                         break;
@@ -660,6 +706,16 @@ public class World {
                         }
                     }
 
+                    for (GameObject gameObject : houseList) {
+                        if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                            if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, fireball.bounds)) {
+                                tiledMapRenderer.removeSprite(fireball.getSprite());
+                                fireballList.remove(fireball);
+                                break;
+                            }
+                        }
+                    }
+
                     if (OverlapTester.overlapRectangles(hero.shooting_bounds, fireball.bounds)) {
                         float tmpXPosition = hero.position.x;
                         float tmpYPosition = hero.position.y;
@@ -720,13 +776,14 @@ public class World {
 
     private void createObjects() {
         worldObjectLists = new ArrayList<Set>();
-
         fireballList = new ArrayList<Fireball>();
+
         enemyFireballList = new ArrayList<Fireball>();
         coinsList = new ArrayList<Coins>();
         itemsList = new ArrayList<Item>();
         treeList = new HashSet<GameObject>();
         wallList = new HashSet<GameObject>();
+        houseList = new HashSet<GameObject>();
         redNinjaList = new ArrayList<GameObject>();
         blackNinjaList = new ArrayList<GameObject>();
         purpleNinjaList = new ArrayList<GameObject>();
@@ -742,9 +799,10 @@ public class World {
         input.add(treeList);
         input.add(wallList);
         worldObjectLists = input;
-
         levelPortal = null;
+        switchToInsideHouse = false;
         createNewLevel = false;
+        leaveHouse = false;
     }
 
     private void moveEnemies(float deltaTime) {

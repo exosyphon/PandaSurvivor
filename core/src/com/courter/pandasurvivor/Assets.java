@@ -41,6 +41,7 @@ public class Assets {
     public static Texture grayAddStatButtonSprite;
     public static Texture addStatButtonSprite;
     public static Texture levelPortalSprite;
+    public static Texture houseSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -84,5 +85,6 @@ public class Assets {
         grayAddStatButtonSprite = loadTexture("disabled_add_stat_button.png");
         addStatButtonSprite = loadTexture("add_stat_button.png");
         levelPortalSprite = loadTexture("level_portal.png");
+        houseSprite = loadTexture("house.png");
     }
 }

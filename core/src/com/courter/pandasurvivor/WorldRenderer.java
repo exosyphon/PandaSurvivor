@@ -153,8 +153,43 @@ public class WorldRenderer {
     Animation blackNinjaUpAnimation;
 
     TiledMap tiledMap;
+    TiledMap insideHouseMap;
+    TiledMap grassMap;
 
-    public WorldRenderer(String mapName) {
+    public WorldRenderer(String mapName, float startX, float startY) {
+        setupConstants();
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w, h);
+
+        camera.update();
+
+        slurpFrames();
+
+        addHero(w, h);
+
+        setupControlSprites(w);
+
+        tiledMap = new TmxMapLoader().load(mapName);
+        tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
+        tiledMapRenderer.addSprite(heroSprite);
+        tiledMapRenderer.addControlSprite(dpadSprite);
+
+        moveStartingPosition(startX, startY);
+
+        showInventory = false;
+        showInventoryOptions = false;
+        showArmorView = false;
+        showGearStats = false;
+        showCurrentGearStats = false;
+        showLevelUpStats = false;
+        showLevelUpStatsButton = false;
+
+        insideHouseMap = new TmxMapLoader().load(PandaSurvivor.INSIDE_HOUSE_FILENAME);
+        grassMap = new TmxMapLoader().load(PandaSurvivor.PANDA_GRASS_MAP_NAME);
+    }
+
+    private void setupConstants() {
         currentlySelectedItemIndex = 0;
         currentlyViewingItemIndex = 0;
         currentlyComparingItem = null;
@@ -267,20 +302,27 @@ public class WorldRenderer {
         portalFont.setColor(1, 0, 1, 1);
         portalFont.setScale((w * .0011f), (h * .0018f));
         shapeRenderer = new ShapeRenderer();
+    }
 
+    public WorldRenderer createNewRenderer(String mapName, float startX, float startY) {
+        setupConstants();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
 
         camera.update();
 
-        slurpFrames();
-
         addHero(w, h);
 
         setupControlSprites(w);
 
-        tiledMap = new TmxMapLoader().load(mapName);
-        tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(tiledMap);
+        moveStartingPosition(startX, startY);
+
+        if (mapName.equals(PandaSurvivor.INSIDE_HOUSE_FILENAME)) {
+            tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(insideHouseMap);
+        } else {
+            tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(grassMap);
+        }
+
         tiledMapRenderer.addSprite(heroSprite);
         tiledMapRenderer.addControlSprite(dpadSprite);
 
@@ -291,6 +333,8 @@ public class WorldRenderer {
         showCurrentGearStats = false;
         showLevelUpStats = false;
         showLevelUpStatsButton = false;
+
+        return this;
     }
 
     public void addInventoryUnitBounds(int inventorySize) {
@@ -665,6 +709,39 @@ public class WorldRenderer {
         camera.translate(0, -(originaly - World.hero.position.y));
     }
 
+    public void moveStartingPosition(float x, float y) {
+        heroSprite.setPosition(x, y);
+        World.hero.position.x = x;
+        World.hero.position.y = y;
+        World.hero.updateBounds();
+
+        dpadSprite.setPosition(dpadSprite.getX() - (w / 2) + x, dpadSprite.getY() - (h / 2) + y);
+        aButtonBounds.setPosition(aButtonBounds.getX() - (w / 2) + x, aButtonBounds.getY() - (h / 2) + y);
+        bagButtonBounds.setPosition(bagButtonBounds.getX() - (w / 2) + x, bagButtonBounds.getY() - (h / 2) + y);
+        armorButtonBounds.setPosition(armorButtonBounds.getX() - (w / 2) + x, armorButtonBounds.getY() - (h / 2) + y);
+        equipGearBounds.setPosition(equipGearBounds.getX() - (w / 2) + x, equipGearBounds.getY() - (h / 2) + y);
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (w / 2) + x, showGearStatsCloseBounds.getY() - (h / 2) + y);
+        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() - (w / 2) + x, showCurrentGearStatsBounds.getY() - (h / 2) + y);
+        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() - (w / 2) + x, showCurrentGearStatsCloseBounds.getY() - (h / 2) + y);
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() - (w / 2) + x, showGearStatsDestroyBounds.getY() - (h / 2) + y);
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() - (w / 2) + x, showLevelStatsButtonBounds.getY() - (h / 2) + y);
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() - (w / 2) + x, showLevelStatsCloseBounds.getY() - (h / 2) + y);
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() - (w / 2) + x, showLevelStats1Bounds.getY() - (h / 2) + y);
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (w / 2) + x, showLevelStats2Bounds.getY() - (h / 2) + y);
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (w / 2) + x, showLevelStats3Bounds.getY() - (h / 2) + y);
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (w / 2) + x, showLevelStats4Bounds.getY() - (h / 2) + y);
+        for (Rectangle destroyItemBounds : destroyItemBoundsList) {
+            destroyItemBounds.setPosition(destroyItemBounds.getX() - (w / 2) + x, destroyItemBounds.getY() - (h / 2) + y);
+        }
+        for (Rectangle useItemBounds : useItemBoundsList) {
+            useItemBounds.setPosition(useItemBounds.getX() - (w / 2) + x, useItemBounds.getY() - (h / 2) + y);
+        }
+        for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
+            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() - (w / 2) + x, inventoryUnitBounds.getY() - (h / 2) + y);
+        }
+        camera.translate(-(w / 2) + x, -(h / 2) + y);
+    }
+
     public void updateCameraAndPandaSpritePositionsUp(float originaly) {
         heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
@@ -916,6 +993,10 @@ public class WorldRenderer {
         addNinjaSprite(x, y, ninjaType);
     }
 
+    public void addHouse(float x, float y) {
+        addHouseSprite(x, y);
+    }
+
     public void addPumpkinBoss(float x, float y) {
         addBossSprite(x, y);
     }
@@ -1040,6 +1121,15 @@ public class WorldRenderer {
         Staff staff = new Staff(x, y, staffSprite, PandaSurvivor.currentLevel);
         staff.setItemAction(World.ItemActions.EQUIP);
         World.itemsList.add(staff);
+    }
+
+    private void addHouseSprite(float x, float y) {
+        Sprite houseSprite = new Sprite(Assets.houseSprite);
+        houseSprite.setSize(300, 300);
+        houseSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(houseSprite);
+        House house = new House(x, y);
+        World.houseList.add(house);
     }
 
     private void addNinjaSprite(float x, float y, World.NinjaTypes ninjaType) {
