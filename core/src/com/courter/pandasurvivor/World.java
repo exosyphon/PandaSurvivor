@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class World {
-    public static final int LEVEL_KILL_THRESHOLD = 1;
+    public static final int LEVEL_KILL_THRESHOLD = 100;
     public static float BOSS_COLLISION_Y_BOUNDS_OFFSET;
     public static float ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
     public static float ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
