@@ -960,7 +960,7 @@ public class WorldRenderer {
 
     public void addLevelPortal() {
         this.showPortalMessage = true;
-        addLevelPortalSprite(100, 100);
+        addLevelPortalSprite((WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
     }
 
     public void addCoins(float x, float y, float goldBonus) {
@@ -1016,7 +1016,7 @@ public class WorldRenderer {
     private void addLevelPortalSprite(float x, float y) {
         Sprite levelPortalSprite = new Sprite(Assets.levelPortalSprite);
         levelPortalSprite.setSize((w * .035f), (h * .118f));
-        levelPortalSprite.setPosition(100, 100);
+        levelPortalSprite.setPosition((WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
         tiledMapRenderer.addSprite(levelPortalSprite);
         World.levelPortal = new LevelPortal(x, y);
     }
@@ -1129,7 +1129,7 @@ public class WorldRenderer {
 
     private void addHouseSprite(float x, float y) {
         Sprite houseSprite = new Sprite(Assets.houseSprite);
-        houseSprite.setSize(300, 300);
+        houseSprite.setSize((WorldRenderer.w * .167f), (WorldRenderer.h * .277f));
         houseSprite.setPosition(x, y);
         tiledMapRenderer.addSprite(houseSprite);
         House house = new House(x, y);

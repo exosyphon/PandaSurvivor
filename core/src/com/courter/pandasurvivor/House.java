@@ -4,13 +4,13 @@ package com.courter.pandasurvivor;
  * Created by andrew on 10/26/14.
  */
 public class House extends GameObject {
-    public static final float WALKING_BOUNDS_HOUSE_WIDTH = 370;
-    public static final float WALKING_BOUNDS_HOUSE_HEIGHT = 340;
-    public static final float SHOOTING_BOUNDS_HOUSE_WIDTH = 390;
-    public static final float SHOOTING_BOUNDS_HOUSE_HEIGHT = 310;
+    public static final float WALKING_BOUNDS_HOUSE_WIDTH = (WorldRenderer.w * .206f);
+    public static final float WALKING_BOUNDS_HOUSE_HEIGHT = (WorldRenderer.h * .314f);
+    public static final float SHOOTING_BOUNDS_HOUSE_WIDTH = (WorldRenderer.w * .217f);
+    public static final float SHOOTING_BOUNDS_HOUSE_HEIGHT = (WorldRenderer.h * .287f);
 
-    public static final float ENEMY_WALKING_BOUNDS_HOUSE_WIDTH = 310;
-    public static final float ENEMY_WALKING_BOUNDS_HOUSE_HEIGHT = 240;
+    public static final float ENEMY_WALKING_BOUNDS_HOUSE_WIDTH = (WorldRenderer.w * .172f);
+    public static final float ENEMY_WALKING_BOUNDS_HOUSE_HEIGHT = (WorldRenderer.h * .222f);
 
     public House(float x, float y) {
         super(x + WALKING_BOUNDS_HOUSE_HEIGHT / 4, y + WALKING_BOUNDS_HOUSE_HEIGHT / 2.75f, WALKING_BOUNDS_HOUSE_WIDTH, WALKING_BOUNDS_HOUSE_HEIGHT);

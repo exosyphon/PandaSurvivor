@@ -55,7 +55,7 @@ public class PandaSurvivor extends ApplicationAdapter {
     @Override
     public void create() {
         Assets.load();
-        worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex), 100, 100);
+        worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
         world = new World(null, worldRenderer, true);
 
         setConstants();
@@ -88,7 +88,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                     mapNameIndex = 0;
                 }
                 Hero tmpHero = world.hero;
-                worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), 100, 100);
+                worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
                 world = new World(null, worldRenderer, true);
                 tmpHero.position.x = world.hero.position.x;
                 tmpHero.position.y = world.hero.position.y;
@@ -98,7 +98,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             } else if (world.switchToInsideHouse) {
                 boolean showinglevelPortal = worldRenderer.showPortalMessage;
                 Hero tmpHero = world.hero;
-                worldRenderer = worldRenderer.createNewRenderer(INSIDE_HOUSE_FILENAME, 450, 0);
+                worldRenderer = worldRenderer.createNewRenderer(INSIDE_HOUSE_FILENAME, (WorldRenderer.w * .25f), 0);
                 world = new World(null, worldRenderer, false);
                 tmpHero.position.x = world.hero.position.x;
                 tmpHero.position.y = world.hero.position.y;
@@ -106,10 +106,12 @@ public class PandaSurvivor extends ApplicationAdapter {
                 world.hero = tmpHero;
                 world.hero.updateBounds();
                 worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+                TOP_OF_MAP = TOP_OF_INSIDE_HOUSE;
+                RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_INSIDE_HOUSE;
             } else if (world.leaveHouse) {
                 boolean showinglevelPortal = worldRenderer.showPortalMessage;
                 Hero tmpHero = world.hero;
-                worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), 100, 290);
+                worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .268f));
                 world = new World(null, worldRenderer, true);
                 tmpHero.position.x = world.hero.position.x;
                 tmpHero.position.y = world.hero.position.y;
@@ -272,7 +274,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             }
         } else if (game_state == GAME_STATES.GAME_OVER) {
             if (OverlapTester.pointInRectangle(WorldRenderer.retryYesButtonBounds, clickPosition.x, clickPosition.y)) {
-                worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex), 100, 100);
+                worldRenderer = new WorldRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
                 world = new World(null, worldRenderer, true);
                 game_state = GAME_STATES.RUNNING;
             } else if (OverlapTester.pointInRectangle(WorldRenderer.retryNoButtonBounds, clickPosition.x, clickPosition.y)) {
