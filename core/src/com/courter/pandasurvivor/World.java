@@ -144,18 +144,18 @@ public class World {
         if (outsideHouse) {
             worldRenderer.addWalls();
             for (int i = 0; i <= numberOfRedNinjaEnemies; i++) {
-                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
                 worldRenderer.addNinja(x, y, NinjaTypes.RED);
             }
             for (int t = 0; t <= numberOfBlackNinjaEnemies; t++) {
-                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
                 worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
             }
             for (int p = 0; p <= numberOfPurpleNinjaEnemies; p++) {
-                float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-                float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+                float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+                float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
                 worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
             }
 
@@ -165,18 +165,18 @@ public class World {
 
     private void checkEnemyCount() {
         while (redNinjaList.size() < numberOfRedNinjaEnemies) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+            float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+            float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
             worldRenderer.addNinja(x, y, NinjaTypes.RED);
         }
         while (blackNinjaList.size() < numberOfBlackNinjaEnemies) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+            float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+            float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
             worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
         }
         while (purpleNinjaList.size() < numberOfPurpleNinjaEnemies) {
-            float x = PandaSurvivor.RIGHT_SIDE_OF_MAP * (float) Math.random();
-            float y = PandaSurvivor.TOP_OF_MAP * (float) Math.random();
+            float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
+            float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
             worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
         }
     }
@@ -280,14 +280,14 @@ public class World {
     }
 
     private void checkEdgeOfMapCollisions(GameObject gameObject) {
-        if (gameObject.position.x < PandaSurvivor.LEFT_SIDE_OF_MAP) {
-            gameObject.position.x = PandaSurvivor.LEFT_SIDE_OF_MAP;
-        } else if (gameObject.position.x > (PandaSurvivor.RIGHT_SIDE_OF_MAP + gameObject.bounds.getWidth())) {
-            gameObject.position.x = PandaSurvivor.RIGHT_SIDE_OF_MAP;
-        } else if (gameObject.position.y < PandaSurvivor.BOTTOM_OF_MAP) {
-            gameObject.position.y = PandaSurvivor.BOTTOM_OF_MAP;
-        } else if (gameObject.position.y > (PandaSurvivor.TOP_OF_MAP + gameObject.bounds.getHeight())) {
-            gameObject.position.y = PandaSurvivor.TOP_OF_MAP;
+        if (gameObject.position.x < PandaSurvivor.LEFT_SIDE_OF_LEVEL_MAP) {
+            gameObject.position.x = PandaSurvivor.LEFT_SIDE_OF_LEVEL_MAP;
+        } else if (gameObject.position.x > (PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP + gameObject.bounds.getWidth())) {
+            gameObject.position.x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP;
+        } else if (gameObject.position.y < PandaSurvivor.BOTTOM_OF_LEVEL_MAP) {
+            gameObject.position.y = PandaSurvivor.BOTTOM_OF_LEVEL_MAP;
+        } else if (gameObject.position.y > (PandaSurvivor.TOP_OF_LEVEL_MAP + gameObject.bounds.getHeight())) {
+            gameObject.position.y = PandaSurvivor.TOP_OF_LEVEL_MAP;
         }
         gameObject.updateBounds();
     }
@@ -518,9 +518,9 @@ public class World {
 
         for (int i = 0; i < fireballList.size(); i++) {
             Fireball fireball = fireballList.get(i);
-            if (fireball.position.x < PandaSurvivor.LEFT_SIDE_OF_MAP ||
+            if (fireball.position.x < PandaSurvivor.LEFT_SIDE_OF_LEVEL_MAP ||
                     fireball.position.x > (PandaSurvivor.RIGHT_SIDE_OF_MAP + EDGE_OF_MAP_X_OFFSET) ||
-                    fireball.position.y < PandaSurvivor.BOTTOM_OF_MAP ||
+                    fireball.position.y < PandaSurvivor.BOTTOM_OF_LEVEL_MAP ||
                     fireball.position.y > (PandaSurvivor.TOP_OF_MAP + EDGE_OF_MAP_Y_OFFSET) ||
                     fireball.stateTime > Fireball.FIREBALL_DISTANCE) {
                 tiledMapRenderer.removeSprite(fireball.getSprite());
@@ -685,10 +685,10 @@ public class World {
         for (int i = 0; i < enemyFireballList.size(); i++) {
             Fireball fireball = enemyFireballList.get(i);
             if ((fireball.position.x < (x + WorldRenderer.w) && fireball.position.x > x) && ((fireball.position.y < (y + WorldRenderer.h) && fireball.position.y > y))) {
-                if (fireball.position.x < PandaSurvivor.LEFT_SIDE_OF_MAP ||
-                        fireball.position.x > (PandaSurvivor.RIGHT_SIDE_OF_MAP + EDGE_OF_MAP_X_OFFSET) ||
-                        fireball.position.y < PandaSurvivor.BOTTOM_OF_MAP ||
-                        fireball.position.y > (PandaSurvivor.TOP_OF_MAP + EDGE_OF_MAP_Y_OFFSET) ||
+                if (fireball.position.x < PandaSurvivor.LEFT_SIDE_OF_LEVEL_MAP ||
+                        fireball.position.x > (PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP + EDGE_OF_MAP_X_OFFSET) ||
+                        fireball.position.y < PandaSurvivor.BOTTOM_OF_LEVEL_MAP ||
+                        fireball.position.y > (PandaSurvivor.TOP_OF_LEVEL_MAP + EDGE_OF_MAP_Y_OFFSET) ||
                         fireball.stateTime > Fireball.FIREBALL_DISTANCE) {
                     tiledMapRenderer.removeSprite(fireball.getSprite());
                     enemyFireballList.remove(fireball);

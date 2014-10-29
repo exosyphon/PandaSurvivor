@@ -19,12 +19,16 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     public static int mapNameIndex = 0;
-    public static final int RIGHT_SIDE_OF_MAP = 7584;
-    public static final int LEFT_SIDE_OF_MAP = 0;
-    public static final int BOTTOM_OF_MAP = 0;
-    public static final int TOP_OF_MAP = 7616;
+    public static final int RIGHT_SIDE_OF_LEVEL_MAP = 7584;
+    public static final int LEFT_SIDE_OF_LEVEL_MAP = 0;
+    public static final int BOTTOM_OF_LEVEL_MAP = 0;
+    public static final int TOP_OF_LEVEL_MAP = 7616;
+    public static final int RIGHT_SIDE_OF_INSIDE_HOUSE = 926;
+    public static final int TOP_OF_INSIDE_HOUSE = 926;
     public static final float BUTTON_ACTION_BUFFER = 15;
     public static final float BASE_ATTACK_SPEED = 30;
+    public static float TOP_OF_MAP = TOP_OF_LEVEL_MAP;
+    public static float RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_LEVEL_MAP;
     public static float DPAD_EXTRA_X_SPACE;
     public static float DPAD_EXTRA_Y_SPACE;
     public static float DPAD_X_MOVE_OFFSET;
@@ -121,6 +125,8 @@ public class PandaSurvivor extends ApplicationAdapter {
                 world.hero = tmpHero;
                 world.hero.updateBounds();
                 worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+                TOP_OF_MAP = TOP_OF_LEVEL_MAP;
+                RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_LEVEL_MAP;
             }
 
             deltaTime = Gdx.graphics.getDeltaTime();
@@ -312,7 +318,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
     private void handleDpadMovement(Vector3 position, float heroOriginalX, float heroOriginalY) {
         if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET) && position.y > (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET)) {
-            if (position.x < (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX > LEFT_SIDE_OF_MAP) {
+            if (position.x < (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX > LEFT_SIDE_OF_LEVEL_MAP) {
                 //left
                 World.hero.setCurrentDirection(World.HeroDirections.LEFT);
                 World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
@@ -336,7 +342,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
             }
         } else {
-            if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_DOWN_OFFSET) && heroOriginalY > BOTTOM_OF_MAP) {
+            if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_DOWN_OFFSET) && heroOriginalY > BOTTOM_OF_LEVEL_MAP) {
                 //down
                 World.hero.setCurrentDirection(World.HeroDirections.DOWN);
                 World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
