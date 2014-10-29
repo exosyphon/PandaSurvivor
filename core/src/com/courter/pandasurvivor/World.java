@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class World {
     public static final int LEVEL_KILL_THRESHOLD = 100;
+    public static final int BOSS_KEY_COST = 10000;
     public static float BOSS_COLLISION_Y_BOUNDS_OFFSET;
     public static float ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
     public static float ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
@@ -67,6 +68,7 @@ public class World {
     public static final int BOSS_MOVE_SPEED = (int) (WorldRenderer.h * .074f);
     public static final Rectangle HOUSE_DOOR = new Rectangle((WorldRenderer.w * .033f), (WorldRenderer.h * .314f), (WorldRenderer.w * .039f), (WorldRenderer.h * .037f));
     public static final Rectangle HOUSE_EXIT_DOOR = new Rectangle((WorldRenderer.w * .222f), (WorldRenderer.h * .004f), (WorldRenderer.w * .055f), (WorldRenderer.h * .0092f));
+    public static final Rectangle WIZARD_BOUNDS = new Rectangle(450, 620, 110, 100);
     public static final int COIN_DROP_CHANCE = 50;
     public static final float BOSS_KEY_DROP_CHANCE = 1f;
     public static final float COMMON_GEAR_DROP_CHANCE = 5f;
@@ -92,6 +94,7 @@ public class World {
     public static Hero hero;
     public static Set<GameObject> houseList;
     public static boolean createNewLevel;
+    public static boolean showWizardButton;
     public static boolean leaveHouse;
     public static boolean switchToInsideHouse;
     public static boolean outsideHouse;
@@ -111,6 +114,13 @@ public class World {
         createObjects();
         generateLevel();
         setConstants();
+    }
+
+    public void buyBossKey() {
+        if ((hero.getInventory().size() < hero.getMaxInventorySize()) && hero.getMoneyTotal() > BOSS_KEY_COST) {
+            hero.setMoneyTotal(hero.getMoneyTotal() - BOSS_KEY_COST);
+            worldRenderer.equipBossKey();
+        }
     }
 
     private void setConstants() {
@@ -195,6 +205,7 @@ public class World {
             checkEnemyCount();
         } else {
             checkHouseExitCollisions(hero);
+            checkWizardCollisions(hero);
         }
     }
 
@@ -487,6 +498,14 @@ public class World {
     private void checkHouseExitCollisions(GameObject gameObject) {
         if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_EXIT_DOOR) && hero.getCurrentDirection() == HeroDirections.DOWN) {
             this.leaveHouse = true;
+        }
+    }
+
+    private void checkWizardCollisions(GameObject gameObject) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, WIZARD_BOUNDS)) {
+            this.showWizardButton = true;
+        } else {
+            this.showWizardButton = false;
         }
     }
 
@@ -803,6 +822,7 @@ public class World {
         switchToInsideHouse = false;
         createNewLevel = false;
         leaveHouse = false;
+        showWizardButton = false;
     }
 
     private void moveEnemies(float deltaTime) {

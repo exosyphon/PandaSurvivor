@@ -65,6 +65,8 @@ public class WorldRenderer {
     public static Rectangle showLevelStats2Bounds;
     public static Rectangle showLevelStats3Bounds;
     public static Rectangle showLevelStats4Bounds;
+    public static Rectangle openWizardBagBounds;
+    public static Rectangle buyBossKeyBounds;
     public static List<Rectangle> destroyItemBoundsList;
     public static List<Rectangle> useItemBoundsList;
     private static final int FRAME_ROWS = 8;
@@ -116,6 +118,7 @@ public class WorldRenderer {
     public static int currentlyViewingItemIndex;
     public static Item currentlyComparingItem;
     public static boolean showPortalMessage;
+    public static boolean showWizardSellView;
 
     TextureRegion[] pumpkinBossFrames;
     Animation pumpkinBossDownAnimation;
@@ -196,6 +199,7 @@ public class WorldRenderer {
         currentlyViewingItemIndex = 0;
         currentlyComparingItem = null;
         showPortalMessage = false;
+        showWizardSellView = false;
         Rectangle destroyItemBounds1 = new Rectangle((w * .613f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds2 = new Rectangle((w * .713f), (h * .76f), (w * .111f), (h * .055f));
         Rectangle destroyItemBounds3 = new Rectangle((w * .813f), (h * .76f), (w * .111f), (h * .055f));
@@ -288,6 +292,8 @@ public class WorldRenderer {
         showLevelStats2Bounds = new Rectangle((w * .301f), h - (h * .310f), (w * .035f), (h * .059f));
         showLevelStats3Bounds = new Rectangle((w * .301f), h - (h * .379f), (w * .035f), (h * .059f));
         showLevelStats4Bounds = new Rectangle((w * .301f), h - (h * .449f), (w * .035f), (h * .059f));
+        openWizardBagBounds = new Rectangle((w * .261f), h - 360, (w * .094f), (h * .157f));
+        buyBossKeyBounds = new Rectangle(200, h - (h * .279f), 150, 150);
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));
@@ -643,6 +649,8 @@ public class WorldRenderer {
         showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (originalx - World.hero.position.x), showLevelStats2Bounds.getY());
         showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (originalx - World.hero.position.x), showLevelStats3Bounds.getY());
         showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (originalx - World.hero.position.x), showLevelStats4Bounds.getY());
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX() - (originalx - World.hero.position.x), openWizardBagBounds.getY());
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() - (originalx - World.hero.position.x), buyBossKeyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
         }
@@ -672,6 +680,8 @@ public class WorldRenderer {
         showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() + (World.hero.position.x - originalx), showLevelStats2Bounds.getY());
         showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() + (World.hero.position.x - originalx), showLevelStats3Bounds.getY());
         showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() + (World.hero.position.x - originalx), showLevelStats4Bounds.getY());
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX() + (World.hero.position.x - originalx), openWizardBagBounds.getY());
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() + (World.hero.position.x - originalx), buyBossKeyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
         }
@@ -701,6 +711,8 @@ public class WorldRenderer {
         showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() - (originaly - World.hero.position.y));
         showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() - (originaly - World.hero.position.y));
         showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() - (originaly - World.hero.position.y));
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() - (originaly - World.hero.position.y));
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() - (originaly - World.hero.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
         }
@@ -734,6 +746,8 @@ public class WorldRenderer {
         showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (w / 2) + x, showLevelStats2Bounds.getY() - (h / 2) + y);
         showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (w / 2) + x, showLevelStats3Bounds.getY() - (h / 2) + y);
         showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (w / 2) + x, showLevelStats4Bounds.getY() - (h / 2) + y);
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX() - (w / 2) + x, openWizardBagBounds.getY() - (h / 2) + y);
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() - (w / 2) + x, buyBossKeyBounds.getY() - (h / 2) + y);
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX() - (w / 2) + x, destroyItemBounds.getY() - (h / 2) + y);
         }
@@ -763,6 +777,8 @@ public class WorldRenderer {
         showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() + (World.hero.position.y - originaly));
         showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() + (World.hero.position.y - originaly));
         showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() + (World.hero.position.y - originaly));
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() + (World.hero.position.y - originaly));
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() + (World.hero.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
             destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
         }
@@ -906,6 +922,7 @@ public class WorldRenderer {
     public void openGearStatsView(int itemToBeViewedIndex) {
         showGearStats = true;
         showLevelUpStats = false;
+        closeWizardSellView();
         currentlyViewingItemIndex = itemToBeViewedIndex;
     }
 
@@ -917,11 +934,23 @@ public class WorldRenderer {
     public void openLevelStatsView() {
         this.showInventoryOptions = false;
         closeGearStatsView();
+        closeWizardSellView();
         this.showLevelUpStats = true;
     }
 
     public void closeLevelStatsView() {
         showLevelUpStats = false;
+    }
+
+    public void openWizardSellView() {
+        this.showInventoryOptions = false;
+        this.showLevelUpStats = false;
+        closeGearStatsView();
+        showWizardSellView = true;
+    }
+
+    public void closeWizardSellView() {
+        showWizardSellView = false;
     }
 
     public void openGearCompareView(Item item) {
@@ -1045,6 +1074,15 @@ public class WorldRenderer {
         BossKey bossKey = new BossKey(x, y, bossKeySprite);
         bossKey.setItemAction(World.ItemActions.SPAWN_BOSS);
         World.itemsList.add(bossKey);
+    }
+
+    public void equipBossKey() {
+        Sprite bossKeySprite = new Sprite(Assets.bossKey);
+        bossKeySprite.setSize(BOSS_KEY_WIDTH, BOSS_KEY_HEIGHT);
+        BossKey bossKey = new BossKey(0, 0, bossKeySprite);
+        bossKey.setItemAction(World.ItemActions.SPAWN_BOSS);
+        World.hero.addItemToInventory(bossKey);
+        addInventoryUnitBounds(World.hero.getInventory().size());
     }
 
     private void addSwordSprite(float x, float y) {

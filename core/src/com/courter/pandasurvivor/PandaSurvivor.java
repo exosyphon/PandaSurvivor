@@ -213,7 +213,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                     if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
                         Item item = inventory.get(WorldRenderer.currentlySelectedItemIndex);
                         World.ItemActions itemAction = item.getItemAction();
-                        if (itemAction == World.ItemActions.SPAWN_BOSS) {
+                        if (world.outsideHouse && itemAction == World.ItemActions.SPAWN_BOSS) {
                             worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
                             inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                             worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
@@ -275,6 +275,20 @@ public class PandaSurvivor extends ApplicationAdapter {
                         world.hero.incrementSpellDmg();
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats4Bounds, clickPosition.x, clickPosition.y)) {
                         world.hero.incrementMeleeDmg();
+                    }
+                }
+            }
+
+            if (world.showWizardButton && !worldRenderer.showLevelUpStats && !worldRenderer.showGearStats) {
+                if (OverlapTester.pointInRectangle(WorldRenderer.openWizardBagBounds, clickPosition.x, clickPosition.y)) {
+                    worldRenderer.openWizardSellView();
+                }
+
+                if (WorldRenderer.showWizardSellView) {
+                    if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
+                        worldRenderer.closeWizardSellView();
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.buyBossKeyBounds, clickPosition.x, clickPosition.y)) {
+                        world.buyBossKey();
                     }
                 }
             }

@@ -421,6 +421,24 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.draw(WorldRenderer.healthBarSprite, HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_RENDER_X, HEALTH_BAR_RENDER_Y);
         batcher.draw(WorldRenderer.armorButtonSprite, ARMOR_BUTTON_X, ARMOR_BUTTON_Y, ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
         batcher.draw(WorldRenderer.xpBarSprite, XP_BAR_X, XP_BAR_Y, XP_BAR_RENDER_X, XP_BAR_RENDER_Y);
+
+        if (!World.outsideHouse) {
+            if (World.showWizardButton) {
+                batcher.draw(WorldRenderer.bagButtonSprite, ARMOR_BUTTON_X, (WorldRenderer.camera.viewportHeight - 350), ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
+
+                if (WorldRenderer.showWizardSellView) {
+                    batcher.draw(WorldRenderer.gearStatsWithoutButtonsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
+
+                    batcher.draw(Assets.bossKey, 180, 800, 64, 64);
+                    WorldRenderer.equipmentStatsFont.draw(batcher, "10K", (WorldRenderer.w * .1f), 800);
+
+                    WorldRenderer.equipmentStatsFont.draw(batcher, "Tap to Purchase ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .462f)));
+                }
+            } else {
+                WorldRenderer.showWizardSellView = false;
+            }
+        }
+
         batcher.end();
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);

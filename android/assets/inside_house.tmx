@@ -3,6 +3,12 @@
  <tileset firstgid="1" name="house_tileset" tilewidth="32" tileheight="32">
   <image source="house_tileset.png" width="545" height="495"/>
  </tileset>
+ <tileset firstgid="256" name="interior" tilewidth="32" tileheight="32">
+  <image source="interior.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1280" name="wizard" tilewidth="32" tileheight="32">
+  <image source="wizard.png" width="96" height="96"/>
+ </tileset>
  <layer name="background" width="32" height="32">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMBKGr+f2LrMdQcNVUVVXV1w9/DWQQ
@@ -15,7 +21,7 @@
  </layer>
  <layer name="treebottoms" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20PBxQAAADwbhAAAAE=
+   eJzt1TlPAkEYgOHZXVatFXtF6VTEswVpRVREGk0UW++zgUSlVfHsQVtR8eg9/4cH/g/f2mRJmOhOQuZLnmxmw+y7xWQJGUKEMYQIQlWuH00hnvCMF7ziDU7TyJ4meNGMGcwihTmJ9TutD3ziC2V8V+j3sKcXfejHNnawi6zEWlhCGDBhwQPbcu6PsyeOCSSQRwHnuJBYt9BqhQ9taIe/Qn+VPWtYx4bh/Lv/mmOaJzjFmYL+Lc073ONBQb/mxub8w7TV5C26HtiK+nV069GgqC87A5z9QYXnf5J2UmF/k/aWQ7+D+53oQgDdCLr4rsO0ohhBDKMYc7E/T2sBi1jCMlZc7O/R2scBcjjEkYv9S1pFXOEaNyjp/wo9evToqamZ4rs+bVR//avnpJGRuP4e2ef8ADY/WGg=
   </data>
  </layer>
  <layer name="treemids" width="32" height="32">
