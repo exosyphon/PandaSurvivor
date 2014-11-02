@@ -68,7 +68,7 @@ public class World {
     public static final int BOSS_MOVE_SPEED = (int) (WorldRenderer.h * .074f);
     public static final Rectangle HOUSE_DOOR = new Rectangle((WorldRenderer.w * .033f), (WorldRenderer.h * .314f), (WorldRenderer.w * .039f), (WorldRenderer.h * .037f));
     public static final Rectangle HOUSE_EXIT_DOOR = new Rectangle((WorldRenderer.w * .222f), (WorldRenderer.h * .004f), (WorldRenderer.w * .055f), (WorldRenderer.h * .0092f));
-    public static final Rectangle WIZARD_BOUNDS = new Rectangle(450, 620, 110, 100);
+    public static final Rectangle WIZARD_BOUNDS = new Rectangle((WorldRenderer.w * .25f), (WorldRenderer.h * .574f), (WorldRenderer.w * .061f), (WorldRenderer.h * .092f));
     public static final int COIN_DROP_CHANCE = 50;
     public static final float BOSS_KEY_DROP_CHANCE = 1f;
     public static final float COMMON_GEAR_DROP_CHANCE = 5f;

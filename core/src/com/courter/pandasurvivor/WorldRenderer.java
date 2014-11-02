@@ -293,7 +293,7 @@ public class WorldRenderer {
         showLevelStats3Bounds = new Rectangle((w * .301f), h - (h * .379f), (w * .035f), (h * .059f));
         showLevelStats4Bounds = new Rectangle((w * .301f), h - (h * .449f), (w * .035f), (h * .059f));
         openWizardBagBounds = new Rectangle((w * .261f), h - 360, (w * .094f), (h * .157f));
-        buyBossKeyBounds = new Rectangle(200, h - (h * .279f), 150, 150);
+        buyBossKeyBounds = new Rectangle((w * .111f), h - (h * .279f), (w * .083f), (h * .138f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
         levelFont.setScale((w * .0016f), (h * .0027f));

@@ -348,13 +348,13 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         if (!World.outsideHouse) {
             if (World.showWizardButton) {
-                batcher.draw(WorldRenderer.bagButtonSprite, ARMOR_BUTTON_X, (WorldRenderer.camera.viewportHeight - 350), ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
+                batcher.draw(WorldRenderer.bagButtonSprite, ARMOR_BUTTON_X, (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)), ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
 
                 if (WorldRenderer.showWizardSellView) {
                     batcher.draw(WorldRenderer.gearStatsWithoutButtonsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
 
-                    batcher.draw(Assets.bossKey, 180, 800, 64, 64);
-                    WorldRenderer.equipmentStatsFont.draw(batcher, "10K", (WorldRenderer.w * .1f), 800);
+                    batcher.draw(Assets.bossKey, (WorldRenderer.w * .1f), (WorldRenderer.h * .74f), (WorldRenderer.w * .035f), (WorldRenderer.h * .059f));
+                    WorldRenderer.equipmentStatsFont.draw(batcher, "10K", (WorldRenderer.w * .1f), (WorldRenderer.h * .74f));
 
                     WorldRenderer.equipmentStatsFont.draw(batcher, "Tap to Purchase ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .462f)));
                 }
