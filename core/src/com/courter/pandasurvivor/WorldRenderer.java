@@ -289,10 +289,10 @@ public class WorldRenderer {
         showCurrentGearStatsCloseBounds = new Rectangle((w * .947f), h - (h * .259f), (w * .053f), (h * .088f));
         showLevelStatsButtonBounds = new Rectangle((w * .055f), h - (h * .175f), (w * .066f), (h * .111f));
         showLevelStatsCloseBounds = new Rectangle((w * .39f), h - (h * .259f), (w * .053f), (h * .088f));
-        showLevelStats1Bounds = new Rectangle((w * .301f), h - (h * .240f), (w * .035f), (h * .059f));
-        showLevelStats2Bounds = new Rectangle((w * .301f), h - (h * .310f), (w * .035f), (h * .059f));
-        showLevelStats3Bounds = new Rectangle((w * .301f), h - (h * .379f), (w * .035f), (h * .059f));
-        showLevelStats4Bounds = new Rectangle((w * .301f), h - (h * .449f), (w * .035f), (h * .059f));
+        showLevelStats1Bounds = new Rectangle((w * .295f), h - (h * .240f), (w * .040f), (h * .062f));
+        showLevelStats2Bounds = new Rectangle((w * .295f), h - (h * .310f), (w * .040f), (h * .062f));
+        showLevelStats3Bounds = new Rectangle((w * .295f), h - (h * .379f), (w * .040f), (h * .062f));
+        showLevelStats4Bounds = new Rectangle((w * .295f), h - (h * .449f), (w * .040f), (h * .062f));
         openWizardBagBounds = new Rectangle((w * .261f), h - 360, (w * .094f), (h * .157f));
         buyBossKeyBounds = new Rectangle((w * .111f), h - (h * .279f), (w * .083f), (h * .138f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);

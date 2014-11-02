@@ -255,7 +255,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                         }
                     }
                 }
-                
+
                 if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearStatsView();
                     worldRenderer.closeGearCompareView();
