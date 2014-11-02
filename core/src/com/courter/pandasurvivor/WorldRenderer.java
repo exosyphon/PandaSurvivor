@@ -91,6 +91,7 @@ public class WorldRenderer {
     public static Sprite emptyStaffSprite;
     public static Sprite emptyHelmetSprite;
     public static Sprite gearStatsViewSprite;
+    public static Sprite cantEquipGearStatsViewSprite;
     public static Sprite gearStatsWithoutButtonsViewSprite;
     public static Sprite grayAddStatButtonSprite;
     public static Sprite addStatButtonSprite;
@@ -450,7 +451,7 @@ public class WorldRenderer {
         heroSprite = new Sprite(firstPandaFrames[0]);
         heroSprite.setSize((w * .053f), (h * .088f));
         heroSprite.setPosition(w / 2, h / 2);
-        World.hero = new Hero(w / 2, h / 2);
+        World.mage = new Mage(w / 2, h / 2);
     }
 
     public void addFireballSprite(float x, float y, World.HeroDirections direction) {
@@ -499,16 +500,16 @@ public class WorldRenderer {
     public void updatePandaShootingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
-                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case DOWN:
-                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case LEFT:
-                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case RIGHT:
-                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
         }
 
@@ -601,16 +602,16 @@ public class WorldRenderer {
     public void updatePandaWalkingSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
-                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaUpAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case DOWN:
-                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaDownAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case LEFT:
-                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaLeftAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case RIGHT:
-                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaRightAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
         }
     }
@@ -618,118 +619,118 @@ public class WorldRenderer {
     public void updatePandaHitSpriteTexture(World.HeroDirections direction) {
         switch (direction) {
             case UP:
-                heroSprite.setRegion(pandaHitUpAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaHitUpAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case DOWN:
-                heroSprite.setRegion(pandaHitDownAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaHitDownAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case LEFT:
-                heroSprite.setRegion(pandaHitLeftAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaHitLeftAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
             case RIGHT:
-                heroSprite.setRegion(pandaHitRightAnimation.getKeyFrame(World.hero.stateTime, Animation.ANIMATION_LOOPING));
+                heroSprite.setRegion(pandaHitRightAnimation.getKeyFrame(World.mage.stateTime, Animation.ANIMATION_LOOPING));
                 break;
         }
     }
 
     public void updateCameraAndPandaSpritePositionsLeft(float originalx) {
-        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.hero.position.x), dpadSprite.getY());
-        aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.hero.position.x), aButtonBounds.getY());
-        bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.hero.position.x), bagButtonBounds.getY());
-        armorButtonBounds.setPosition(armorButtonBounds.getX() - (originalx - World.hero.position.x), armorButtonBounds.getY());
-        equipGearBounds.setPosition(equipGearBounds.getX() - (originalx - World.hero.position.x), equipGearBounds.getY());
-        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showGearStatsCloseBounds.getY());
-        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsBounds.getY());
-        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() - (originalx - World.hero.position.x), showCurrentGearStatsCloseBounds.getY());
-        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() - (originalx - World.hero.position.x), showGearStatsDestroyBounds.getY());
-        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() - (originalx - World.hero.position.x), showLevelStatsButtonBounds.getY());
-        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() - (originalx - World.hero.position.x), showLevelStatsCloseBounds.getY());
-        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() - (originalx - World.hero.position.x), showLevelStats1Bounds.getY());
-        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (originalx - World.hero.position.x), showLevelStats2Bounds.getY());
-        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (originalx - World.hero.position.x), showLevelStats3Bounds.getY());
-        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (originalx - World.hero.position.x), showLevelStats4Bounds.getY());
-        openWizardBagBounds.setPosition(openWizardBagBounds.getX() - (originalx - World.hero.position.x), openWizardBagBounds.getY());
-        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() - (originalx - World.hero.position.x), buyBossKeyBounds.getY());
+        heroSprite.setPosition(World.mage.position.x, World.mage.position.y);
+        dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.mage.position.x), dpadSprite.getY());
+        aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.mage.position.x), aButtonBounds.getY());
+        bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.mage.position.x), bagButtonBounds.getY());
+        armorButtonBounds.setPosition(armorButtonBounds.getX() - (originalx - World.mage.position.x), armorButtonBounds.getY());
+        equipGearBounds.setPosition(equipGearBounds.getX() - (originalx - World.mage.position.x), equipGearBounds.getY());
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (originalx - World.mage.position.x), showGearStatsCloseBounds.getY());
+        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() - (originalx - World.mage.position.x), showCurrentGearStatsBounds.getY());
+        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() - (originalx - World.mage.position.x), showCurrentGearStatsCloseBounds.getY());
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() - (originalx - World.mage.position.x), showGearStatsDestroyBounds.getY());
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() - (originalx - World.mage.position.x), showLevelStatsButtonBounds.getY());
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() - (originalx - World.mage.position.x), showLevelStatsCloseBounds.getY());
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() - (originalx - World.mage.position.x), showLevelStats1Bounds.getY());
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() - (originalx - World.mage.position.x), showLevelStats2Bounds.getY());
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() - (originalx - World.mage.position.x), showLevelStats3Bounds.getY());
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() - (originalx - World.mage.position.x), showLevelStats4Bounds.getY());
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX() - (originalx - World.mage.position.x), openWizardBagBounds.getY());
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() - (originalx - World.mage.position.x), buyBossKeyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
-            destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.hero.position.x), destroyItemBounds.getY());
+            destroyItemBounds.setPosition(destroyItemBounds.getX() - (originalx - World.mage.position.x), destroyItemBounds.getY());
         }
         for (Rectangle useItemBounds : useItemBoundsList) {
-            useItemBounds.setPosition(useItemBounds.getX() - (originalx - World.hero.position.x), useItemBounds.getY());
+            useItemBounds.setPosition(useItemBounds.getX() - (originalx - World.mage.position.x), useItemBounds.getY());
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
-            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() - (originalx - World.hero.position.x), inventoryUnitBounds.getY());
+            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() - (originalx - World.mage.position.x), inventoryUnitBounds.getY());
         }
-        camera.translate(-(originalx - World.hero.position.x), 0);
+        camera.translate(-(originalx - World.mage.position.x), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsRight(float originalx) {
-        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX() + (World.hero.position.x - originalx), dpadSprite.getY());
-        aButtonBounds.setPosition(aButtonBounds.getX() + (World.hero.position.x - originalx), aButtonBounds.getY());
-        bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.hero.position.x - originalx), bagButtonBounds.getY());
-        armorButtonBounds.setPosition(armorButtonBounds.getX() + (World.hero.position.x - originalx), armorButtonBounds.getY());
-        equipGearBounds.setPosition(equipGearBounds.getX() + (World.hero.position.x - originalx), equipGearBounds.getY());
-        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showGearStatsCloseBounds.getY());
-        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsBounds.getY());
-        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() + (World.hero.position.x - originalx), showCurrentGearStatsCloseBounds.getY());
-        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() + (World.hero.position.x - originalx), showGearStatsDestroyBounds.getY());
-        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() + (World.hero.position.x - originalx), showLevelStatsButtonBounds.getY());
-        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() + (World.hero.position.x - originalx), showLevelStatsCloseBounds.getY());
-        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() + (World.hero.position.x - originalx), showLevelStats1Bounds.getY());
-        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() + (World.hero.position.x - originalx), showLevelStats2Bounds.getY());
-        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() + (World.hero.position.x - originalx), showLevelStats3Bounds.getY());
-        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() + (World.hero.position.x - originalx), showLevelStats4Bounds.getY());
-        openWizardBagBounds.setPosition(openWizardBagBounds.getX() + (World.hero.position.x - originalx), openWizardBagBounds.getY());
-        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() + (World.hero.position.x - originalx), buyBossKeyBounds.getY());
+        heroSprite.setPosition(World.mage.position.x, World.mage.position.y);
+        dpadSprite.setPosition(dpadSprite.getX() + (World.mage.position.x - originalx), dpadSprite.getY());
+        aButtonBounds.setPosition(aButtonBounds.getX() + (World.mage.position.x - originalx), aButtonBounds.getY());
+        bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.mage.position.x - originalx), bagButtonBounds.getY());
+        armorButtonBounds.setPosition(armorButtonBounds.getX() + (World.mage.position.x - originalx), armorButtonBounds.getY());
+        equipGearBounds.setPosition(equipGearBounds.getX() + (World.mage.position.x - originalx), equipGearBounds.getY());
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() + (World.mage.position.x - originalx), showGearStatsCloseBounds.getY());
+        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX() + (World.mage.position.x - originalx), showCurrentGearStatsBounds.getY());
+        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX() + (World.mage.position.x - originalx), showCurrentGearStatsCloseBounds.getY());
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX() + (World.mage.position.x - originalx), showGearStatsDestroyBounds.getY());
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX() + (World.mage.position.x - originalx), showLevelStatsButtonBounds.getY());
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX() + (World.mage.position.x - originalx), showLevelStatsCloseBounds.getY());
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX() + (World.mage.position.x - originalx), showLevelStats1Bounds.getY());
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX() + (World.mage.position.x - originalx), showLevelStats2Bounds.getY());
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX() + (World.mage.position.x - originalx), showLevelStats3Bounds.getY());
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX() + (World.mage.position.x - originalx), showLevelStats4Bounds.getY());
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX() + (World.mage.position.x - originalx), openWizardBagBounds.getY());
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX() + (World.mage.position.x - originalx), buyBossKeyBounds.getY());
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
-            destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.hero.position.x - originalx), destroyItemBounds.getY());
+            destroyItemBounds.setPosition(destroyItemBounds.getX() + (World.mage.position.x - originalx), destroyItemBounds.getY());
         }
         for (Rectangle useItemBounds : useItemBoundsList) {
-            useItemBounds.setPosition(useItemBounds.getX() + (World.hero.position.x - originalx), useItemBounds.getY());
+            useItemBounds.setPosition(useItemBounds.getX() + (World.mage.position.x - originalx), useItemBounds.getY());
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
-            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() + (World.hero.position.x - originalx), inventoryUnitBounds.getY());
+            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX() + (World.mage.position.x - originalx), inventoryUnitBounds.getY());
         }
-        camera.translate((World.hero.position.x - originalx), 0);
+        camera.translate((World.mage.position.x - originalx), 0);
     }
 
     public void updateCameraAndPandaSpritePositionsDown(float originaly) {
-        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.hero.position.y));
-        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.hero.position.y));
-        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.hero.position.y));
-        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() - (originaly - World.hero.position.y));
-        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() - (originaly - World.hero.position.y));
-        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
-        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() - (originaly - World.hero.position.y));
-        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() - (originaly - World.hero.position.y));
-        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() - (originaly - World.hero.position.y));
-        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() - (originaly - World.hero.position.y));
-        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() - (originaly - World.hero.position.y));
-        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() - (originaly - World.hero.position.y));
-        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() - (originaly - World.hero.position.y));
-        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() - (originaly - World.hero.position.y));
-        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() - (originaly - World.hero.position.y));
-        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() - (originaly - World.hero.position.y));
-        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() - (originaly - World.hero.position.y));
+        heroSprite.setPosition(World.mage.position.x, World.mage.position.y);
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.mage.position.y));
+        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.mage.position.y));
+        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.mage.position.y));
+        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() - (originaly - World.mage.position.y));
+        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() - (originaly - World.mage.position.y));
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() - (originaly - World.mage.position.y));
+        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() - (originaly - World.mage.position.y));
+        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() - (originaly - World.mage.position.y));
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() - (originaly - World.mage.position.y));
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() - (originaly - World.mage.position.y));
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() - (originaly - World.mage.position.y));
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() - (originaly - World.mage.position.y));
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() - (originaly - World.mage.position.y));
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() - (originaly - World.mage.position.y));
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() - (originaly - World.mage.position.y));
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() - (originaly - World.mage.position.y));
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() - (originaly - World.mage.position.y));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
-            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.hero.position.y));
+            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() - (originaly - World.mage.position.y));
         }
         for (Rectangle useItemBounds : useItemBoundsList) {
-            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() - (originaly - World.hero.position.y));
+            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() - (originaly - World.mage.position.y));
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
-            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() - (originaly - World.hero.position.y));
+            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() - (originaly - World.mage.position.y));
         }
-        camera.translate(0, -(originaly - World.hero.position.y));
+        camera.translate(0, -(originaly - World.mage.position.y));
     }
 
     public void moveStartingPosition(float x, float y) {
         heroSprite.setPosition(x, y);
-        World.hero.position.x = x;
-        World.hero.position.y = y;
-        World.hero.updateBounds();
+        World.mage.position.x = x;
+        World.mage.position.y = y;
+        World.mage.updateBounds();
 
         dpadSprite.setPosition(dpadSprite.getX() - (w / 2) + x, dpadSprite.getY() - (h / 2) + y);
         aButtonBounds.setPosition(aButtonBounds.getX() - (w / 2) + x, aButtonBounds.getY() - (h / 2) + y);
@@ -761,34 +762,34 @@ public class WorldRenderer {
     }
 
     public void updateCameraAndPandaSpritePositionsUp(float originaly) {
-        heroSprite.setPosition(World.hero.position.x, World.hero.position.y);
-        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.hero.position.y - originaly));
-        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.hero.position.y - originaly));
-        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.hero.position.y - originaly));
-        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() + (World.hero.position.y - originaly));
-        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() + (World.hero.position.y - originaly));
-        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
-        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() + (World.hero.position.y - originaly));
-        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() + (World.hero.position.y - originaly));
-        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() + (World.hero.position.y - originaly));
-        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() + (World.hero.position.y - originaly));
-        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() + (World.hero.position.y - originaly));
-        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() + (World.hero.position.y - originaly));
-        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() + (World.hero.position.y - originaly));
-        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() + (World.hero.position.y - originaly));
-        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() + (World.hero.position.y - originaly));
-        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() + (World.hero.position.y - originaly));
-        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() + (World.hero.position.y - originaly));
+        heroSprite.setPosition(World.mage.position.x, World.mage.position.y);
+        dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.mage.position.y - originaly));
+        aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.mage.position.y - originaly));
+        bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.mage.position.y - originaly));
+        armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() + (World.mage.position.y - originaly));
+        equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() + (World.mage.position.y - originaly));
+        showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() + (World.mage.position.y - originaly));
+        showCurrentGearStatsBounds.setPosition(showCurrentGearStatsBounds.getX(), showCurrentGearStatsBounds.getY() + (World.mage.position.y - originaly));
+        showCurrentGearStatsCloseBounds.setPosition(showCurrentGearStatsCloseBounds.getX(), showCurrentGearStatsCloseBounds.getY() + (World.mage.position.y - originaly));
+        showGearStatsDestroyBounds.setPosition(showGearStatsDestroyBounds.getX(), showGearStatsDestroyBounds.getY() + (World.mage.position.y - originaly));
+        showLevelStatsButtonBounds.setPosition(showLevelStatsButtonBounds.getX(), showLevelStatsButtonBounds.getY() + (World.mage.position.y - originaly));
+        showLevelStatsCloseBounds.setPosition(showLevelStatsCloseBounds.getX(), showLevelStatsCloseBounds.getY() + (World.mage.position.y - originaly));
+        showLevelStats1Bounds.setPosition(showLevelStats1Bounds.getX(), showLevelStats1Bounds.getY() + (World.mage.position.y - originaly));
+        showLevelStats2Bounds.setPosition(showLevelStats2Bounds.getX(), showLevelStats2Bounds.getY() + (World.mage.position.y - originaly));
+        showLevelStats3Bounds.setPosition(showLevelStats3Bounds.getX(), showLevelStats3Bounds.getY() + (World.mage.position.y - originaly));
+        showLevelStats4Bounds.setPosition(showLevelStats4Bounds.getX(), showLevelStats4Bounds.getY() + (World.mage.position.y - originaly));
+        openWizardBagBounds.setPosition(openWizardBagBounds.getX(), openWizardBagBounds.getY() + (World.mage.position.y - originaly));
+        buyBossKeyBounds.setPosition(buyBossKeyBounds.getX(), buyBossKeyBounds.getY() + (World.mage.position.y - originaly));
         for (Rectangle destroyItemBounds : destroyItemBoundsList) {
-            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.hero.position.y - originaly));
+            destroyItemBounds.setPosition(destroyItemBounds.getX(), destroyItemBounds.getY() + (World.mage.position.y - originaly));
         }
         for (Rectangle useItemBounds : useItemBoundsList) {
-            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() + (World.hero.position.y - originaly));
+            useItemBounds.setPosition(useItemBounds.getX(), useItemBounds.getY() + (World.mage.position.y - originaly));
         }
         for (Rectangle inventoryUnitBounds : inventoryUnitBoundsList) {
-            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() + (World.hero.position.y - originaly));
+            inventoryUnitBounds.setPosition(inventoryUnitBounds.getX(), inventoryUnitBounds.getY() + (World.mage.position.y - originaly));
         }
-        camera.translate(0, (World.hero.position.y - originaly));
+        camera.translate(0, (World.mage.position.y - originaly));
     }
 
     private void slurpPumpkinBossFramesIntoAnimations() {
@@ -905,6 +906,7 @@ public class WorldRenderer {
         useDestroyInventoryOptionsSprite = new Sprite(Assets.useDestroyInventoryOptionsSprite);
         statsDestroyViewSprite = new Sprite(Assets.statsDestroyViewSprite);
         gearStatsViewSprite = new Sprite(Assets.gearStatsViewSprite);
+        cantEquipGearStatsViewSprite = new Sprite(Assets.cantEquipGearStatsViewSprite);
         gearStatsWithoutButtonsViewSprite = new Sprite(Assets.gearStatsWithoutButtonsViewSprite);
         grayAddStatButtonSprite = new Sprite(Assets.grayAddStatButtonSprite);
         addStatButtonSprite = new Sprite(Assets.addStatButtonSprite);
@@ -958,7 +960,7 @@ public class WorldRenderer {
         this.showInventory = false;
         this.showInventoryOptions = false;
         showCurrentGearStats = true;
-        Item equippedItem = World.hero.getCurrentlyEquippedItemFromItemClass(item);
+        Item equippedItem = World.mage.getCurrentlyEquippedItemFromItemClass(item);
         currentlyComparingItem = equippedItem;
     }
 
@@ -1081,8 +1083,8 @@ public class WorldRenderer {
         bossKeySprite.setSize(BOSS_KEY_WIDTH, BOSS_KEY_HEIGHT);
         BossKey bossKey = new BossKey(0, 0, bossKeySprite);
         bossKey.setItemAction(World.ItemActions.SPAWN_BOSS);
-        World.hero.addItemToInventory(bossKey);
-        addInventoryUnitBounds(World.hero.getInventory().size());
+        World.mage.addItemToInventory(bossKey);
+        addInventoryUnitBounds(World.mage.getInventory().size());
     }
 
     private void addSwordSprite(float x, float y) {

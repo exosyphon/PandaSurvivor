@@ -6,10 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Hero extends GameObject {
     enum GearSlot {
-        BOOTS, PANTS, CHESTPIECE, HELMET, STAFF, GLOVES, BRACERS
+        BOOTS, PANTS, CHESTPIECE, HELMET, STAFF, GLOVES, BRACERS, SWORD
+    }
+
+    enum HeroClass {
+        MAGE, ARCHER, WARLOCK, WARRIOR
     }
 
     public static final float WALKING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .018f);
@@ -21,7 +26,6 @@ public class Hero extends GameObject {
     private static final float NEXT_XP_LEVEL_MULTIPLIER = 2;
 
     private static final int FULL_HEALTH_DEFAULT = 100;
-    private static final int SPELL_DMG_DEFAULT = 5;
 
     private float health;
     private int fullHealth;
@@ -38,13 +42,15 @@ public class Hero extends GameObject {
     private ArrayList<Item> inventory;
     private int maxInventorySize;
     private HashMap<Enum, Item> equippedGear;
-    private float spellDmg;
     private float attackSpeed;
     private float goldBonus;
-    private float meleeDmg;
+    protected float spellDmg;
+    protected float physDmg;
     private int xpPointsToUse;
+    protected HeroClass heroClass;
+    protected List<GearSlot> cantEquipSlots;
 
-    public Hero(float x, float y) {
+    public Hero(float x, float y, HeroClass heroClass) {
         super(x, y, WALKING_BOUNDS_HERO_WIDTH, WALKING_BOUNDS_HERO_HEIGHT);
         this.shooting_bounds = createBoundsRectangle(
                 x + (SHOOTING_BOUNDS_HERO_WIDTH / 6),
@@ -68,21 +74,39 @@ public class Hero extends GameObject {
         this.equippedGear = new HashMap<Enum, Item>();
         this.attackSpeed = 0;
         this.goldBonus = 0;
-        this.spellDmg = SPELL_DMG_DEFAULT;
-        this.meleeDmg = 0;
+        this.spellDmg = 0;
+        this.physDmg = 0;
         this.xpPointsToUse = 0;
+        this.heroClass = heroClass;
+        this.cantEquipSlots = new ArrayList<GearSlot>();
+    }
+
+    public boolean canEquip(GearSlot slot) {
+        return false;
+    }
+
+    public float getSpellDmgDefault() {
+        return 0;
+    }
+
+    public float getPhysicalDmgDefault() {
+        return 0;
+    }
+
+    public int getFullHealthDefault() {
+        return FULL_HEALTH_DEFAULT;
     }
 
     private void recalculateGearBonuses() {
-        this.spellDmg = SPELL_DMG_DEFAULT;
-        this.meleeDmg = 0;
-        this.fullHealth = FULL_HEALTH_DEFAULT;
+        this.spellDmg = getSpellDmgDefault();
+        this.physDmg = getPhysicalDmgDefault();
+        this.fullHealth = getFullHealthDefault();
         this.goldBonus = 0;
         this.attackSpeed = 0;
         DecimalFormat df = new DecimalFormat("0.0");
         for (Item item : equippedGear.values()) {
             this.spellDmg += item.getMagicBonus();
-            this.meleeDmg += item.getMeleeBonus();
+            this.physDmg += item.getPhysicalBonus();
             this.fullHealth += item.getHealthBonus();
             this.goldBonus += item.getExtraGoldBonus();
             this.fullHealth += item.getArmorBonus() / 2;
@@ -91,8 +115,8 @@ public class Hero extends GameObject {
                 this.attackSpeed = 20;
             }
             this.spellDmg = Float.parseFloat(df.format(this.spellDmg));
-            this.meleeDmg = Float.parseFloat(df.format(this.meleeDmg));
-            this.goldBonus  = Float.parseFloat(df.format(this.goldBonus));
+            this.physDmg = Float.parseFloat(df.format(this.physDmg));
+            this.goldBonus = Float.parseFloat(df.format(this.goldBonus));
             this.attackSpeed = Float.parseFloat(df.format(this.attackSpeed));
         }
     }
@@ -154,58 +178,31 @@ public class Hero extends GameObject {
     }
 
     public boolean equipItem(Item item) {
-        boolean shouldRemoveBounds = true;
-        if (item.getClass() == Staff.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.STAFF, item);
-        } else if (item.getClass() == Helmet.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.HELMET, item);
-        } else if (item.getClass() == Chestpiece.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.CHESTPIECE, item);
-        } else if (item.getClass() == Boots.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.BOOTS, item);
-        } else if (item.getClass() == Gloves.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.GLOVES, item);
-        } else if (item.getClass() == Bracers.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.BRACERS, item);
-        } else if (item.getClass() == Pants.class) {
-            shouldRemoveBounds = addToEquippedGear(GearSlot.PANTS, item);
-        }
+        boolean shouldRemoveBounds = addToEquippedGear(item.getGearSlot(), item);
         recalculateGearBonuses();
         return shouldRemoveBounds;
     }
 
     public Item getCurrentlyEquippedItemFromItemClass(Item item) {
-        Item returnItem = null;
-        if (item.getClass() == Staff.class) {
-            returnItem = equippedGear.get(GearSlot.STAFF);
-        } else if (item.getClass() == Helmet.class) {
-            returnItem = equippedGear.get(GearSlot.HELMET);
-        } else if (item.getClass() == Chestpiece.class) {
-            returnItem = equippedGear.get(GearSlot.CHESTPIECE);
-        } else if (item.getClass() == Boots.class) {
-            returnItem = equippedGear.get(GearSlot.BOOTS);
-        } else if (item.getClass() == Gloves.class) {
-            returnItem = equippedGear.get(GearSlot.GLOVES);
-        } else if (item.getClass() == Bracers.class) {
-            returnItem = equippedGear.get(GearSlot.BRACERS);
-        } else if (item.getClass() == Pants.class) {
-            returnItem = equippedGear.get(GearSlot.PANTS);
-        }
-        return returnItem;
+        return equippedGear.get(item.getGearSlot());
     }
 
     private boolean addToEquippedGear(GearSlot slot, Item item) {
-        boolean shouldRemoveBounds = true;
+        if (!cantEquipSlots.contains(slot)) {
+            boolean shouldRemoveBounds = true;
 
-        inventory.remove(item);
-        if (equippedGear.containsKey(slot)) {
-            inventory.add(equippedGear.get(slot));
-            equippedGear.remove(slot);
-            shouldRemoveBounds = false;
+            inventory.remove(item);
+            if (equippedGear.containsKey(slot)) {
+                inventory.add(equippedGear.get(slot));
+                equippedGear.remove(slot);
+                shouldRemoveBounds = false;
+            }
+            equippedGear.put(slot, item);
+
+            return shouldRemoveBounds;
+        } else {
+            return false;
         }
-        equippedGear.put(slot, item);
-
-        return shouldRemoveBounds;
     }
 
     public void update(float deltaTime) {
@@ -359,12 +356,12 @@ public class Hero extends GameObject {
         this.goldBonus = goldBonus;
     }
 
-    public float getMeleeDmg() {
-        return meleeDmg;
+    public float getPhysDmg() {
+        return physDmg;
     }
 
-    public void setMeleeDmg(float meleeDmg) {
-        this.meleeDmg = meleeDmg;
+    public void setPhysDmg(float physDmg) {
+        this.physDmg = physDmg;
     }
 
     public int getXpPointsToUse() {
@@ -385,8 +382,8 @@ public class Hero extends GameObject {
         this.xpPointsToUse -= 1;
     }
 
-    public void incrementMeleeDmg() {
-        this.meleeDmg += 1;
+    public void incrementPhysicalDmg() {
+        this.physDmg += 1;
         this.xpPointsToUse -= 1;
     }
 

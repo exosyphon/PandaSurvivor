@@ -15,6 +15,7 @@ public class Boots extends Item {
         super(x, y, sprite);
         this.currentLevel = currentLevel;
         generateRandomAttributes();
+        this.gearSlot = Hero.GearSlot.BOOTS;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Boots extends Item {
         float random = (float) Math.random() * (2.0f * currentLevel);
         magicBonus = Float.parseFloat(df.format(random));
         random = (float) Math.random() * (2.0f * currentLevel);
-        meleeBonus = Float.parseFloat(df.format(random));
+        physicalBonus = Float.parseFloat(df.format(random));
         random = (float) Math.random() * 2.0f;
         attackSpeedBonus = Float.parseFloat(df.format(random));
         random = (float) Math.random() * (2.0f * currentLevel);

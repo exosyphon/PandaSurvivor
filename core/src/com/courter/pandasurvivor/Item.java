@@ -14,11 +14,12 @@ public class Item extends GameObject {
     private World.ItemActions itemAction;
 
     protected float magicBonus;
-    protected float meleeBonus;
+    protected float physicalBonus;
     protected float attackSpeedBonus;
     protected float healthBonus;
     protected float extraGoldBonus;
     protected float armorBonus;
+    protected Hero.GearSlot gearSlot;
 
     public Item(float x, float y, Sprite sprite) {
         super(x - HERO_WALKING_BOUNDS_COINS_WIDTH / 2, y, HERO_WALKING_BOUNDS_COINS_WIDTH, HERO_WALKING_BOUNDS_COINS_HEIGHT);
@@ -28,11 +29,16 @@ public class Item extends GameObject {
         this.sellValue = (int) randomValue;
         this.visible = true;
         magicBonus = 0;
-        meleeBonus = 0;
+        physicalBonus = 0;
         attackSpeedBonus = 0;
         healthBonus = 0;
         extraGoldBonus = 0;
         armorBonus = 0;
+        gearSlot = null;
+    }
+
+    public Hero.GearSlot getGearSlot() {
+        return this.gearSlot;
     }
 
     public float inventoryRenderX() {
@@ -95,12 +101,12 @@ public class Item extends GameObject {
         this.magicBonus = magicBonus;
     }
 
-    public float getMeleeBonus() {
-        return meleeBonus;
+    public float getPhysicalBonus() {
+        return physicalBonus;
     }
 
-    public void setMeleeBonus(float meleeBonus) {
-        this.meleeBonus = meleeBonus;
+    public void setPhysicalBonus(float physicalBonus) {
+        this.physicalBonus = physicalBonus;
     }
 
     public float getAttackSpeedBonus() {

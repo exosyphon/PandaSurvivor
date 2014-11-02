@@ -91,7 +91,7 @@ public class World {
     public static List<List<GameObject>> enemyList;
     public static List<Set> worldObjectLists;
     public static LevelPortal levelPortal;
-    public static Hero hero;
+    public static Mage mage;
     public static Set<GameObject> houseList;
     public static boolean createNewLevel;
     public static boolean showWizardButton;
@@ -117,8 +117,8 @@ public class World {
     }
 
     public void buyBossKey() {
-        if ((hero.getInventory().size() < hero.getMaxInventorySize()) && hero.getMoneyTotal() > BOSS_KEY_COST) {
-            hero.setMoneyTotal(hero.getMoneyTotal() - BOSS_KEY_COST);
+        if ((mage.getInventory().size() < mage.getMaxInventorySize()) && mage.getMoneyTotal() > BOSS_KEY_COST) {
+            mage.setMoneyTotal(mage.getMoneyTotal() - BOSS_KEY_COST);
             worldRenderer.equipBossKey();
         }
     }
@@ -204,8 +204,8 @@ public class World {
             checkHealthRegen(deltaTime);
             checkEnemyCount();
         } else {
-            checkHouseExitCollisions(hero);
-            checkWizardCollisions(hero);
+            checkHouseExitCollisions(mage);
+            checkWizardCollisions(mage);
         }
     }
 
@@ -234,8 +234,8 @@ public class World {
 
     private void checkCoinCollisions(float deltaTime) {
         for (Coins coins : coinsList) {
-            if (OverlapTester.overlapRectangles(coins.bounds, hero.bounds)) {
-                hero.addMoney(coins.getMoneyValue());
+            if (OverlapTester.overlapRectangles(coins.bounds, mage.bounds)) {
+                mage.addMoney(coins.getMoneyValue());
                 tiledMapRenderer.removeSprite(coins.getSprite());
                 coinsList.remove(coins);
                 break;
@@ -261,10 +261,10 @@ public class World {
 
     private void checkItemCollisions(float deltaTime) {
         for (Item item : itemsList) {
-            if (OverlapTester.overlapRectangles(item.bounds, hero.bounds)) {
-                int currentHeroInventorySize = hero.getInventory().size();
-                if (currentHeroInventorySize < hero.getMaxInventorySize()) {
-                    hero.addItemToInventory(item);
+            if (OverlapTester.overlapRectangles(item.bounds, mage.bounds)) {
+                int currentHeroInventorySize = mage.getInventory().size();
+                if (currentHeroInventorySize < mage.getMaxInventorySize()) {
+                    mage.addItemToInventory(item);
                     worldRenderer.addInventoryUnitBounds(currentHeroInventorySize + 1);
                     tiledMapRenderer.removeSprite(item.getSprite());
                     itemsList.remove(item);
@@ -307,53 +307,53 @@ public class World {
         for (List<GameObject> list : enemyList) {
             for (int i = 0; i < list.size(); i++) {
                 Enemy enemy = (Enemy) list.get(i);
-                float heroOriginalX = hero.position.x;
-                float heroOriginalY = hero.position.y;
-                if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
+                float heroOriginalX = mage.position.x;
+                float heroOriginalY = mage.position.y;
+                if (OverlapTester.overlapRectangles(enemy.bounds, mage.bounds)) {
                     if (direction == HeroDirections.RIGHT) {
-                        enemy.position.x = hero.position.x - NINJA_KNOCKBACK_X;
-                        hero.position.x = hero.position.x + NINJA_HERO_KNOCKBACK_X;
+                        enemy.position.x = mage.position.x - NINJA_KNOCKBACK_X;
+                        mage.position.x = mage.position.x + NINJA_HERO_KNOCKBACK_X;
 
                         enemy.update(deltaTime);
                         enemy.getSprite().setPosition(enemy.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, enemy.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
-                        hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
-                        hero.updateBounds();
+                        mage.updateBounds();
+                        checkStaticObjectCollisionsFor(mage, HeroDirections.RIGHT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
+                        mage.updateBounds();
                         worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.RIGHT);
                     } else if (direction == HeroDirections.LEFT) {
-                        enemy.position.x = hero.position.x + NINJA_KNOCKBACK_X;
-                        hero.position.x = hero.position.x - NINJA_HERO_KNOCKBACK_X;
+                        enemy.position.x = mage.position.x + NINJA_KNOCKBACK_X;
+                        mage.position.x = mage.position.x - NINJA_HERO_KNOCKBACK_X;
 
                         enemy.update(deltaTime);
                         enemy.getSprite().setPosition(enemy.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, enemy.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
-                        hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
-                        hero.updateBounds();
+                        mage.updateBounds();
+                        checkStaticObjectCollisionsFor(mage, HeroDirections.LEFT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
+                        mage.updateBounds();
                         worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.LEFT);
                     } else if (direction == HeroDirections.DOWN) {
-                        enemy.position.y = hero.position.y + BOSS_KNOCKBACK_Y;
-                        hero.position.y = hero.position.y - BOSS_HERO_KNOCKBACK_Y;
+                        enemy.position.y = mage.position.y + BOSS_KNOCKBACK_Y;
+                        mage.position.y = mage.position.y - BOSS_HERO_KNOCKBACK_Y;
 
                         enemy.update(deltaTime);
                         enemy.getSprite().setPosition(enemy.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, enemy.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
-                        hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
-                        hero.updateBounds();
+                        mage.updateBounds();
+                        checkStaticObjectCollisionsFor(mage, HeroDirections.DOWN, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
+                        mage.updateBounds();
                         worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.DOWN);
                     } else if (direction == HeroDirections.UP) {
-                        enemy.position.y = hero.position.y - BOSS_KNOCKBACK_Y;
-                        hero.position.y = hero.position.y + BOSS_HERO_KNOCKBACK_Y;
+                        enemy.position.y = mage.position.y - BOSS_KNOCKBACK_Y;
+                        mage.position.y = mage.position.y + BOSS_HERO_KNOCKBACK_Y;
 
                         enemy.update(deltaTime);
                         enemy.getSprite().setPosition(enemy.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, enemy.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
-                        hero.updateBounds();
-                        checkStaticObjectCollisionsFor(hero, HeroDirections.UP, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
-                        hero.updateBounds();
+                        mage.updateBounds();
+                        checkStaticObjectCollisionsFor(mage, HeroDirections.UP, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
+                        mage.updateBounds();
                         worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.UP);
                     }
-                    worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
-                    hero.subtractDamage(enemy.getTouchDamage());
-                    hero.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
+                    worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
+                    mage.subtractDamage(enemy.getTouchDamage());
+                    mage.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
                 }
             }
         }
@@ -362,70 +362,70 @@ public class World {
     private void checkBossCollisionsWithHero(HeroDirections direction, float deltaTime) {
         for (int i = 0; i < bossList.size(); i++) {
             Boss boss = (Boss) bossList.get(i);
-            float heroOriginalX = hero.position.x;
-            float heroOriginalY = hero.position.y;
-            if (OverlapTester.overlapRectangles(boss.bounds, hero.bounds)) {
+            float heroOriginalX = mage.position.x;
+            float heroOriginalY = mage.position.y;
+            if (OverlapTester.overlapRectangles(boss.bounds, mage.bounds)) {
                 if (direction == HeroDirections.RIGHT) {
-                    boss.position.x = hero.position.x - BOSS_KNOCKBACK_X;
-                    hero.position.x = hero.position.x + BOSS_HERO_KNOCKBACK_X;
+                    boss.position.x = mage.position.x - BOSS_KNOCKBACK_X;
+                    mage.position.x = mage.position.x + BOSS_HERO_KNOCKBACK_X;
 
                     boss.update(deltaTime);
                     boss.getSprite().setPosition(boss.position.x + BOSS_X_POSITION_OFFSET, boss.position.y - BOSS_Y_POSITION_OFFSET);
-                    hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
-                    hero.updateBounds();
+                    mage.updateBounds();
+                    checkStaticObjectCollisionsFor(mage, HeroDirections.RIGHT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
+                    mage.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.RIGHT);
                 } else if (direction == HeroDirections.LEFT) {
-                    boss.position.x = hero.position.x + BOSS_KNOCKBACK_X;
-                    hero.position.x = hero.position.x - BOSS_HERO_KNOCKBACK_X;
+                    boss.position.x = mage.position.x + BOSS_KNOCKBACK_X;
+                    mage.position.x = mage.position.x - BOSS_HERO_KNOCKBACK_X;
 
                     boss.update(deltaTime);
                     boss.getSprite().setPosition(boss.position.x + BOSS_X_POSITION_OFFSET, boss.position.y - BOSS_Y_POSITION_OFFSET);
-                    hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
-                    hero.updateBounds();
+                    mage.updateBounds();
+                    checkStaticObjectCollisionsFor(mage, HeroDirections.LEFT, ENEMY_COLLISION_X_BOUNDS_OFFSET_2, true);
+                    mage.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.LEFT);
                 } else if (direction == HeroDirections.DOWN) {
-                    boss.position.y = hero.position.y + BOSS_KNOCKBACK_Y;
-                    hero.position.y = hero.position.y - BOSS_HERO_KNOCKBACK_Y;
+                    boss.position.y = mage.position.y + BOSS_KNOCKBACK_Y;
+                    mage.position.y = mage.position.y - BOSS_HERO_KNOCKBACK_Y;
 
                     boss.update(deltaTime);
                     boss.getSprite().setPosition(boss.position.x + BOSS_X_POSITION_OFFSET, boss.position.y - BOSS_Y_POSITION_OFFSET);
-                    hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
-                    hero.updateBounds();
+                    mage.updateBounds();
+                    checkStaticObjectCollisionsFor(mage, HeroDirections.DOWN, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
+                    mage.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.DOWN);
                 } else if (direction == HeroDirections.UP) {
-                    boss.position.y = hero.position.y - BOSS_KNOCKBACK_Y;
-                    hero.position.y = hero.position.y + BOSS_HERO_KNOCKBACK_Y;
+                    boss.position.y = mage.position.y - BOSS_KNOCKBACK_Y;
+                    mage.position.y = mage.position.y + BOSS_HERO_KNOCKBACK_Y;
 
                     boss.update(deltaTime);
                     boss.getSprite().setPosition(boss.position.x + BOSS_X_POSITION_OFFSET, boss.position.y - BOSS_Y_POSITION_OFFSET);
-                    hero.updateBounds();
-                    checkStaticObjectCollisionsFor(hero, HeroDirections.UP, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
-                    hero.updateBounds();
+                    mage.updateBounds();
+                    checkStaticObjectCollisionsFor(mage, HeroDirections.UP, ENEMY_COLLISION_Y_BOUNDS_OFFSET_2, true);
+                    mage.updateBounds();
                     worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, HeroDirections.UP);
                 }
-                worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
-                hero.subtractDamage(boss.getTouchDamage());
-                hero.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
+                worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
+                mage.subtractDamage(boss.getTouchDamage());
+                mage.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
             }
         }
     }
 
     private void checkHealthRegen(float deltaTime) {
-        if (hero.getHealth() < hero.getFullHealth()) {
-            if (hero.getLastTimeDamaged() > timeBeforeRegeneration) {
-                hero.regenerateHealth();
+        if (mage.getHealth() < mage.getFullHealth()) {
+            if (mage.getLastTimeDamaged() > timeBeforeRegeneration) {
+                mage.regenerateHealth();
             } else {
-                hero.setLastTimeDamaged(hero.getLastTimeDamaged() + deltaTime);
+                mage.setLastTimeDamaged(mage.getLastTimeDamaged() + deltaTime);
             }
         }
     }
 
     private void checkGameOver() {
-        if (hero.getHealth() <= 0) {
-            hero.setHealth(0);
+        if (mage.getHealth() <= 0) {
+            mage.setHealth(0);
             fireballList.clear();
             enemyFireballList.clear();
             worldRenderer.addRetryBounds();
@@ -442,15 +442,15 @@ public class World {
             for (GameObject gameObject : list) {
                 Enemy enemy = (Enemy) gameObject;
 
-                if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
+                if (OverlapTester.overlapRectangles(enemy.bounds, mage.bounds)) {
                     if (direction == HeroDirections.RIGHT)
-                        hero.position.x = enemy.position.x - enemy.bounds.getWidth() / 2 - ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
+                        mage.position.x = enemy.position.x - enemy.bounds.getWidth() / 2 - ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
                     else if (direction == HeroDirections.LEFT) {
-                        hero.position.x = enemy.position.x + enemy.bounds.getWidth() / 2 + ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
+                        mage.position.x = enemy.position.x + enemy.bounds.getWidth() / 2 + ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
                     } else if (direction == HeroDirections.DOWN) {
-                        hero.position.y = enemy.position.y + enemy.bounds.getHeight() / 2 + ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
+                        mage.position.y = enemy.position.y + enemy.bounds.getHeight() / 2 + ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
                     } else if (direction == HeroDirections.UP) {
-                        hero.position.y = enemy.position.y - enemy.bounds.getHeight() / 2 - ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
+                        mage.position.y = enemy.position.y - enemy.bounds.getHeight() / 2 - ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
                     }
                 }
             }
@@ -461,15 +461,15 @@ public class World {
         for (GameObject gameObject : bossList) {
             Enemy enemy = (Enemy) gameObject;
 
-            if (OverlapTester.overlapRectangles(enemy.bounds, hero.bounds)) {
+            if (OverlapTester.overlapRectangles(enemy.bounds, mage.bounds)) {
                 if (direction == HeroDirections.RIGHT)
-                    hero.position.x = enemy.position.x - enemy.bounds.getWidth() / 2 - ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
+                    mage.position.x = enemy.position.x - enemy.bounds.getWidth() / 2 - ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
                 else if (direction == HeroDirections.LEFT) {
-                    hero.position.x = enemy.position.x + enemy.bounds.getWidth() / 2 + ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
+                    mage.position.x = enemy.position.x + enemy.bounds.getWidth() / 2 + ENEMY_COLLISION_X_BOUNDS_OFFSET_2;
                 } else if (direction == HeroDirections.DOWN) {
-                    hero.position.y = enemy.position.y + enemy.bounds.getHeight() / 2 + ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
+                    mage.position.y = enemy.position.y + enemy.bounds.getHeight() / 2 + ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
                 } else if (direction == HeroDirections.UP) {
-                    hero.position.y = enemy.position.y - enemy.bounds.getHeight() / 2 - ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
+                    mage.position.y = enemy.position.y - enemy.bounds.getHeight() / 2 - ENEMY_COLLISION_Y_BOUNDS_OFFSET_2;
                 }
             }
         }
@@ -490,13 +490,13 @@ public class World {
     }
 
     private void checkHouseEntranceCollisions(GameObject gameObject) {
-        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_DOOR) && hero.getCurrentDirection() == HeroDirections.UP) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_DOOR) && mage.getCurrentDirection() == HeroDirections.UP) {
             this.switchToInsideHouse = true;
         }
     }
 
     private void checkHouseExitCollisions(GameObject gameObject) {
-        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_EXIT_DOOR) && hero.getCurrentDirection() == HeroDirections.DOWN) {
+        if (OverlapTester.overlapRectangles(gameObject.bounds, HOUSE_EXIT_DOOR) && mage.getCurrentDirection() == HeroDirections.DOWN) {
             this.leaveHouse = true;
         }
     }
@@ -569,15 +569,15 @@ public class World {
                 }
 
                 if (fireball != null) {
-                    float heroGoldBonus = hero.getGoldBonus();
+                    float heroGoldBonus = mage.getGoldBonus();
                     for (List<GameObject> list : enemyList) {
                         for (GameObject gameObject : list) {
                             if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
                                 Ninja ninja = ((Ninja) gameObject);
                                 if (OverlapTester.overlapRectangles(ninja.shooting_bounds, fireball.bounds)) {
-                                    ninja.setHealth(ninja.getHealth() - hero.getSpellDmg());
+                                    ninja.setHealth(ninja.getHealth() - mage.getSpellDmg());
                                     if (ninja.getHealth() <= 0) {
-                                        hero.handleXpGain(ninja.getXpGain());
+                                        mage.handleXpGain(ninja.getXpGain());
                                         float percentageChance = (float) Math.random() * 100;
                                         if (percentageChance < COIN_DROP_CHANCE) {
                                             worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y, heroGoldBonus);
@@ -590,8 +590,8 @@ public class World {
                                         }
                                         tiledMapRenderer.removeSprite(ninja.getSprite());
                                         list.remove(ninja);
-                                        hero.addNinjaKill();
-                                        if (hero.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
+                                        mage.addNinjaKill();
+                                        if (mage.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
                                             worldRenderer.addLevelPortal();
                                         }
                                         break;
@@ -640,9 +640,9 @@ public class World {
                             if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
                                 Boss boss = ((Boss) gameObject);
                                 if (OverlapTester.overlapRectangles(boss.shooting_bounds, fireball.bounds)) {
-                                    boss.setHealth(boss.getHealth() - hero.getSpellDmg());
+                                    boss.setHealth(boss.getHealth() - mage.getSpellDmg());
                                     if (boss.getHealth() <= 0) {
-                                        hero.handleXpGain(boss.getXpGain());
+                                        mage.handleXpGain(boss.getXpGain());
                                         worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
@@ -652,7 +652,7 @@ public class World {
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
                                         tiledMapRenderer.removeSprite(boss.getSprite());
                                         bossList.remove(boss);
-                                        hero.addBossKill();
+                                        mage.addBossKill();
                                         break;
                                     }
 
@@ -735,36 +735,36 @@ public class World {
                         }
                     }
 
-                    if (OverlapTester.overlapRectangles(hero.shooting_bounds, fireball.bounds)) {
-                        float tmpXPosition = hero.position.x;
-                        float tmpYPosition = hero.position.y;
+                    if (OverlapTester.overlapRectangles(mage.shooting_bounds, fireball.bounds)) {
+                        float tmpXPosition = mage.position.x;
+                        float tmpYPosition = mage.position.y;
 
-                        hero.subtractDamage(fireball.getDamageValue());
-                        hero.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
+                        mage.subtractDamage(fireball.getDamageValue());
+                        mage.setLastTimeDamaged(deltaTime * LAST_TIME_DAMAGED_BUFFER);
 
                         if (fireball.fireballDirection == HeroDirections.UP) {
-                            hero.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;
-                            hero.updateBounds();
-                            checkStaticObjectCollisionsFor(hero, HeroDirections.UP, FIREBALL_X_BOUNDS_OFFSET, true);
-                            worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
+                            mage.position.y += (HERO_MOVE_SPEED * deltaTime) * 2;
+                            mage.updateBounds();
+                            checkStaticObjectCollisionsFor(mage, HeroDirections.UP, FIREBALL_X_BOUNDS_OFFSET, true);
+                            worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
                             worldRenderer.updateCameraAndPandaSpritePositionsUp(tmpYPosition);
                         } else if (fireball.fireballDirection == HeroDirections.DOWN) {
-                            hero.position.y -= (HERO_MOVE_SPEED * deltaTime) * 2;
-                            hero.updateBounds();
-                            checkStaticObjectCollisionsFor(hero, HeroDirections.DOWN, FIREBALL_X_BOUNDS_OFFSET, true);
-                            worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
+                            mage.position.y -= (HERO_MOVE_SPEED * deltaTime) * 2;
+                            mage.updateBounds();
+                            checkStaticObjectCollisionsFor(mage, HeroDirections.DOWN, FIREBALL_X_BOUNDS_OFFSET, true);
+                            worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
                             worldRenderer.updateCameraAndPandaSpritePositionsDown(tmpYPosition);
                         } else if (fireball.fireballDirection == HeroDirections.RIGHT) {
-                            hero.position.x += (HERO_MOVE_SPEED * deltaTime) * 2;
-                            hero.updateBounds();
-                            checkStaticObjectCollisionsFor(hero, HeroDirections.RIGHT, FIREBALL_Y_BOUNDS_OFFSET, true);
-                            worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
+                            mage.position.x += (HERO_MOVE_SPEED * deltaTime) * 2;
+                            mage.updateBounds();
+                            checkStaticObjectCollisionsFor(mage, HeroDirections.RIGHT, FIREBALL_Y_BOUNDS_OFFSET, true);
+                            worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
                             worldRenderer.updateCameraAndPandaSpritePositionsRight(tmpXPosition);
                         } else if (fireball.fireballDirection == HeroDirections.LEFT) {
-                            hero.position.x -= (HERO_MOVE_SPEED * deltaTime) * 2;
-                            hero.updateBounds();
-                            checkStaticObjectCollisionsFor(hero, HeroDirections.LEFT, FIREBALL_Y_BOUNDS_OFFSET, true);
-                            worldRenderer.updatePandaHitSpriteTexture(hero.getCurrentDirection());
+                            mage.position.x -= (HERO_MOVE_SPEED * deltaTime) * 2;
+                            mage.updateBounds();
+                            checkStaticObjectCollisionsFor(mage, HeroDirections.LEFT, FIREBALL_Y_BOUNDS_OFFSET, true);
+                            worldRenderer.updatePandaHitSpriteTexture(mage.getCurrentDirection());
                             worldRenderer.updateCameraAndPandaSpritePositionsLeft(tmpXPosition);
                         }
                         tiledMapRenderer.removeSprite(fireball.getSprite());
@@ -831,21 +831,21 @@ public class World {
                 Ninja ninja = (Ninja) gameObject;
                 HeroDirections direction = null;
                 if (doHorizontal < 14) {
-                    if (ninja.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                    if (ninja.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
                         direction = HeroDirections.RIGHT;
                         ninja.setCurrentDirection(direction);
                         ninja.position.x = ninja.position.x + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (ninja.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
+                    } else if (ninja.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
                         direction = HeroDirections.LEFT;
                         ninja.setCurrentDirection(direction);
                         ninja.position.x = ninja.position.x - (ENEMY_MOVE_SPEED * deltaTime);
                     }
                 } else {
-                    if (ninja.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                    if (ninja.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
                         direction = HeroDirections.UP;
                         ninja.setCurrentDirection(HeroDirections.UP);
                         ninja.position.y = ninja.position.y + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (ninja.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
+                    } else if (ninja.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
                         direction = HeroDirections.DOWN;
                         ninja.setCurrentDirection(direction);
                         ninja.position.y = ninja.position.y - (ENEMY_MOVE_SPEED * deltaTime);
@@ -873,21 +873,21 @@ public class World {
             Boss boss = (Boss) gameObject;
             HeroDirections direction = null;
             if (bossDoHorizontal < 24) {
-                if (boss.position.x < hero.position.x - hero.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                if (boss.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
                     direction = HeroDirections.RIGHT;
                     boss.setCurrentDirection(direction);
                     boss.position.x = boss.position.x + (BOSS_MOVE_SPEED * deltaTime);
-                } else if (boss.position.x > hero.position.x + hero.WALKING_BOUNDS_HERO_WIDTH) {
+                } else if (boss.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
                     direction = HeroDirections.LEFT;
                     boss.setCurrentDirection(direction);
                     boss.position.x = boss.position.x - (BOSS_MOVE_SPEED * deltaTime);
                 }
             } else {
-                if (boss.position.y < hero.position.y - hero.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                if (boss.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
                     direction = HeroDirections.UP;
                     boss.setCurrentDirection(HeroDirections.UP);
                     boss.position.y = boss.position.y + (BOSS_MOVE_SPEED * deltaTime);
-                } else if (boss.position.y > hero.position.y + hero.WALKING_BOUNDS_HERO_HEIGHT) {
+                } else if (boss.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
                     direction = HeroDirections.DOWN;
                     boss.setCurrentDirection(direction);
                     boss.position.y = boss.position.y - (BOSS_MOVE_SPEED * deltaTime);

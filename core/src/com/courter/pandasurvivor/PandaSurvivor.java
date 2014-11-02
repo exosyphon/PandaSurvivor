@@ -91,40 +91,40 @@ public class PandaSurvivor extends ApplicationAdapter {
                 if (mapNameIndex > mapNames.size() - 1) {
                     mapNameIndex = 0;
                 }
-                Hero tmpHero = world.hero;
+                Mage tmpHero = world.mage;
                 worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .092f));
                 world = new World(null, worldRenderer, true);
-                tmpHero.position.x = world.hero.position.x;
-                tmpHero.position.y = world.hero.position.y;
-                world.hero = tmpHero;
-                world.hero.updateBounds();
-                worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+                tmpHero.position.x = world.mage.position.x;
+                tmpHero.position.y = world.mage.position.y;
+                world.mage = tmpHero;
+                world.mage.updateBounds();
+                worldRenderer.repopulateInventoryUnitBounds(world.mage.getInventory().size());
             } else if (world.switchToInsideHouse) {
                 boolean showinglevelPortal = worldRenderer.showPortalMessage;
-                Hero tmpHero = world.hero;
+                Mage tmpHero = world.mage;
                 worldRenderer = worldRenderer.createNewRenderer(INSIDE_HOUSE_FILENAME, (WorldRenderer.w * .25f), 0);
                 world = new World(null, worldRenderer, false);
-                tmpHero.position.x = world.hero.position.x;
-                tmpHero.position.y = world.hero.position.y;
+                tmpHero.position.x = world.mage.position.x;
+                tmpHero.position.y = world.mage.position.y;
                 worldRenderer.showPortalMessage = showinglevelPortal;
-                world.hero = tmpHero;
-                world.hero.updateBounds();
-                worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+                world.mage = tmpHero;
+                world.mage.updateBounds();
+                worldRenderer.repopulateInventoryUnitBounds(world.mage.getInventory().size());
                 TOP_OF_MAP = TOP_OF_INSIDE_HOUSE;
                 RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_INSIDE_HOUSE;
             } else if (world.leaveHouse) {
                 boolean showinglevelPortal = worldRenderer.showPortalMessage;
-                Hero tmpHero = world.hero;
+                Mage tmpHero = world.mage;
                 worldRenderer = worldRenderer.createNewRenderer(mapNames.get(mapNameIndex), (WorldRenderer.w * .055f), (WorldRenderer.h * .268f));
                 world = new World(null, worldRenderer, true);
-                tmpHero.position.x = world.hero.position.x;
-                tmpHero.position.y = world.hero.position.y;
+                tmpHero.position.x = world.mage.position.x;
+                tmpHero.position.y = world.mage.position.y;
                 if (showinglevelPortal) {
                     worldRenderer.addLevelPortal();
                 }
-                world.hero = tmpHero;
-                world.hero.updateBounds();
-                worldRenderer.repopulateInventoryUnitBounds(world.hero.getInventory().size());
+                world.mage = tmpHero;
+                world.mage.updateBounds();
+                worldRenderer.repopulateInventoryUnitBounds(world.mage.getInventory().size());
                 TOP_OF_MAP = TOP_OF_LEVEL_MAP;
                 RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_LEVEL_MAP;
             }
@@ -132,7 +132,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             deltaTime = Gdx.graphics.getDeltaTime();
 
             world.update(deltaTime);
-            worldRenderer.render(World.hero.getCurrentDirection());
+            worldRenderer.render(World.mage.getCurrentDirection());
 
             if (Gdx.input.isTouched(0)) {
                 if (Gdx.input.justTouched()) {
@@ -163,7 +163,7 @@ public class PandaSurvivor extends ApplicationAdapter {
             }
 
             if ((testActionTime == 0 || testActionTime > (deltaTime * BUTTON_ACTION_BUFFER)) && world.outsideHouse) {
-//        worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
+//        worldRenderer.updatePandaShootingSpriteTexture(World.mage.getCurrentDirection());
                 float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
                 float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
                 for (GameObject gameObject : World.redNinjaList) {
@@ -179,7 +179,7 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             lastActionTime += deltaTime;
         } else if (game_state == GAME_STATES.GAME_OVER) {
-            worldRenderer.render(World.hero.getCurrentDirection());
+            worldRenderer.render(World.mage.getCurrentDirection());
 
             if (Gdx.input.isTouched(0)) {
                 if (Gdx.input.justTouched()) {
@@ -194,7 +194,7 @@ public class PandaSurvivor extends ApplicationAdapter {
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
         if (game_state == GAME_STATES.RUNNING) {
-            xpPoints = world.hero.getXpPointsToUse();
+            xpPoints = world.mage.getXpPointsToUse();
             if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleInventory();
             }
@@ -207,14 +207,14 @@ public class PandaSurvivor extends ApplicationAdapter {
                 }
             }
 
-            ArrayList<Item> inventory = World.hero.getInventory();
+            ArrayList<Item> inventory = World.mage.getInventory();
             if (worldRenderer.showInventory) {
                 if (WorldRenderer.showInventoryOptions) {
                     if (OverlapTester.pointInRectangle(WorldRenderer.currentUseItemBounds, clickPosition.x, clickPosition.y)) {
                         Item item = inventory.get(WorldRenderer.currentlySelectedItemIndex);
                         World.ItemActions itemAction = item.getItemAction();
                         if (world.outsideHouse && itemAction == World.ItemActions.SPAWN_BOSS) {
-                            worldRenderer.addPumpkinBoss(World.hero.position.x, World.hero.position.y);
+                            worldRenderer.addPumpkinBoss(World.mage.position.x, World.mage.position.y);
                             inventory.remove(WorldRenderer.currentlySelectedItemIndex);
                             worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
                         } else if (itemAction == World.ItemActions.EQUIP) {
@@ -239,19 +239,25 @@ public class PandaSurvivor extends ApplicationAdapter {
 
             if (worldRenderer.showGearStats) {
                 Item item = inventory.get(WorldRenderer.currentlyViewingItemIndex);
-                if (OverlapTester.pointInRectangle(WorldRenderer.equipGearBounds, clickPosition.x, clickPosition.y)) {
-                    shouldRemoveBounds = World.hero.equipItem(item);
-                    if (shouldRemoveBounds) {
-                        worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
+                if (World.mage.canEquip(item.getGearSlot())) {
+                    if (OverlapTester.pointInRectangle(WorldRenderer.equipGearBounds, clickPosition.x, clickPosition.y)) {
+                        shouldRemoveBounds = World.mage.equipItem(item);
+                        if (shouldRemoveBounds) {
+                            worldRenderer.currentInventoryUnitBoundsList.remove(worldRenderer.currentInventoryUnitBoundsList.size() - 1);
+                        }
+                        worldRenderer.closeGearStatsView();
+                        worldRenderer.closeGearCompareView();
+                    } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsBounds, clickPosition.x, clickPosition.y)) {
+                        worldRenderer.openGearCompareView(item);
+                    } else if (worldRenderer.showCurrentGearStats) {
+                        if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
+                            worldRenderer.closeGearCompareView();
+                        }
                     }
+                }
+                
+                if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearStatsView();
-                    worldRenderer.closeGearCompareView();
-                } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
-                    worldRenderer.closeGearStatsView();
-                    worldRenderer.closeGearCompareView();
-                } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsBounds, clickPosition.x, clickPosition.y)) {
-                    worldRenderer.openGearCompareView(item);
-                } else if (OverlapTester.pointInRectangle(WorldRenderer.showCurrentGearStatsCloseBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearCompareView();
                 } else if (OverlapTester.pointInRectangle(WorldRenderer.showGearStatsDestroyBounds, clickPosition.x, clickPosition.y)) {
                     worldRenderer.closeGearStatsView();
@@ -268,13 +274,13 @@ public class PandaSurvivor extends ApplicationAdapter {
 
                 if (xpPoints > 0) {
                     if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats1Bounds, clickPosition.x, clickPosition.y)) {
-                        world.hero.incrementHealth();
+                        world.mage.incrementHealth();
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats2Bounds, clickPosition.x, clickPosition.y)) {
-                        world.hero.incrementGoldBonus();
+                        world.mage.incrementGoldBonus();
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats3Bounds, clickPosition.x, clickPosition.y)) {
-                        world.hero.incrementSpellDmg();
+                        world.mage.incrementSpellDmg();
                     } else if (OverlapTester.pointInRectangle(WorldRenderer.showLevelStats4Bounds, clickPosition.x, clickPosition.y)) {
-                        world.hero.incrementMeleeDmg();
+                        world.mage.incrementPhysicalDmg();
                     }
                 }
             }
@@ -309,8 +315,8 @@ public class PandaSurvivor extends ApplicationAdapter {
         Vector3 clickPosition = WorldRenderer.camera.unproject(clickCoordinates);
 
         if (game_state == GAME_STATES.RUNNING) {
-            float heroOriginalX = World.hero.position.x;
-            float heroOriginalY = World.hero.position.y;
+            float heroOriginalX = World.mage.position.x;
+            float heroOriginalY = World.mage.position.y;
 
             if (OverlapTester.pointInRectangle(WorldRenderer.aButtonBounds, clickPosition.x, clickPosition.y)) {
                 handleAButtonPress(heroOriginalX, heroOriginalY);
@@ -322,9 +328,9 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     private void handleAButtonPress(float heroOriginalX, float heroOriginalY) {
-        if (lastActionTime == 0 || lastActionTime > (deltaTime * (BASE_ATTACK_SPEED - World.hero.getAttackSpeed()))) {
-            worldRenderer.updatePandaShootingSpriteTexture(World.hero.getCurrentDirection());
-            worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.hero.getCurrentDirection());
+        if (lastActionTime == 0 || lastActionTime > (deltaTime * (BASE_ATTACK_SPEED - World.mage.getAttackSpeed()))) {
+            worldRenderer.updatePandaShootingSpriteTexture(World.mage.getCurrentDirection());
+            worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.mage.getCurrentDirection());
 
             lastActionTime = deltaTime;
         }
@@ -334,23 +340,23 @@ public class PandaSurvivor extends ApplicationAdapter {
         if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_UPPER_OFFSET) && position.y > (WorldRenderer.dpadSprite.getY() + DPAD_MOVE_SIDEWAYS_Y_LOWER_OFFSET)) {
             if (position.x < (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX > LEFT_SIDE_OF_LEVEL_MAP) {
                 //left
-                World.hero.setCurrentDirection(World.HeroDirections.LEFT);
-                World.hero.position.x = World.hero.position.x - (World.HERO_MOVE_SPEED * deltaTime);
-                World.hero.update(deltaTime);
+                World.mage.setCurrentDirection(World.HeroDirections.LEFT);
+                World.mage.position.x = World.mage.position.x - (World.HERO_MOVE_SPEED * deltaTime);
+                World.mage.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.LEFT, HERO_X_BOUNDS_OFFSET, true);
-                World.hero.updateBounds();
+                world.checkStaticObjectCollisionsFor(World.mage, World.HeroDirections.LEFT, HERO_X_BOUNDS_OFFSET, true);
+                World.mage.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.LEFT);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.LEFT);
             } else if (position.x > (WorldRenderer.dpadSprite.getX() + DPAD_X_MOVE_OFFSET) && heroOriginalX < RIGHT_SIDE_OF_MAP) {
                 //right
-                World.hero.setCurrentDirection(World.HeroDirections.RIGHT);
-                World.hero.position.x = World.hero.position.x + (World.HERO_MOVE_SPEED * deltaTime);
-                World.hero.update(deltaTime);
+                World.mage.setCurrentDirection(World.HeroDirections.RIGHT);
+                World.mage.position.x = World.mage.position.x + (World.HERO_MOVE_SPEED * deltaTime);
+                World.mage.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.RIGHT, HERO_X_BOUNDS_OFFSET, true);
-                World.hero.updateBounds();
+                world.checkStaticObjectCollisionsFor(World.mage, World.HeroDirections.RIGHT, HERO_X_BOUNDS_OFFSET, true);
+                World.mage.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.RIGHT);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.RIGHT);
@@ -358,23 +364,23 @@ public class PandaSurvivor extends ApplicationAdapter {
         } else {
             if (position.y < (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_DOWN_OFFSET) && heroOriginalY > BOTTOM_OF_LEVEL_MAP) {
                 //down
-                World.hero.setCurrentDirection(World.HeroDirections.DOWN);
-                World.hero.position.y = World.hero.position.y - (World.HERO_MOVE_SPEED * deltaTime);
-                World.hero.update(deltaTime);
+                World.mage.setCurrentDirection(World.HeroDirections.DOWN);
+                World.mage.position.y = World.mage.position.y - (World.HERO_MOVE_SPEED * deltaTime);
+                World.mage.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.DOWN, HERO_Y_BOUNDS_OFFSET, true);
-                World.hero.updateBounds();
+                world.checkStaticObjectCollisionsFor(World.mage, World.HeroDirections.DOWN, HERO_Y_BOUNDS_OFFSET, true);
+                World.mage.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.DOWN);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.DOWN);
             } else if (position.y > (WorldRenderer.dpadSprite.getY() + DPAD_Y_MOVE_UP_OFFSET) && heroOriginalY < TOP_OF_MAP) {
                 //up
-                World.hero.setCurrentDirection(World.HeroDirections.UP);
-                World.hero.position.y = World.hero.position.y + (World.HERO_MOVE_SPEED * deltaTime);
-                World.hero.update(deltaTime);
+                World.mage.setCurrentDirection(World.HeroDirections.UP);
+                World.mage.position.y = World.mage.position.y + (World.HERO_MOVE_SPEED * deltaTime);
+                World.mage.update(deltaTime);
 
-                world.checkStaticObjectCollisionsFor(World.hero, World.HeroDirections.UP, HERO_Y_BOUNDS_OFFSET, true);
-                World.hero.updateBounds();
+                world.checkStaticObjectCollisionsFor(World.mage, World.HeroDirections.UP, HERO_Y_BOUNDS_OFFSET, true);
+                World.mage.updateBounds();
 
                 worldRenderer.updatePandaWalkingSpriteTexture(World.HeroDirections.UP);
                 worldRenderer.updateControlSprites(heroOriginalX, heroOriginalY, World.HeroDirections.UP);

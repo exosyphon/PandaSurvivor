@@ -36,6 +36,7 @@ public class Assets {
     public static Texture clothPantsSprite;
     public static Texture clothBracersSprite;
     public static Texture gearStatsViewSprite;
+    public static Texture cantEquipGearStatsViewSprite;
     public static Texture statsDestroyViewSprite;
     public static Texture gearStatsWithoutButtonsViewSprite;
     public static Texture grayAddStatButtonSprite;
@@ -86,5 +87,6 @@ public class Assets {
         addStatButtonSprite = loadTexture("add_stat_button.png");
         levelPortalSprite = loadTexture("level_portal.png");
         houseSprite = loadTexture("house.png");
+        cantEquipGearStatsViewSprite = loadTexture("cant_equip_gear_stat_view.png");
     }
 }

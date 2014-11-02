@@ -258,58 +258,60 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.begin();
         if (WorldRenderer.showArmorView) {
             batcher.draw(WorldRenderer.armorViewSprite, ARMOR_VIEW_X_OFFSET, WorldRenderer.camera.viewportHeight / 2 - ARMOR_VIEW_Y_OFFSET, INVENTORY_SPRITE_RENDER_X_SIZE, INVENTORY_SPRITE_RENDER_Y_SIZE);
-            if (World.hero.hasHelmetEquipped()) {
-                batcher.draw(World.hero.getHelmetSprite(), ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            if (World.mage.hasHelmetEquipped()) {
+                batcher.draw(World.mage.getHelmetSprite(), ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             } else {
                 batcher.draw(WorldRenderer.emptyHelmetSprite, ARMOR_HELMET_POSITION_X, ARMOR_HELMET_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (World.hero.hasChestpieceEquipped()) {
-                batcher.draw(World.hero.getChestpieceSprite(), ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            if (World.mage.hasChestpieceEquipped()) {
+                batcher.draw(World.mage.getChestpieceSprite(), ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             } else {
                 batcher.draw(WorldRenderer.emptyChestpieceSprite, ARMOR_CHESTPIECE_POSITION_X, ARMOR_CHESTPIECE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
-            if (World.hero.hasBracersEquipped()) {
-                batcher.draw(World.hero.getBracersSprite(), ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            if (World.mage.hasBracersEquipped()) {
+                batcher.draw(World.mage.getBracersSprite(), ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             } else {
                 batcher.draw(WorldRenderer.emptyBracersSprite, ARMOR_BRACERS_POSITION_X, ARMOR_BRACERS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (World.hero.hasGlovesEquipped()) {
-                batcher.draw(World.hero.getGlovesSprite(), ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            if (World.mage.hasGlovesEquipped()) {
+                batcher.draw(World.mage.getGlovesSprite(), ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             } else {
                 batcher.draw(WorldRenderer.emptyGloveSprite, ARMOR_GLOVE_POSITION_X, ARMOR_GLOVE_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
-            if (World.hero.hasStaffEquipped()) {
-                batcher.draw(World.hero.getStaffSprite(), ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
-            } else {
-                batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
-            }
-
-            if (World.hero.hasPantsEquipped()) {
-                batcher.draw(World.hero.getPantsSprite(), ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+            if (World.mage.hasPantsEquipped()) {
+                batcher.draw(World.mage.getPantsSprite(), ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             } else {
                 batcher.draw(WorldRenderer.emptyPantsSprite, ARMOR_PANTS_POSITION_X, ARMOR_PANTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
             }
 
-            if (World.hero.hasBootsEquipped()) {
-                batcher.draw(World.hero.getBootsSprite(), ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
+            if (World.mage.hasBootsEquipped()) {
+                batcher.draw(World.mage.getBootsSprite(), ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             } else {
                 batcher.draw(WorldRenderer.emptyBootsSprite, ARMOR_BOOTS_POSITION_X, ARMOR_BOOTS_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X, ARMOR_PIECES_RENDER_SIZE_Y);
             }
 
+            if (World.mage.heroClass == Hero.HeroClass.MAGE) {
+                if (World.mage.hasStaffEquipped()) {
+                    batcher.draw(World.mage.getStaffSprite(), ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+                } else {
+                    batcher.draw(WorldRenderer.emptyStaffSprite, ARMOR_STAFF_POSITION_X, ARMOR_STAFF_POSITION_Y, ARMOR_PIECES_RENDER_SIZE_X * 2, ARMOR_PIECES_RENDER_SIZE_Y * 2);
+                }
+            }
+
             WorldRenderer.equipmentStatsFont.draw(batcher, "Hlth: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .481f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getFullHealth()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .019f)) - (String.valueOf(World.hero.getFullHealth()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .481f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.mage.getFullHealth()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .019f)) - (String.valueOf(World.mage.getFullHealth()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .481f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .527f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getAttackSpeed()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getAttackSpeed()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .527f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.mage.getAttackSpeed()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.mage.getAttackSpeed()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .527f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Gld Bns: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .574f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getGoldBonus()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .574f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.mage.getGoldBonus()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.mage.getGoldBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .574f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .620f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getSpellDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getSpellDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .620f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.mage.getSpellDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.mage.getSpellDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .620f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .267f)), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .666f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.hero.getMeleeDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.hero.getMeleeDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .666f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(World.mage.getPhysDmg()), (WorldRenderer.camera.viewportWidth - (WorldRenderer.w * .0111f)) - (String.valueOf(World.mage.getPhysDmg()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .666f)));
         }
         batcher.end();
 
@@ -321,7 +323,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
             int row = 0;
             int col = 0;
-            ArrayList<Item> list = World.hero.getInventory();
+            ArrayList<Item> list = World.mage.getInventory();
             for (int x = 0; x < list.size(); x++) {
                 Item item = list.get(x);
                 batcher.draw(item.getSprite(), baseX + INVENTORY_X_OFFSET_2 + (col * INVENTORY_COLUMN_OFFSET), baseY + INVENTORY_Y_OFFSET_2 - (row * INVENTORY_ROW_OFFSET), item.inventoryRenderX(), item.inventoryRenderY());
@@ -334,7 +336,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         }
 
         if (WorldRenderer.showInventoryOptions) {
-            Item item = World.hero.getInventory().get(WorldRenderer.currentlySelectedItemIndex);
+            Item item = World.mage.getInventory().get(WorldRenderer.currentlySelectedItemIndex);
             if (item.getItemAction() == World.ItemActions.EQUIP) {
                 batcher.draw(WorldRenderer.statsDestroyViewSprite, WorldRenderer.camera.viewportWidth - USE_DESTROY_X_OFFSET + WorldRenderer.showInventoryOptionsOffsetX, WorldRenderer.camera.viewportHeight - USE_DESTROY_Y_OFFSET - WorldRenderer.showInventoryOptionsOffsetY, USE_DESTROY_SPRITE_RENDER_X_SIZE, USE_DESTROY_SPRITE_RENDER_Y_SIZE);
             } else {
@@ -342,7 +344,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             }
         }
 
-        if (World.hero.getXpPointsToUse() > 0) {
+        if (World.mage.getXpPointsToUse() > 0) {
             batcher.draw(WorldRenderer.addStatButtonSprite, (WorldRenderer.w * .055f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .143f), (WorldRenderer.w * .035f), (WorldRenderer.h * .059f));
         }
 
@@ -370,7 +372,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .393f)));
 
-            if (World.hero.getXpPointsToUse() > 0) {
+            if (World.mage.getXpPointsToUse() > 0) {
                 lvlButtonSprite = WorldRenderer.addStatButtonSprite;
             } else {
                 lvlButtonSprite = WorldRenderer.grayAddStatButtonSprite;
@@ -381,13 +383,17 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
             batcher.draw(lvlButtonSprite, (WorldRenderer.w * .29f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .439f)), (WorldRenderer.w * .026f), (WorldRenderer.h * .044f));
 
-            WorldRenderer.equipmentStatsFont.draw(batcher, "Points: " + World.hero.getXpPointsToUse(), (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .462f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, "Points: " + World.mage.getXpPointsToUse(), (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .462f)));
         }
 
         if (WorldRenderer.showGearStats) {
-            Item item = World.hero.getInventory().get(WorldRenderer.currentlyViewingItemIndex);
+            Item item = World.mage.getInventory().get(WorldRenderer.currentlyViewingItemIndex);
 
-            batcher.draw(WorldRenderer.gearStatsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
+            if(World.mage.canEquip(item.getGearSlot())) {
+                batcher.draw(WorldRenderer.gearStatsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
+            } else {
+                batcher.draw(WorldRenderer.cantEquipGearStatsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
+            }
             WorldRenderer.equipmentStatsFont.draw(batcher, "Health: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getHealthBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getHealthBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .185f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Atk Spd: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .231f)));
@@ -397,7 +403,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
             WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMagicBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getMagicBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
-            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMeleeBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getMeleeBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
+            WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getPhysicalBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getPhysicalBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, "Armr Bns: ", (WorldRenderer.w * .1f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .416f)));
             WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getArmorBonus()), (WorldRenderer.w * .39f) - (String.valueOf(item.getArmorBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .416f)));
         }
@@ -416,7 +422,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                 WorldRenderer.equipmentStatsFont.draw(batcher, "Spl Dmg: ", (WorldRenderer.w * .657f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
                 WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMagicBonus()), (WorldRenderer.w * .947f) - (String.valueOf(item.getMagicBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .324f)));
                 WorldRenderer.equipmentStatsFont.draw(batcher, "Phy Dmg: ", (WorldRenderer.w * .657f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
-                WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getMeleeBonus()), (WorldRenderer.w * .947f) - (String.valueOf(item.getMeleeBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
+                WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getPhysicalBonus()), (WorldRenderer.w * .947f) - (String.valueOf(item.getPhysicalBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .37f)));
                 WorldRenderer.equipmentStatsFont.draw(batcher, "Armr Bns: ", (WorldRenderer.w * .657f), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .416f)));
                 WorldRenderer.equipmentStatsFont.draw(batcher, String.valueOf(item.getArmorBonus()), (WorldRenderer.w * .947f) - (String.valueOf(item.getArmorBonus()).length() * NUMBER_INCREMENT_OFFSET), (WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .416f)));
 
@@ -442,10 +448,10 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 1, 0, 1);
-        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.hero.getHealth() * (1.0f / World.hero.getFullHealth())), HEALTH_FILL_RENDER_Y);
+        WorldRenderer.shapeRenderer.rect(HEALTH_FILL_X, HEALTH_FILL_Y, HEALTH_FILL_RENDER_X * (World.mage.getHealth() * (1.0f / World.mage.getFullHealth())), HEALTH_FILL_RENDER_Y);
         WorldRenderer.shapeRenderer.end();
 
-        float xpPercentage = (float) World.hero.getCurrentXp() / World.hero.getCurrentLevelXpRequired();
+        float xpPercentage = (float) World.mage.getCurrentXp() / World.mage.getCurrentLevelXpRequired();
         WorldRenderer.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         WorldRenderer.shapeRenderer.setColor(0, 0, 1, 1);
         WorldRenderer.shapeRenderer.rect(XP_FILL_X, XP_FILL_Y, XP_FILL_RENDER_X * (xpPercentage), XP_FILL_RENDER_Y);
@@ -453,9 +459,9 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         endRender();
 
         batcher.begin();
-        WorldRenderer.levelFont.draw(batcher, String.valueOf(World.hero.getCurrentLevel()), XP_LVL_FONT_X, XP_LVL_FONT_Y);
-        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_BACKGROUND_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_BACKGROUND_FONT_Y);
-        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.hero.getMoneyTotal()), COIN_FONT_X - (String.valueOf(World.hero.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_FONT_Y);
+        WorldRenderer.levelFont.draw(batcher, String.valueOf(World.mage.getCurrentLevel()), XP_LVL_FONT_X, XP_LVL_FONT_Y);
+        WorldRenderer.coinFont2.draw(batcher, "$ " + String.valueOf(World.mage.getMoneyTotal()), COIN_BACKGROUND_FONT_X - (String.valueOf(World.mage.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_BACKGROUND_FONT_Y);
+        WorldRenderer.coinFont.draw(batcher, "$ " + String.valueOf(World.mage.getMoneyTotal()), COIN_FONT_X - (String.valueOf(World.mage.getMoneyTotal()).length() * NUMBER_INCREMENT_OFFSET), COIN_FONT_Y);
         batcher.end();
     }
 
