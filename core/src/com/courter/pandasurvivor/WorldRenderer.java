@@ -49,6 +49,10 @@ public class WorldRenderer {
     public static final float DPAD_RENDER_SIZE_Y = (w * .075f);
     public static Rectangle aButtonBounds;
     public static Rectangle bagButtonBounds;
+    public static Rectangle firstSkillButtonBounds;
+    public static Rectangle secondSkillButtonBounds;
+    public static Rectangle thirdSkillButtonBounds;
+    public static Rectangle fourthSkillButtonBounds;
     public static Rectangle armorButtonBounds;
     public static Rectangle retryYesButtonBounds;
     public static Rectangle retryNoButtonBounds;
@@ -73,6 +77,14 @@ public class WorldRenderer {
     private static final int FRAME_COLS = 12;
     public static Sprite aButtonSprite;
     public static Sprite bagButtonSprite;
+    public static Sprite firstSkillButtonSprite;
+    public static Sprite secondSkillButtonSprite;
+    public static Sprite thirdSkillButtonSprite;
+    public static Sprite fourthSkillButtonSprite;
+    public static Sprite disabledFirstSkillButtonSprite;
+    public static Sprite disabledSecondSkillButtonSprite;
+    public static Sprite disabledThirdSkillButtonSprite;
+    public static Sprite disabledFourthSkillButtonSprite;
     public static Sprite armorButtonSprite;
     public static Sprite dpadSprite;
     public static Sprite healthBarSprite;
@@ -280,7 +292,11 @@ public class WorldRenderer {
         inventoryUnitBoundsList.add(inventoryUnitBounds11);
         inventoryUnitBoundsList.add(inventoryUnitBounds12);
         aButtonBounds = new Rectangle((w * .858f), (h * .064f), (w * .109f), (h * .181f));
-        bagButtonBounds = new Rectangle((w * .685f), (h * .027f), (w * .094f), (h * .138f));
+        bagButtonBounds = new Rectangle((w * .705f), (h * .027f), (w * .094f), (h * .138f));
+        firstSkillButtonBounds = new Rectangle((w * .330f), (h * .017f), (w * .094f), (h * .138f));
+        secondSkillButtonBounds = new Rectangle((w * .415f), (h * .017f), (w * .094f), (h * .138f));
+        thirdSkillButtonBounds = new Rectangle((w * .500f), (h * .017f), (w * .094f), (h * .138f));
+        fourthSkillButtonBounds = new Rectangle((w * .585f), (h * .017f), (w * .094f), (h * .138f));
         armorButtonBounds = new Rectangle((w * .261f), h - (h * .157f), (w * .094f), (h * .157f));
         showGearStatsCloseBounds = new Rectangle((w * .39f), h - (h * .259f), (w * .053f), (h * .088f));
         equipGearBounds = new Rectangle((w * .351f), h - (h * .555f), (w * .083f), (h * .088f));
@@ -638,6 +654,10 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() - (originalx - World.mage.position.x), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() - (originalx - World.mage.position.x), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() - (originalx - World.mage.position.x), bagButtonBounds.getY());
+        firstSkillButtonBounds.setPosition(firstSkillButtonBounds.getX() - (originalx - World.mage.position.x), firstSkillButtonBounds.getY());
+        secondSkillButtonBounds.setPosition(secondSkillButtonBounds.getX() - (originalx - World.mage.position.x), secondSkillButtonBounds.getY());
+        thirdSkillButtonBounds.setPosition(thirdSkillButtonBounds.getX() - (originalx - World.mage.position.x), thirdSkillButtonBounds.getY());
+        fourthSkillButtonBounds.setPosition(fourthSkillButtonBounds.getX() - (originalx - World.mage.position.x), fourthSkillButtonBounds.getY());
         armorButtonBounds.setPosition(armorButtonBounds.getX() - (originalx - World.mage.position.x), armorButtonBounds.getY());
         equipGearBounds.setPosition(equipGearBounds.getX() - (originalx - World.mage.position.x), equipGearBounds.getY());
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (originalx - World.mage.position.x), showGearStatsCloseBounds.getY());
@@ -669,6 +689,10 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() + (World.mage.position.x - originalx), dpadSprite.getY());
         aButtonBounds.setPosition(aButtonBounds.getX() + (World.mage.position.x - originalx), aButtonBounds.getY());
         bagButtonBounds.setPosition(bagButtonBounds.getX() + (World.mage.position.x - originalx), bagButtonBounds.getY());
+        firstSkillButtonBounds.setPosition(firstSkillButtonBounds.getX() + (World.mage.position.x - originalx), firstSkillButtonBounds.getY());
+        secondSkillButtonBounds.setPosition(secondSkillButtonBounds.getX() + (World.mage.position.x - originalx), secondSkillButtonBounds.getY());
+        thirdSkillButtonBounds.setPosition(thirdSkillButtonBounds.getX() + (World.mage.position.x - originalx), thirdSkillButtonBounds.getY());
+        fourthSkillButtonBounds.setPosition(fourthSkillButtonBounds.getX() + (World.mage.position.x - originalx), fourthSkillButtonBounds.getY());
         armorButtonBounds.setPosition(armorButtonBounds.getX() + (World.mage.position.x - originalx), armorButtonBounds.getY());
         equipGearBounds.setPosition(equipGearBounds.getX() + (World.mage.position.x - originalx), equipGearBounds.getY());
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() + (World.mage.position.x - originalx), showGearStatsCloseBounds.getY());
@@ -700,6 +724,10 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() - (originaly - World.mage.position.y));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() - (originaly - World.mage.position.y));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() - (originaly - World.mage.position.y));
+        firstSkillButtonBounds.setPosition(firstSkillButtonBounds.getX(), firstSkillButtonBounds.getY() - (originaly - World.mage.position.y));
+        secondSkillButtonBounds.setPosition(secondSkillButtonBounds.getX(), secondSkillButtonBounds.getY() - (originaly - World.mage.position.y));
+        thirdSkillButtonBounds.setPosition(thirdSkillButtonBounds.getX(), thirdSkillButtonBounds.getY() - (originaly - World.mage.position.y));
+        fourthSkillButtonBounds.setPosition(fourthSkillButtonBounds.getX(), fourthSkillButtonBounds.getY() - (originaly - World.mage.position.y));
         armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() - (originaly - World.mage.position.y));
         equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() - (originaly - World.mage.position.y));
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() - (originaly - World.mage.position.y));
@@ -735,6 +763,10 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX() - (w / 2) + x, dpadSprite.getY() - (h / 2) + y);
         aButtonBounds.setPosition(aButtonBounds.getX() - (w / 2) + x, aButtonBounds.getY() - (h / 2) + y);
         bagButtonBounds.setPosition(bagButtonBounds.getX() - (w / 2) + x, bagButtonBounds.getY() - (h / 2) + y);
+        firstSkillButtonBounds.setPosition(firstSkillButtonBounds.getX() - (w / 2) + x, firstSkillButtonBounds.getY() - (h / 2) + y);
+        secondSkillButtonBounds.setPosition(secondSkillButtonBounds.getX() - (w / 2) + x, secondSkillButtonBounds.getY() - (h / 2) + y);
+        thirdSkillButtonBounds.setPosition(thirdSkillButtonBounds.getX() - (w / 2) + x, thirdSkillButtonBounds.getY() - (h / 2) + y);
+        fourthSkillButtonBounds.setPosition(fourthSkillButtonBounds.getX() - (w / 2) + x, fourthSkillButtonBounds.getY() - (h / 2) + y);
         armorButtonBounds.setPosition(armorButtonBounds.getX() - (w / 2) + x, armorButtonBounds.getY() - (h / 2) + y);
         equipGearBounds.setPosition(equipGearBounds.getX() - (w / 2) + x, equipGearBounds.getY() - (h / 2) + y);
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX() - (w / 2) + x, showGearStatsCloseBounds.getY() - (h / 2) + y);
@@ -766,6 +798,10 @@ public class WorldRenderer {
         dpadSprite.setPosition(dpadSprite.getX(), dpadSprite.getY() + (World.mage.position.y - originaly));
         aButtonBounds.setPosition(aButtonBounds.getX(), aButtonBounds.getY() + (World.mage.position.y - originaly));
         bagButtonBounds.setPosition(bagButtonBounds.getX(), bagButtonBounds.getY() + (World.mage.position.y - originaly));
+        firstSkillButtonBounds.setPosition(firstSkillButtonBounds.getX(), firstSkillButtonBounds.getY() + (World.mage.position.y - originaly));
+        secondSkillButtonBounds.setPosition(secondSkillButtonBounds.getX(), secondSkillButtonBounds.getY() + (World.mage.position.y - originaly));
+        thirdSkillButtonBounds.setPosition(thirdSkillButtonBounds.getX(), thirdSkillButtonBounds.getY() + (World.mage.position.y - originaly));
+        fourthSkillButtonBounds.setPosition(fourthSkillButtonBounds.getX(), fourthSkillButtonBounds.getY() + (World.mage.position.y - originaly));
         armorButtonBounds.setPosition(armorButtonBounds.getX(), armorButtonBounds.getY() + (World.mage.position.y - originaly));
         equipGearBounds.setPosition(equipGearBounds.getX(), equipGearBounds.getY() + (World.mage.position.y - originaly));
         showGearStatsCloseBounds.setPosition(showGearStatsCloseBounds.getX(), showGearStatsCloseBounds.getY() + (World.mage.position.y - originaly));
@@ -919,6 +955,17 @@ public class WorldRenderer {
         emptyChestpieceSprite = new Sprite(Assets.emptyChestpieceSprite);
         emptyStaffSprite = new Sprite(Assets.emptyStaffSprite);
         emptyHelmetSprite = new Sprite(Assets.emptyHelmetSprite);
+
+        if(World.mage.heroClass == Hero.HeroClass.MAGE) {
+            firstSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
+            disabledFirstSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+            secondSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
+            disabledSecondSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+            thirdSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
+            disabledThirdSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+            fourthSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
+            disabledFourthSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+        }
     }
 
     public void openGearStatsView(int itemToBeViewedIndex) {

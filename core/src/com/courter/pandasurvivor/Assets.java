@@ -43,6 +43,8 @@ public class Assets {
     public static Texture addStatButtonSprite;
     public static Texture levelPortalSprite;
     public static Texture houseSprite;
+    public static Texture fireballSkillButtonSprite;
+    public static Texture disabledFireballSkillButtonSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -88,5 +90,7 @@ public class Assets {
         levelPortalSprite = loadTexture("level_portal.png");
         houseSprite = loadTexture("house.png");
         cantEquipGearStatsViewSprite = loadTexture("cant_equip_gear_stat_view.png");
+        fireballSkillButtonSprite = loadTexture("fireball_skill_button.png");
+        disabledFireballSkillButtonSprite = loadTexture("disabled_fireball_skill_button.png");
     }
 }

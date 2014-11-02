@@ -232,6 +232,10 @@ public class World {
         }
     }
 
+    public void setCurrentSkill(int skill) {
+        mage.setCurrentActiveSkill(skill);
+    }
+
     private void checkCoinCollisions(float deltaTime) {
         for (Coins coins : coinsList) {
             if (OverlapTester.overlapRectangles(coins.bounds, mage.bounds)) {

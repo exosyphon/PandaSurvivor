@@ -17,6 +17,8 @@ public class Hero extends GameObject {
         MAGE, ARCHER, WARLOCK, WARRIOR
     }
 
+    protected int currentActiveSkill;
+
     public static final float WALKING_BOUNDS_HERO_HEIGHT = (Gdx.graphics.getHeight() * .018f);
     public static final float WALKING_BOUNDS_HERO_WIDTH = (Gdx.graphics.getWidth() * .011f);
 
@@ -79,6 +81,7 @@ public class Hero extends GameObject {
         this.xpPointsToUse = 0;
         this.heroClass = heroClass;
         this.cantEquipSlots = new ArrayList<GearSlot>();
+        this.currentActiveSkill = 1;
     }
 
     public boolean canEquip(GearSlot slot) {
@@ -390,5 +393,13 @@ public class Hero extends GameObject {
     public void incrementGoldBonus() {
         this.goldBonus += 2;
         this.xpPointsToUse -= 1;
+    }
+
+    public int getCurrentActiveSkill() {
+        return currentActiveSkill;
+    }
+
+    public void setCurrentActiveSkill(int skill) {
+        this.currentActiveSkill = skill;
     }
 }

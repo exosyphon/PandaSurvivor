@@ -49,7 +49,6 @@ public class PandaSurvivor extends ApplicationAdapter {
     boolean secondFingerAlreadyDown;
     boolean shouldRemoveBounds;
     int xpPoints;
-    WorldRenderer storedWorldRenderer;
 
     enum GAME_STATES {
         RUNNING, GAME_OVER, PAUSED
@@ -197,6 +196,18 @@ public class PandaSurvivor extends ApplicationAdapter {
             xpPoints = world.mage.getXpPointsToUse();
             if (OverlapTester.pointInRectangle(WorldRenderer.bagButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleInventory();
+            }
+            if (OverlapTester.pointInRectangle(WorldRenderer.firstSkillButtonBounds, clickPosition.x, clickPosition.y)) {
+                world.setCurrentSkill(1);
+            }
+            if (OverlapTester.pointInRectangle(WorldRenderer.secondSkillButtonBounds, clickPosition.x, clickPosition.y)) {
+                world.setCurrentSkill(2);
+            }
+            if (OverlapTester.pointInRectangle(WorldRenderer.thirdSkillButtonBounds, clickPosition.x, clickPosition.y)) {
+                world.setCurrentSkill(3);
+            }
+            if (OverlapTester.pointInRectangle(WorldRenderer.fourthSkillButtonBounds, clickPosition.x, clickPosition.y)) {
+                world.setCurrentSkill(4);
             }
             if (OverlapTester.pointInRectangle(WorldRenderer.armorButtonBounds, clickPosition.x, clickPosition.y)) {
                 worldRenderer.toggleArmorView();
