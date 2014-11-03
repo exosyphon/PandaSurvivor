@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameObject {
     public final Vector2 position;
-    public final Rectangle bounds;
+    public Rectangle bounds;
     public Rectangle shooting_bounds;
     public Rectangle enemy_walking_bounds;
 

@@ -341,7 +341,11 @@ public class PandaSurvivor extends ApplicationAdapter {
     private void handleAButtonPress(float heroOriginalX, float heroOriginalY) {
         if (lastActionTime == 0 || lastActionTime > (deltaTime * (BASE_ATTACK_SPEED - World.mage.getAttackSpeed()))) {
             worldRenderer.updatePandaShootingSpriteTexture(World.mage.getCurrentDirection());
-            worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.mage.getCurrentDirection());
+            if (world.mage.getCurrentActiveSkill() == 1) {
+                worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.mage.getCurrentDirection());
+            } else if (world.mage.getCurrentActiveSkill() == 2) {
+                worldRenderer.addFreezeRingSprite(heroOriginalX, heroOriginalY);
+            }
 
             lastActionTime = deltaTime;
         }

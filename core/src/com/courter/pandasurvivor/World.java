@@ -1,5 +1,6 @@
 package com.courter.pandasurvivor;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class World {
     static final int numberOfBlackNinjaEnemies = 15;
     static final int numberOfPurpleNinjaEnemies = 15;
     public static List<Fireball> fireballList;
+    public static List<FreezeRing> freezeRingList;
     public static List<Fireball> enemyFireballList;
     public static List<Coins> coinsList;
     public static List<Item> itemsList;
@@ -192,10 +194,12 @@ public class World {
     }
 
     public void update(float deltaTime) {
+        updateFreezeRings(deltaTime);
         updateFireballs(deltaTime);
         checkFireballCollisions(deltaTime);
 
         if (outsideHouse) {
+            checkFreezeRingCollisions(deltaTime);
             updateEnemyFireballs(deltaTime);
             moveEnemies(deltaTime);
             moveBosses(deltaTime);
@@ -206,6 +210,17 @@ public class World {
         } else {
             checkHouseExitCollisions(mage);
             checkWizardCollisions(mage);
+        }
+    }
+
+    private void updateFreezeRings(float deltaTime) {
+        for (int i = 0; i < freezeRingList.size(); i++) {
+            FreezeRing freezeRing = freezeRingList.get(i);
+            freezeRing.update(deltaTime);
+            if (freezeRing.stateTime > FreezeRing.FREEZE_RING_TOTAL_EXPAND_TIME) {
+                tiledMapRenderer.removeSprite(freezeRing.getSprite());
+                freezeRingList.remove(freezeRing);
+            }
         }
     }
 
@@ -535,6 +550,45 @@ public class World {
         }
     }
 
+    private void checkFreezeRingCollisions(float deltaTime) {
+        float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
+        float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
+
+        float heroGoldBonus = mage.getGoldBonus();
+
+        for (int i = 0; i < freezeRingList.size(); i++) {
+            FreezeRing freezeRing = freezeRingList.get(i);
+            for (List<GameObject> list : enemyList) {
+
+                for (GameObject gameObject : list) {
+                    if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                        Ninja ninja = ((Ninja) gameObject);
+                        if (OverlapTester.overlapRectangles(ninja.shooting_bounds, freezeRing.bounds)) {
+                            mage.handleXpGain(ninja.getXpGain());
+                            float percentageChance = (float) Math.random() * 100;
+                            if (percentageChance < COIN_DROP_CHANCE) {
+                                worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y, heroGoldBonus);
+                            }
+                            if (percentageChance < BOSS_KEY_DROP_CHANCE) {
+                                worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y);
+                            }
+                            if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
+                                worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y + (WorldRenderer.h * .0185f));
+                            }
+                            tiledMapRenderer.removeSprite(ninja.getSprite());
+                            list.remove(ninja);
+                            mage.addNinjaKill();
+                            if (mage.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
+                                worldRenderer.addLevelPortal();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void checkFireballCollisions(float deltaTime) {
         float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
         float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
@@ -800,6 +854,7 @@ public class World {
     private void createObjects() {
         worldObjectLists = new ArrayList<Set>();
         fireballList = new ArrayList<Fireball>();
+        freezeRingList = new ArrayList<FreezeRing>();
 
         enemyFireballList = new ArrayList<Fireball>();
         coinsList = new ArrayList<Coins>();

@@ -45,6 +45,9 @@ public class Assets {
     public static Texture houseSprite;
     public static Texture fireballSkillButtonSprite;
     public static Texture disabledFireballSkillButtonSprite;
+    public static Texture freezeRingSkillButtonSprite;
+    public static Texture disabledFreezeRingSkillButtonSprite;
+    public static Texture freezeRingSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -92,5 +95,8 @@ public class Assets {
         cantEquipGearStatsViewSprite = loadTexture("cant_equip_gear_stat_view.png");
         fireballSkillButtonSprite = loadTexture("fireball_skill_button.png");
         disabledFireballSkillButtonSprite = loadTexture("disabled_fireball_skill_button.png");
+        freezeRingSkillButtonSprite = loadTexture("freezering_skill_button.png");
+        disabledFreezeRingSkillButtonSprite = loadTexture("disabled_freezering_skill_button.png");
+        freezeRingSprite = loadTexture("freeze_ring.png");
     }
 }

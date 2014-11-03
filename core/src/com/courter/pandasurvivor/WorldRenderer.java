@@ -483,6 +483,14 @@ public class WorldRenderer {
         World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction, PandaSurvivor.currentLevel));
     }
 
+    public void addFreezeRingSprite(float x, float y) {
+        Sprite freezeRingSprite = new Sprite(Assets.freezeRingSprite);
+        freezeRingSprite.setSize(128, 128);
+        freezeRingSprite.setPosition(x, y);
+        tiledMapRenderer.addSprite(freezeRingSprite);
+        World.freezeRingList.add(new FreezeRing(x + 48, y, freezeRingSprite));
+    }
+
     public void updateControlSprites(float heroOriginalX, float heroOriginalY, World.HeroDirections direction) {
         switch (direction) {
             case UP:
@@ -959,8 +967,8 @@ public class WorldRenderer {
         if(World.mage.heroClass == Hero.HeroClass.MAGE) {
             firstSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
             disabledFirstSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
-            secondSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
-            disabledSecondSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+            secondSkillButtonSprite = new Sprite(Assets.freezeRingSkillButtonSprite);
+            disabledSecondSkillButtonSprite = new Sprite(Assets.disabledFreezeRingSkillButtonSprite);
             thirdSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
             disabledThirdSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
             fourthSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
