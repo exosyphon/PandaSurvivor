@@ -554,35 +554,36 @@ public class World {
         float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
         float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
 
-        float heroGoldBonus = mage.getGoldBonus();
-
         for (int i = 0; i < freezeRingList.size(); i++) {
             FreezeRing freezeRing = freezeRingList.get(i);
             for (List<GameObject> list : enemyList) {
-
                 for (GameObject gameObject : list) {
                     if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
                         Ninja ninja = ((Ninja) gameObject);
                         if (OverlapTester.overlapRectangles(ninja.shooting_bounds, freezeRing.bounds)) {
-                            mage.handleXpGain(ninja.getXpGain());
-                            float percentageChance = (float) Math.random() * 100;
-                            if (percentageChance < COIN_DROP_CHANCE) {
-                                worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y, heroGoldBonus);
-                            }
-                            if (percentageChance < BOSS_KEY_DROP_CHANCE) {
-                                worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y);
-                            }
-                            if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
-                                worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y + (WorldRenderer.h * .0185f));
-                            }
-                            tiledMapRenderer.removeSprite(ninja.getSprite());
-                            list.remove(ninja);
-                            mage.addNinjaKill();
-                            if (mage.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
-                                worldRenderer.addLevelPortal();
+                            if(ninja.getFrozenSprite() == null) {
+                                Sprite sprite = worldRenderer.addFrozenGroundSprite(ninja.position.x, ninja.position.y);
+                                ninja.setFrozenState(sprite);
+                            } else {
+                                ninja.setFrozenState(ninja.getFrozenSprite());
                             }
                             break;
                         }
+                    }
+                }
+            }
+
+            for (GameObject gameObject : bossList) {
+                if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                    Boss boss = ((Boss) gameObject);
+                    if (OverlapTester.overlapRectangles(boss.shooting_bounds, freezeRing.bounds)) {
+                        if(boss.getFrozenSprite() == null) {
+                            Sprite sprite = worldRenderer.addFrozenGroundSprite(boss.position.x, boss.position.y);
+                            boss.setFrozenState(sprite);
+                        } else {
+                            boss.setFrozenState(boss.getFrozenSprite());
+                        }
+                        break;
                     }
                 }
             }
@@ -646,6 +647,10 @@ public class World {
                                         if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
                                             worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y + (WorldRenderer.h * .0185f));
                                         }
+                                        if(ninja.getFrozenSprite() != null) {
+                                            tiledMapRenderer.removeSprite(ninja.getFrozenSprite());
+                                        }
+
                                         tiledMapRenderer.removeSprite(ninja.getSprite());
                                         list.remove(ninja);
                                         mage.addNinjaKill();
@@ -708,6 +713,9 @@ public class World {
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                        if(boss.getFrozenSprite() != null) {
+                                            tiledMapRenderer.removeSprite(boss.getFrozenSprite());
+                                        }
                                         tiledMapRenderer.removeSprite(boss.getSprite());
                                         bossList.remove(boss);
                                         mage.addBossKill();
@@ -888,35 +896,44 @@ public class World {
         for (List<GameObject> gameObjectList : enemyList) {
             for (GameObject gameObject : gameObjectList) {
                 Ninja ninja = (Ninja) gameObject;
-                HeroDirections direction = null;
-                if (doHorizontal < 14) {
-                    if (ninja.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
-                        direction = HeroDirections.RIGHT;
-                        ninja.setCurrentDirection(direction);
-                        ninja.position.x = ninja.position.x + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (ninja.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
-                        direction = HeroDirections.LEFT;
-                        ninja.setCurrentDirection(direction);
-                        ninja.position.x = ninja.position.x - (ENEMY_MOVE_SPEED * deltaTime);
+
+                if (ninja.canMove()) {
+                    HeroDirections direction = null;
+                    if (doHorizontal < 14) {
+                        if (ninja.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                            direction = HeroDirections.RIGHT;
+                            ninja.setCurrentDirection(direction);
+                            ninja.position.x = ninja.position.x + (ENEMY_MOVE_SPEED * deltaTime);
+                        } else if (ninja.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
+                            direction = HeroDirections.LEFT;
+                            ninja.setCurrentDirection(direction);
+                            ninja.position.x = ninja.position.x - (ENEMY_MOVE_SPEED * deltaTime);
+                        }
+                    } else {
+                        if (ninja.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                            direction = HeroDirections.UP;
+                            ninja.setCurrentDirection(HeroDirections.UP);
+                            ninja.position.y = ninja.position.y + (ENEMY_MOVE_SPEED * deltaTime);
+                        } else if (ninja.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
+                            direction = HeroDirections.DOWN;
+                            ninja.setCurrentDirection(direction);
+                            ninja.position.y = ninja.position.y - (ENEMY_MOVE_SPEED * deltaTime);
+                        }
                     }
+                    ninja.update(deltaTime);
+                    ninja.getSprite().setPosition(ninja.position.x + NINJA_X_POSITION_OFFSET, ninja.position.y - NINJA_Y_POSITION_OFFSET);
+
+                    checkEnemyCollisionsWithHero(direction, deltaTime);
+                    checkStaticObjectCollisionsFor(ninja, ninja.getCurrentDirection(), NINJA_COLLISION_X_BOUNDS_OFFSET, false);
+                    ninja.updateBounds();
+                    worldRenderer.updateNinjaWalkingSpriteTexture(ninja, ninja.getCurrentDirection(), ninja.getNinjaType());
                 } else {
-                    if (ninja.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
-                        direction = HeroDirections.UP;
-                        ninja.setCurrentDirection(HeroDirections.UP);
-                        ninja.position.y = ninja.position.y + (ENEMY_MOVE_SPEED * deltaTime);
-                    } else if (ninja.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
-                        direction = HeroDirections.DOWN;
-                        ninja.setCurrentDirection(direction);
-                        ninja.position.y = ninja.position.y - (ENEMY_MOVE_SPEED * deltaTime);
+                    ninja.update(deltaTime);
+                    if (ninja.canMove()) {
+                        tiledMapRenderer.removeSprite(ninja.getFrozenSprite());
+                        ninja.clearFrozenSprite();
                     }
                 }
-                ninja.update(deltaTime);
-                ninja.getSprite().setPosition(ninja.position.x + NINJA_X_POSITION_OFFSET, ninja.position.y - NINJA_Y_POSITION_OFFSET);
-
-                checkEnemyCollisionsWithHero(direction, deltaTime);
-                checkStaticObjectCollisionsFor(ninja, ninja.getCurrentDirection(), NINJA_COLLISION_X_BOUNDS_OFFSET, false);
-                ninja.updateBounds();
-                worldRenderer.updateNinjaWalkingSpriteTexture(ninja, ninja.getCurrentDirection(), ninja.getNinjaType());
             }
         }
 
@@ -930,35 +947,44 @@ public class World {
     private void moveBosses(float deltaTime) {
         for (GameObject gameObject : bossList) {
             Boss boss = (Boss) gameObject;
-            HeroDirections direction = null;
-            if (bossDoHorizontal < 24) {
-                if (boss.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
-                    direction = HeroDirections.RIGHT;
-                    boss.setCurrentDirection(direction);
-                    boss.position.x = boss.position.x + (BOSS_MOVE_SPEED * deltaTime);
-                } else if (boss.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
-                    direction = HeroDirections.LEFT;
-                    boss.setCurrentDirection(direction);
-                    boss.position.x = boss.position.x - (BOSS_MOVE_SPEED * deltaTime);
+
+            if (boss.canMove()) {
+                HeroDirections direction = null;
+                if (bossDoHorizontal < 24) {
+                    if (boss.position.x < mage.position.x - mage.WALKING_BOUNDS_HERO_WIDTH / 3) {
+                        direction = HeroDirections.RIGHT;
+                        boss.setCurrentDirection(direction);
+                        boss.position.x = boss.position.x + (BOSS_MOVE_SPEED * deltaTime);
+                    } else if (boss.position.x > mage.position.x + mage.WALKING_BOUNDS_HERO_WIDTH) {
+                        direction = HeroDirections.LEFT;
+                        boss.setCurrentDirection(direction);
+                        boss.position.x = boss.position.x - (BOSS_MOVE_SPEED * deltaTime);
+                    }
+                } else {
+                    if (boss.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
+                        direction = HeroDirections.UP;
+                        boss.setCurrentDirection(HeroDirections.UP);
+                        boss.position.y = boss.position.y + (BOSS_MOVE_SPEED * deltaTime);
+                    } else if (boss.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
+                        direction = HeroDirections.DOWN;
+                        boss.setCurrentDirection(direction);
+                        boss.position.y = boss.position.y - (BOSS_MOVE_SPEED * deltaTime);
+                    }
                 }
+                boss.update(deltaTime);
+                boss.getSprite().setPosition(boss.position.x, boss.position.y - BOSS_Y_POSITION_OFFSET);
+
+                checkBossCollisionsWithHero(direction, deltaTime);
+                checkStaticObjectCollisionsFor(boss, boss.getCurrentDirection(), BOSS_COLLISION_Y_BOUNDS_OFFSET, false);
+                boss.updateBounds();
+                worldRenderer.updateBossWalkingSpriteTexture(boss, boss.getCurrentDirection(), boss.getBossType());
             } else {
-                if (boss.position.y < mage.position.y - mage.WALKING_BOUNDS_HERO_HEIGHT / 3) {
-                    direction = HeroDirections.UP;
-                    boss.setCurrentDirection(HeroDirections.UP);
-                    boss.position.y = boss.position.y + (BOSS_MOVE_SPEED * deltaTime);
-                } else if (boss.position.y > mage.position.y + mage.WALKING_BOUNDS_HERO_HEIGHT) {
-                    direction = HeroDirections.DOWN;
-                    boss.setCurrentDirection(direction);
-                    boss.position.y = boss.position.y - (BOSS_MOVE_SPEED * deltaTime);
+                boss.update(deltaTime);
+                if (boss.canMove()) {
+                    tiledMapRenderer.removeSprite(boss.getFrozenSprite());
+                    boss.clearFrozenSprite();
                 }
             }
-            boss.update(deltaTime);
-            boss.getSprite().setPosition(boss.position.x, boss.position.y - BOSS_Y_POSITION_OFFSET);
-
-            checkBossCollisionsWithHero(direction, deltaTime);
-            checkStaticObjectCollisionsFor(boss, boss.getCurrentDirection(), BOSS_COLLISION_Y_BOUNDS_OFFSET, false);
-            boss.updateBounds();
-            worldRenderer.updateBossWalkingSpriteTexture(boss, boss.getCurrentDirection(), boss.getBossType());
         }
 
         if (bossDoHorizontal > 48) {

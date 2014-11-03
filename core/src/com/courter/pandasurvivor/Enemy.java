@@ -10,6 +10,9 @@ public class Enemy extends GameObject {
     private int xpGain;
     private int touchDamage;
     private int currentLevel;
+    protected boolean canMove;
+    protected float frozenStateTime = 0;
+    Sprite frozenSprite;
 
     public Enemy(float x,
                  float y,
@@ -31,6 +34,8 @@ public class Enemy extends GameObject {
         this.xpGain = xpGain;
         this.touchDamage = touchDamage * currentLevel;
         this.currentLevel = currentLevel;
+        this.canMove = true;
+        this.frozenSprite = null;
     }
 
     public void update(float deltaTime) {
@@ -77,5 +82,31 @@ public class Enemy extends GameObject {
 
     public void setTouchDamage(int touchDamage) {
         this.touchDamage = touchDamage;
+    }
+
+    public boolean canMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    public float getFrozenStateTime() {
+        return frozenStateTime;
+    }
+
+    public void setFrozenState(Sprite sprite) {
+        this.frozenSprite = sprite;
+        this.canMove = false;
+        this.frozenStateTime = 0;
+    }
+
+    public Sprite getFrozenSprite() {
+        return this.frozenSprite;
+    }
+
+    public void clearFrozenSprite() {
+        this.frozenSprite = null;
     }
 }

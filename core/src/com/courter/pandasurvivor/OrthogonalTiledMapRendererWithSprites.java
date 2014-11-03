@@ -207,12 +207,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         sprites.add(sprite);
     }
 
-    public void removeSprite(Sprite sprite) {
-        sprites.remove(sprite);
+    public void addSpriteToFront(Sprite sprite) {
+        sprites.add(5, sprite);
     }
 
-    public Sprite getSprite(Sprite sprite) {
-        return sprites.get(sprites.indexOf(sprite));
+    public void removeSprite(Sprite sprite) {
+        sprites.remove(sprite);
     }
 
     public void addControlSprite(Sprite sprite) {

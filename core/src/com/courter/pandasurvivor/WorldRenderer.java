@@ -1252,4 +1252,12 @@ public class WorldRenderer {
             World.purpleNinjaList.add(new Ninja(x, y, enemySprite, World.NinjaTypes.PURPLE, PandaSurvivor.currentLevel));
         }
     }
+
+    public Sprite addFrozenGroundSprite(float x, float y) {
+        Sprite frozenGroundSprite = new Sprite(Assets.frozenGroundSprite);
+        frozenGroundSprite.setSize(64, 64);
+        frozenGroundSprite.setPosition(x + 32, y - 32);
+        tiledMapRenderer.addSpriteToFront(frozenGroundSprite);
+        return frozenGroundSprite;
+    }
 }

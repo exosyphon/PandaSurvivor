@@ -13,6 +13,8 @@ public class Boss extends Enemy {
     public static final float SHOOTING_BOUNDS_BOSS_HEIGHT = (Gdx.graphics.getHeight() * .106f);
     public static final float SHOOTING_BOUNDS_BOSS_WIDTH = (Gdx.graphics.getWidth() * .072f);
 
+    public static final float FROZEN_TIME = 3;
+
     private World.BossTypes bossType;
 
     public Boss(float x, float y, Sprite sprite, World.BossTypes bossType, int currentLevel) {
@@ -35,6 +37,10 @@ public class Boss extends Enemy {
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
+        frozenStateTime += deltaTime;
+        if(frozenStateTime > FROZEN_TIME) {
+            this.canMove = true;
+        }
         updateBounds();
     }
 
@@ -45,6 +51,10 @@ public class Boss extends Enemy {
 
         shooting_bounds.x = position.x;
         shooting_bounds.y = position.y - SHOOTING_BOUNDS_BOSS_HEIGHT / 2;
+
+        if (frozenSprite != null) {
+            frozenSprite.setPosition(position.x + 32, position.y - 32);
+        }
     }
 
     public World.BossTypes getBossType() {

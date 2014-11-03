@@ -48,6 +48,7 @@ public class Assets {
     public static Texture freezeRingSkillButtonSprite;
     public static Texture disabledFreezeRingSkillButtonSprite;
     public static Texture freezeRingSprite;
+    public static Texture frozenGroundSprite;
 
     public static Texture loadTexture(String file) {
         return new Texture(Gdx.files.internal(file));
@@ -98,5 +99,6 @@ public class Assets {
         freezeRingSkillButtonSprite = loadTexture("freezering_skill_button.png");
         disabledFreezeRingSkillButtonSprite = loadTexture("disabled_freezering_skill_button.png");
         freezeRingSprite = loadTexture("freeze_ring.png");
+        frozenGroundSprite = loadTexture("ground_ice.png");
     }
 }

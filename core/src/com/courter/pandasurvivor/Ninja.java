@@ -12,6 +12,8 @@ public class Ninja extends Enemy {
     public static final float SHOOTING_BOUNDS_ENEMY_HEIGHT = (WorldRenderer.h * .101f);
     public static final float SHOOTING_BOUNDS_ENEMY_WIDTH = (WorldRenderer.w * .044f);
 
+    public static final float FROZEN_TIME = 6;
+
     private World.NinjaTypes ninjaType;
 
     public Ninja(float x, float y, Sprite sprite, World.NinjaTypes ninjaType, int currentLevel) {
@@ -34,6 +36,10 @@ public class Ninja extends Enemy {
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
+        frozenStateTime += deltaTime;
+        if (frozenStateTime > FROZEN_TIME) {
+            this.canMove = true;
+        }
         updateBounds();
     }
 
@@ -44,6 +50,10 @@ public class Ninja extends Enemy {
 
         shooting_bounds.x = position.x;
         shooting_bounds.y = position.y - SHOOTING_BOUNDS_ENEMY_HEIGHT / 2;
+
+        if (frozenSprite != null) {
+            frozenSprite.setPosition(position.x + 32, position.y - 32);
+        }
     }
 
     public World.NinjaTypes getNinjaType() {
