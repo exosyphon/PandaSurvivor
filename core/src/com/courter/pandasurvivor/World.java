@@ -81,6 +81,7 @@ public class World {
     static final int numberOfPurpleNinjaEnemies = 15;
     public static List<Fireball> fireballList;
     public static List<FreezeRing> freezeRingList;
+    public static List<Tornado> tornadoList;
     public static List<Fireball> enemyFireballList;
     public static List<Coins> coinsList;
     public static List<Item> itemsList;
@@ -196,6 +197,8 @@ public class World {
     public void update(float deltaTime) {
         updateFreezeRings(deltaTime);
         updateFireballs(deltaTime);
+        updateTornados(deltaTime);
+        checkTornadoCollisions(deltaTime);
         checkFireballCollisions(deltaTime);
 
         if (outsideHouse) {
@@ -561,7 +564,7 @@ public class World {
                     if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
                         Ninja ninja = ((Ninja) gameObject);
                         if (OverlapTester.overlapRectangles(ninja.shooting_bounds, freezeRing.bounds)) {
-                            if(ninja.getFrozenSprite() == null) {
+                            if (ninja.getFrozenSprite() == null) {
                                 Sprite sprite = worldRenderer.addFrozenGroundSprite(ninja.position.x, ninja.position.y);
                                 ninja.setFrozenState(sprite);
                             } else {
@@ -577,7 +580,7 @@ public class World {
                 if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
                     Boss boss = ((Boss) gameObject);
                     if (OverlapTester.overlapRectangles(boss.shooting_bounds, freezeRing.bounds)) {
-                        if(boss.getFrozenSprite() == null) {
+                        if (boss.getFrozenSprite() == null) {
                             Sprite sprite = worldRenderer.addFrozenGroundSprite(boss.position.x, boss.position.y);
                             boss.setFrozenState(sprite);
                         } else {
@@ -647,7 +650,7 @@ public class World {
                                         if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
                                             worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y + (WorldRenderer.h * .0185f));
                                         }
-                                        if(ninja.getFrozenSprite() != null) {
+                                        if (ninja.getFrozenSprite() != null) {
                                             tiledMapRenderer.removeSprite(ninja.getFrozenSprite());
                                         }
 
@@ -713,7 +716,7 @@ public class World {
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
                                         worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
-                                        if(boss.getFrozenSprite() != null) {
+                                        if (boss.getFrozenSprite() != null) {
                                             tiledMapRenderer.removeSprite(boss.getFrozenSprite());
                                         }
                                         tiledMapRenderer.removeSprite(boss.getSprite());
@@ -754,6 +757,173 @@ public class World {
 
                                     tiledMapRenderer.removeSprite(fireball.getSprite());
                                     fireballList.remove(fireball);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkTornadoCollisions(float deltaTime) {
+        float x = WorldRenderer.camera.position.x - WorldRenderer.w / 2;
+        float y = WorldRenderer.camera.position.y - WorldRenderer.h / 2;
+
+        for (int i = 0; i < tornadoList.size(); i++) {
+            Tornado tornado = tornadoList.get(i);
+            if (tornado.position.x < PandaSurvivor.LEFT_SIDE_OF_LEVEL_MAP ||
+                    tornado.position.x > (PandaSurvivor.RIGHT_SIDE_OF_MAP + EDGE_OF_MAP_X_OFFSET) ||
+                    tornado.position.y < PandaSurvivor.BOTTOM_OF_LEVEL_MAP ||
+                    tornado.position.y > (PandaSurvivor.TOP_OF_MAP + EDGE_OF_MAP_Y_OFFSET) ||
+                    tornado.stateTime > Tornado.TORNADO_DISTANCE) {
+                tiledMapRenderer.removeSprite(tornado.getSprite());
+                tornadoList.remove(tornado);
+                break;
+            } else {
+                for (Set<GameObject> set : worldObjectLists) {
+                    for (GameObject gameObject : set) {
+                        if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                            if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, tornado.bounds)) {
+                                tiledMapRenderer.removeSprite(tornado.getSprite());
+                                tornadoList.remove(tornado);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                for (GameObject gameObject : houseList) {
+                    if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                        if (OverlapTester.overlapRectangles(gameObject.shooting_bounds, tornado.bounds)) {
+                            tiledMapRenderer.removeSprite(tornado.getSprite());
+                            tornadoList.remove(tornado);
+                            break;
+                        }
+                    }
+                }
+
+                if (tornado != null) {
+                    float heroGoldBonus = mage.getGoldBonus();
+                    for (List<GameObject> list : enemyList) {
+                        for (GameObject gameObject : list) {
+                            if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                                Ninja ninja = ((Ninja) gameObject);
+                                if (OverlapTester.overlapRectangles(ninja.shooting_bounds, tornado.bounds)) {
+                                    ninja.setHealth(ninja.getHealth() - (mage.getSpellDmg() / 20.0f));
+                                    if (ninja.getHealth() <= 0) {
+                                        mage.handleXpGain(ninja.getXpGain());
+                                        float percentageChance = (float) Math.random() * 100;
+                                        if (percentageChance < COIN_DROP_CHANCE) {
+                                            worldRenderer.addCoins(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2, ninja.position.y, heroGoldBonus);
+                                        }
+                                        if (percentageChance < BOSS_KEY_DROP_CHANCE) {
+                                            worldRenderer.addBossKey(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y);
+                                        }
+                                        if (percentageChance < COMMON_GEAR_DROP_CHANCE) {
+                                            worldRenderer.addGear(ninja.position.x + ninja.WALKING_BOUNDS_ENEMY_WIDTH / 2 - (WorldRenderer.w * .0055f), ninja.position.y + (WorldRenderer.h * .0185f));
+                                        }
+                                        if (ninja.getFrozenSprite() != null) {
+                                            tiledMapRenderer.removeSprite(ninja.getFrozenSprite());
+                                        }
+
+                                        tiledMapRenderer.removeSprite(ninja.getSprite());
+                                        list.remove(ninja);
+                                        mage.addNinjaKill();
+                                        if (mage.getNinjaKillCount() % LEVEL_KILL_THRESHOLD == 0 && !worldRenderer.showPortalMessage) {
+                                            worldRenderer.addLevelPortal();
+                                        }
+                                        break;
+                                    }
+
+                                    if (tornado.tornadoDirection == HeroDirections.UP) {
+                                        ninja.position.y += (HERO_MOVE_SPEED * deltaTime);
+                                        ninja.update(deltaTime);
+                                        ninja.getSprite().setPosition(ninja.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, ninja.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
+
+                                        checkStaticObjectCollisionsFor(ninja, HeroDirections.UP, NINJA_COLLISION_Y_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.DOWN) {
+                                        ninja.position.y -= (HERO_MOVE_SPEED * deltaTime);
+                                        ninja.update(deltaTime);
+                                        ninja.getSprite().setPosition(ninja.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, ninja.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
+
+                                        checkStaticObjectCollisionsFor(ninja, HeroDirections.DOWN, NINJA_COLLISION_Y_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.RIGHT) {
+                                        ninja.position.x += (HERO_MOVE_SPEED * deltaTime);
+                                        ninja.update(deltaTime);
+                                        ninja.getSprite().setPosition(ninja.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, ninja.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
+
+                                        checkStaticObjectCollisionsFor(ninja, HeroDirections.RIGHT, NINJA_COLLISION_X_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.LEFT) {
+                                        ninja.position.x -= (HERO_MOVE_SPEED * deltaTime);
+                                        ninja.update(deltaTime);
+                                        ninja.getSprite().setPosition(ninja.position.x + NINJA_POSITION_X_BOUNDS_OFFSET, ninja.position.y - NINJA_POSITION_Y_BOUNDS_OFFSET);
+
+                                        checkStaticObjectCollisionsFor(ninja, HeroDirections.LEFT, NINJA_COLLISION_X_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (tornado != null) {
+                        for (GameObject gameObject : bossList) {
+                            if ((gameObject.position.x < (x + WorldRenderer.w) && gameObject.position.x > x) && ((gameObject.position.y < (y + WorldRenderer.h) && gameObject.position.y > y))) {
+                                Boss boss = ((Boss) gameObject);
+                                if (OverlapTester.overlapRectangles(boss.shooting_bounds, tornado.bounds)) {
+                                    boss.setHealth(boss.getHealth() - (mage.getSpellDmg() / 20.0f));
+                                    if (boss.getHealth() <= 0) {
+                                        mage.handleXpGain(boss.getXpGain());
+                                        worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x + boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y + BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_1, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                        worldRenderer.addCoins(boss.position.x - boss.WALKING_BOUNDS_BOSS_WIDTH / 2, boss.position.y - BOSS_COIN_DROP_Y_OFFSET_2, heroGoldBonus);
+                                        if (boss.getFrozenSprite() != null) {
+                                            tiledMapRenderer.removeSprite(boss.getFrozenSprite());
+                                        }
+                                        tiledMapRenderer.removeSprite(boss.getSprite());
+                                        bossList.remove(boss);
+                                        mage.addBossKill();
+                                        break;
+                                    }
+
+                                    if (tornado.tornadoDirection == HeroDirections.UP) {
+                                        boss.position.y += (HERO_MOVE_SPEED * deltaTime);
+                                        boss.update(deltaTime);
+                                        boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+
+                                        checkStaticObjectCollisionsFor(boss, HeroDirections.UP, BOSS_COLLISION_X_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.DOWN) {
+                                        boss.position.y -= (HERO_MOVE_SPEED * deltaTime);
+                                        boss.update(deltaTime);
+                                        boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+
+                                        checkStaticObjectCollisionsFor(boss, HeroDirections.DOWN, BOSS_COLLISION_X_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.RIGHT) {
+                                        boss.position.x += (HERO_MOVE_SPEED * deltaTime);
+                                        boss.update(deltaTime);
+                                        boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+
+                                        checkStaticObjectCollisionsFor(boss, HeroDirections.RIGHT, BOSS_COLLISION_Y_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateNinjaHitSpriteTexture(enemy.getCurrentDirection());
+                                    } else if (tornado.tornadoDirection == HeroDirections.LEFT) {
+                                        boss.position.x -= (HERO_MOVE_SPEED * deltaTime);
+                                        boss.update(deltaTime);
+                                        boss.getSprite().setPosition(boss.position.x, boss.position.y - Boss.WALKING_BOUNDS_BOSS_HEIGHT / 4);
+
+                                        checkStaticObjectCollisionsFor(boss, HeroDirections.LEFT, BOSS_COLLISION_Y_BOUNDS_OFFSET, false);
+//                        worldRenderer.updateEnemyHitSpriteTexture(enemy.getCurrentDirection());
+                                    }
                                 }
                             }
                         }
@@ -852,6 +1022,13 @@ public class World {
         }
     }
 
+    private void updateTornados(float deltaTime) {
+        for (int i = 0; i < tornadoList.size(); i++) {
+            Tornado tornado = tornadoList.get(i);
+            tornado.update(deltaTime);
+        }
+    }
+
     private void updateEnemyFireballs(float deltaTime) {
         for (int i = 0; i < enemyFireballList.size(); i++) {
             Fireball fireball = enemyFireballList.get(i);
@@ -863,6 +1040,7 @@ public class World {
         worldObjectLists = new ArrayList<Set>();
         fireballList = new ArrayList<Fireball>();
         freezeRingList = new ArrayList<FreezeRing>();
+        tornadoList = new ArrayList<Tornado>();
 
         enemyFireballList = new ArrayList<Fireball>();
         coinsList = new ArrayList<Coins>();

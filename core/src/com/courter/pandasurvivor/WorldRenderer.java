@@ -344,7 +344,7 @@ public class WorldRenderer {
 
         if (mapName.equals(PandaSurvivor.INSIDE_HOUSE_FILENAME)) {
             tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(insideHouseMap);
-        } else if(mapName.equals(PandaSurvivor.PANDA_GRASS_MAP_NAME)) {
+        } else if (mapName.equals(PandaSurvivor.PANDA_GRASS_MAP_NAME)) {
             tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(grassMap);
         } else if (mapName.equals(PandaSurvivor.PANDA_SNOW_MAP_NAME)) {
             tiledMapRenderer = new OrthogonalTiledMapRendererWithSprites(snowMap);
@@ -481,6 +481,20 @@ public class WorldRenderer {
         fireballSprite.setPosition(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION);
         tiledMapRenderer.addSprite(fireballSprite);
         World.fireballList.add(new Fireball(x + (fireballSpriteXOffset), y + FIREBALL_Y_POSITION, fireballSprite, direction, PandaSurvivor.currentLevel));
+    }
+
+    public void addTornadoSprite(float x, float y, World.HeroDirections direction) {
+        Sprite tornadoSprite = new Sprite(Assets.tornadoSprite);
+        tornadoSprite.setSize(64, 128);
+        float tornadoSpriteXOffset = heroSprite.getWidth() / 2.5f;
+        float tornadoSpriteYOffset = 0;
+        if (direction == World.HeroDirections.LEFT)
+            tornadoSpriteXOffset = 0;
+        else if (direction == World.HeroDirections.DOWN)
+            tornadoSpriteYOffset = heroSprite.getHeight();
+        tornadoSprite.setPosition(x + (tornadoSpriteXOffset), y - tornadoSpriteYOffset);
+        tiledMapRenderer.addSprite(tornadoSprite);
+        World.tornadoList.add(new Tornado(x + (tornadoSpriteXOffset), y - tornadoSpriteYOffset, tornadoSprite, direction, PandaSurvivor.currentLevel));
     }
 
     public void addFreezeRingSprite(float x, float y) {
@@ -932,6 +946,7 @@ public class WorldRenderer {
 
     private void renderObjectSprites() {
         renderFireballs();
+        renderTornados();
         renderEnemyFireballs();
     }
 
@@ -964,13 +979,13 @@ public class WorldRenderer {
         emptyStaffSprite = new Sprite(Assets.emptyStaffSprite);
         emptyHelmetSprite = new Sprite(Assets.emptyHelmetSprite);
 
-        if(World.mage.heroClass == Hero.HeroClass.MAGE) {
+        if (World.mage.heroClass == Hero.HeroClass.MAGE) {
             firstSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
             disabledFirstSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
             secondSkillButtonSprite = new Sprite(Assets.freezeRingSkillButtonSprite);
             disabledSecondSkillButtonSprite = new Sprite(Assets.disabledFreezeRingSkillButtonSprite);
-            thirdSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
-            disabledThirdSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
+            thirdSkillButtonSprite = new Sprite(Assets.tornadoSkillButtonSprite);
+            disabledThirdSkillButtonSprite = new Sprite(Assets.disabledTornadoSkillButtonSprite);
             fourthSkillButtonSprite = new Sprite(Assets.fireballSkillButtonSprite);
             disabledFourthSkillButtonSprite = new Sprite(Assets.disabledFireballSkillButtonSprite);
         }
@@ -1029,6 +1044,14 @@ public class WorldRenderer {
         for (int i = 0; i < len; i++) {
             Fireball fireball = World.fireballList.get(i);
             fireball.getSprite().setPosition(fireball.position.x, fireball.position.y);
+        }
+    }
+
+    private void renderTornados() {
+        int len = World.tornadoList.size();
+        for (int i = 0; i < len; i++) {
+            Tornado tornado = World.tornadoList.get(i);
+            tornado.getSprite().setPosition(tornado.position.x, tornado.position.y);
         }
     }
 

@@ -345,6 +345,8 @@ public class PandaSurvivor extends ApplicationAdapter {
                 worldRenderer.addFireballSprite(heroOriginalX, heroOriginalY, World.mage.getCurrentDirection());
             } else if (world.mage.getCurrentActiveSkill() == 2) {
                 worldRenderer.addFreezeRingSprite(heroOriginalX, heroOriginalY);
+            } else if (world.mage.getCurrentActiveSkill() == 3) {
+                worldRenderer.addTornadoSprite(heroOriginalX, heroOriginalY, World.mage.getCurrentDirection());
             }
 
             lastActionTime = deltaTime;
