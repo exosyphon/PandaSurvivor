@@ -230,7 +230,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                         super.renderTileLayer((TiledMapTileLayer) layer);
                     if (currentLayer == drawSpritesAfterLayer) {
                         for (int i = sprites.size() - 1; i > 0; i--)
-                            sprites.get(i).draw(this.getSpriteBatch());
+                            sprites.get(i).draw(this.getBatch());
                     }
                     if (currentLayer == treeBottomSpritesLayer) {
                         renderTreeBottomsFlag = true;
@@ -242,12 +242,12 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                     if (currentLayer == treeMidSpritesLayer) {
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, false);
 
-                        sprites.get(0).draw(this.getSpriteBatch());
+                        sprites.get(0).draw(this.getBatch());
 
                         renderTileLayerLeftovers((TiledMapTileLayer) layer, true);
 
                         for (Sprite sprite : controlSprites)
-                            sprite.draw(this.getSpriteBatch());
+                            sprite.draw(this.getBatch());
                     }
 
                     currentLayer++;
@@ -499,7 +499,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     public void renderTileLayerLeftovers(TiledMapTileLayer layer, boolean checkLessThan) {
         Sprite heroSprite = sprites.get(0);
 
-        final Color batchColor = spriteBatch.getColor();
+        final Color batchColor = batch.getColor();
         final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b, batchColor.a * layer.getOpacity());
 
         final int layerWidth = layer.getWidth();
@@ -638,7 +638,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                             }
                         }
                     }
-                    spriteBatch.draw(region.getTexture(), vertices, 0, 20);
+                    batch.draw(region.getTexture(), vertices, 0, 20);
                 }
                 x += layerTileWidth;
             }
@@ -648,7 +648,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
 
     @Override
     public void renderTileLayer(TiledMapTileLayer layer) {
-        final Color batchColor = spriteBatch.getColor();
+        final Color batchColor = batch.getColor();
         final float color = Color.toFloatBits(batchColor.r, batchColor.g, batchColor.b, batchColor.a * layer.getOpacity());
 
         final int layerWidth = layer.getWidth();
@@ -782,7 +782,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
                             }
                         }
                     }
-                    spriteBatch.draw(region.getTexture(), vertices, 0, 20);
+                    batch.draw(region.getTexture(), vertices, 0, 20);
                     if (renderTreeBottomsFlag)
                         addTree(x2, y2, region.getTexture());
                 }

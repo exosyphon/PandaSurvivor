@@ -313,19 +313,19 @@ public class WorldRenderer {
         buyBossKeyBounds = new Rectangle((w * .111f), h - (h * .279f), (w * .083f), (h * .138f));
         levelFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         levelFont.setColor(0, 0, 1, 1);
-        levelFont.setScale((w * .0016f), (h * .0027f));
+        levelFont.getData().setScale((w * .0016f), (h * .0027f));
         coinFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         coinFont.setColor(1, 1, 0, 1);
-        coinFont.setScale((w * .0011f), (h * .0018f));
+        coinFont.getData().setScale((w * .0011f), (h * .0018f));
         coinFont2 = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         coinFont2.setColor(0, 0, 0, 1);
-        coinFont2.setScale((w * .0011f), (h * .0018f));
+        coinFont2.getData().setScale((w * .0011f), (h * .0018f));
         equipmentStatsFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         equipmentStatsFont.setColor(1, 1, 1, 1);
-        equipmentStatsFont.setScale((w * .0011f), (h * .0018f));
+        equipmentStatsFont.getData().setScale((w * .0011f), (h * .0018f));
         portalFont = new BitmapFont(Gdx.files.internal("font.fnt"), false);
         portalFont.setColor(1, 0, 1, 1);
-        portalFont.setScale((w * .0011f), (h * .0018f));
+        portalFont.getData().setScale((w * .0011f), (h * .0018f));
         shapeRenderer = new ShapeRenderer();
     }
 
