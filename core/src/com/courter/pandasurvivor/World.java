@@ -56,18 +56,18 @@ public class World {
     }
 
     public interface WorldListener {
-        public void hit();
+        void hit();
 
-        public void kill();
+        void kill();
 
-        public void powerup();
+        void powerup();
     }
 
     public static final int LAST_TIME_DAMAGED_BUFFER = 500;
     public static final int HERO_MOVE_SPEED = (int) (WorldRenderer.h * .481f);
     public static final int ENEMY_MOVE_SPEED = (int) (WorldRenderer.h * .055f);
     public static final int BOSS_MOVE_SPEED = (int) (WorldRenderer.h * .074f);
-    public static final Rectangle HOUSE_DOOR = new Rectangle((WorldRenderer.w * .033f), (WorldRenderer.h * .314f), (WorldRenderer.w * .039f), (WorldRenderer.h * .037f));
+    public static final Rectangle HOUSE_DOOR = new Rectangle((WorldRenderer.w * .033f), (WorldRenderer.h * .264f), (WorldRenderer.w * .039f), (WorldRenderer.h * .037f));
     public static final Rectangle HOUSE_EXIT_DOOR = new Rectangle((WorldRenderer.w * .222f), (WorldRenderer.h * .004f), (WorldRenderer.w * .055f), (WorldRenderer.h * .0092f));
     public static final Rectangle WIZARD_BOUNDS = new Rectangle((WorldRenderer.w * .25f), (WorldRenderer.h * .574f), (WorldRenderer.w * .061f), (WorldRenderer.h * .092f));
     public static final int COIN_DROP_CHANCE = 50;
@@ -159,20 +159,47 @@ public class World {
             for (int i = 0; i <= numberOfRedNinjaEnemies; i++) {
                 float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
                 float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
+                if (x < PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP - 100) {
+                    x += 40;
+                }
+                if (y < 400) {
+                    y += 400;
+                }
+                if (x < 400) {
+                    x += 400;
+                }
                 worldRenderer.addNinja(x, y, NinjaTypes.RED);
             }
             for (int t = 0; t <= numberOfBlackNinjaEnemies; t++) {
                 float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
                 float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
+                if (x < PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP - 100) {
+                    x += 40;
+                }
+                if (y < 400) {
+                    y += 400;
+                }
+                if (x < 400) {
+                    x += 400;
+                }
                 worldRenderer.addNinja(x, y, NinjaTypes.BLACK);
             }
             for (int p = 0; p <= numberOfPurpleNinjaEnemies; p++) {
                 float x = PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP * (float) Math.random();
                 float y = PandaSurvivor.TOP_OF_LEVEL_MAP * (float) Math.random();
+                if (x < PandaSurvivor.RIGHT_SIDE_OF_LEVEL_MAP - 100) {
+                    x += 40;
+                }
+                if (y < 400) {
+                    y += 400;
+                }
+                if (x < 400) {
+                    x += 400;
+                }
                 worldRenderer.addNinja(x, y, NinjaTypes.PURPLE);
             }
 
-            worldRenderer.addHouse(0, 400);
+            worldRenderer.addHouse(0, WorldRenderer.h * .320f);
         }
     }
 

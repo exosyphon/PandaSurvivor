@@ -121,7 +121,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
     private Sprite lvlButtonSprite;
 
     public OrthogonalTiledMapRendererWithSprites(TiledMap map) {
-        super(map);
+        super(map, WorldRenderer.h / 1080f);
         sprites = new ArrayList<Sprite>();
         controlSprites = new ArrayList<Sprite>();
         batcher = new SpriteBatch();
@@ -396,7 +396,7 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         if (WorldRenderer.showGearStats) {
             Item item = hero.getInventory().get(WorldRenderer.currentlyViewingItemIndex);
 
-            if(hero.canEquip(item.getGearSlot())) {
+            if (hero.canEquip(item.getGearSlot())) {
                 batcher.draw(WorldRenderer.gearStatsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
             } else {
                 batcher.draw(WorldRenderer.cantEquipGearStatsViewSprite, (WorldRenderer.w * .083f), WorldRenderer.camera.viewportHeight - (WorldRenderer.h * .532f), (WorldRenderer.w * .334f), (WorldRenderer.h * .37f));
@@ -452,23 +452,23 @@ public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRen
         batcher.draw(WorldRenderer.armorButtonSprite, ARMOR_BUTTON_X, ARMOR_BUTTON_Y, ARMOR_BUTTON_RENDER_X, ARMOR_BUTTON_RENDER_Y);
         batcher.draw(WorldRenderer.xpBarSprite, XP_BAR_X, XP_BAR_Y, XP_BAR_RENDER_X, XP_BAR_RENDER_Y);
 
-        if(hero.heroClass == Hero.HeroClass.MAGE) {
-            if(hero.getCurrentActiveSkill() == 1) {
+        if (hero.heroClass == Hero.HeroClass.MAGE) {
+            if (hero.getCurrentActiveSkill() == 1) {
                 batcher.draw(WorldRenderer.firstSkillButtonSprite, (WorldRenderer.w * .320f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             } else {
                 batcher.draw(WorldRenderer.disabledFirstSkillButtonSprite, (WorldRenderer.w * .320f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             }
-            if(hero.getCurrentActiveSkill() == 2) {
+            if (hero.getCurrentActiveSkill() == 2) {
                 batcher.draw(WorldRenderer.secondSkillButtonSprite, (WorldRenderer.w * .405f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             } else {
                 batcher.draw(WorldRenderer.disabledSecondSkillButtonSprite, (WorldRenderer.w * .405f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             }
-            if(hero.getCurrentActiveSkill() == 3) {
+            if (hero.getCurrentActiveSkill() == 3) {
                 batcher.draw(WorldRenderer.thirdSkillButtonSprite, (WorldRenderer.w * .490f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             } else {
                 batcher.draw(WorldRenderer.disabledThirdSkillButtonSprite, (WorldRenderer.w * .490f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             }
-            if(hero.getCurrentActiveSkill() == 4) {
+            if (hero.getCurrentActiveSkill() == 4) {
                 batcher.draw(WorldRenderer.fourthSkillButtonSprite, (WorldRenderer.w * .575f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);
             } else {
                 batcher.draw(WorldRenderer.disabledFourthSkillButtonSprite, (WorldRenderer.w * .575f), (WorldRenderer.h * .02f), BAG_BUTTON_RENDER_X, BAG_BUTTON_RENDER_Y);

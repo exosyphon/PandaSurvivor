@@ -19,16 +19,16 @@ public class PandaSurvivor extends ApplicationAdapter {
     }
 
     public static int mapNameIndex = 0;
-    public static final int RIGHT_SIDE_OF_LEVEL_MAP = 7584;
     public static final int LEFT_SIDE_OF_LEVEL_MAP = 0;
     public static final int BOTTOM_OF_LEVEL_MAP = 0;
-    public static final int TOP_OF_LEVEL_MAP = 7616;
-    public static final int RIGHT_SIDE_OF_INSIDE_HOUSE = 926;
-    public static final int TOP_OF_INSIDE_HOUSE = 926;
+    public static int RIGHT_SIDE_OF_LEVEL_MAP;
+    public static int TOP_OF_LEVEL_MAP;
+    public static int RIGHT_SIDE_OF_INSIDE_HOUSE;
+    public static int TOP_OF_INSIDE_HOUSE;
+    public static float TOP_OF_MAP;
+    public static float RIGHT_SIDE_OF_MAP;
     public static final float BUTTON_ACTION_BUFFER = 15;
     public static final float BASE_ATTACK_SPEED = 30;
-    public static float TOP_OF_MAP = TOP_OF_LEVEL_MAP;
-    public static float RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_LEVEL_MAP;
     public static float DPAD_EXTRA_X_SPACE;
     public static float DPAD_EXTRA_Y_SPACE;
     public static float DPAD_X_MOVE_OFFSET;
@@ -79,6 +79,12 @@ public class PandaSurvivor extends ApplicationAdapter {
         HERO_Y_BOUNDS_OFFSET = (WorldRenderer.h * .011f);
         DPAD_EXTRA_X_SPACE = (WorldRenderer.w * .156f);
         DPAD_EXTRA_Y_SPACE = (WorldRenderer.h * .212f);
+        RIGHT_SIDE_OF_LEVEL_MAP = (int) (7584 * WorldRenderer.h / 1080f);
+        TOP_OF_LEVEL_MAP = (int) (7616 * WorldRenderer.h / 1080f);
+        RIGHT_SIDE_OF_INSIDE_HOUSE = (int) (926 * WorldRenderer.h / 1080f);
+        TOP_OF_INSIDE_HOUSE = (int) (926 * WorldRenderer.h / 1080f);
+        TOP_OF_MAP = TOP_OF_LEVEL_MAP;
+        RIGHT_SIDE_OF_MAP = RIGHT_SIDE_OF_LEVEL_MAP;
     }
 
     @Override
@@ -103,7 +109,7 @@ public class PandaSurvivor extends ApplicationAdapter {
                 Mage tmpHero = world.mage;
                 worldRenderer = worldRenderer.createNewRenderer(INSIDE_HOUSE_FILENAME, (WorldRenderer.w * .25f), 0);
                 world = new World(null, worldRenderer, false);
-                tmpHero.position.x = world.mage.position.x;
+                tmpHero.position.x = RIGHT_SIDE_OF_INSIDE_HOUSE / 2;
                 tmpHero.position.y = world.mage.position.y;
                 worldRenderer.showPortalMessage = showinglevelPortal;
                 world.mage = tmpHero;
